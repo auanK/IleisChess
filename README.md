@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java. O projeto foi iniciado como um trabalho da cadeira de Programação Orientada a Objetos, do curso de Ciência da Computação da Universidade Federal do Ceará Quixáda (UFC). O projeto é desenvolvido por Kauan Pablo, estudante de Ciência da Computação da UFC.
+O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, iniciado como um trabalho da cadeira de Programação Orientada a Objetos do curso de Ciência da Computação na Universidade Federal do Ceará Campus Quixáda (UFC).
 
 ## Funcionalidades
 
