@@ -1,9 +1,7 @@
 package board;
 
 import game.Player;
-import pieces.King;
-import pieces.Piece;
-import pieces.Queen;
+import pieces.*;
 
 // Classe usada apenas para testes
 
