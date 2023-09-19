@@ -1,7 +1,6 @@
 package board;
 
 import game.Player;
-import pieces.Bishop;
 import pieces.King;
 import pieces.Piece;
 import pieces.Queen;
