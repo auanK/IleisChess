@@ -8,6 +8,13 @@ import board.ChessBoard;
  * Classe que representa o programa principal do jogo de xadrez.
  */
 public class Program {
+    // Inicializa o scanner para entrada
+    static Scanner sc = new Scanner(System.in);
+    static String ANSI_RESET = "\u001B[0m";
+    static String ANSI_RED = "\u001B[31m";
+    static String ANSI_YELLOW = "\u001B[33m";
+    static String ANSI_BLUE = "\u001B[36m";
+
     /**
      * Este método principal (main) é a entrada principal para o programa de xadrez.
      * Inicializa o jogo, configura o tabuleiro, cria jogadores e permite que os
@@ -29,12 +36,8 @@ public class Program {
         Player currentPlayer = playerWhite; // Começa com o jogador branco
         Player opponent = playerBlack;
 
-        String ANSI_RESET = "\u001B[0m";
-        String ANSI_RED = "\u001B[31m";
-        String ANSI_YELLOW = "\u001B[33m";
-
         while (true) {
-            printBoard(board, playerWhite, playerBlack, currentPlayer, opponent, ANSI_RESET, ANSI_YELLOW);
+            printBoard(board, playerWhite, playerBlack, currentPlayer, opponent);
 
             // Solicita a entrada do jogador
             System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
@@ -45,8 +48,7 @@ public class Program {
             if (source.length() == 2) {
                 int[] coordinatesSource = parseChessNotation(source);
 
-                printValidMoves(board, coordinatesSource, playerWhite, playerBlack, currentPlayer, opponent,
-                        ANSI_RESET, ANSI_RED, ANSI_YELLOW);
+                printValidMoves(board, coordinatesSource, playerWhite, playerBlack, currentPlayer, opponent);
 
                 String destination = sc.nextLine();
                 int[] coordinatesDestination = parseChessNotation(destination);
@@ -72,9 +74,6 @@ public class Program {
             }
         }
     }
-
-    // Inicializa o scanner para entrada
-    static Scanner sc = new Scanner(System.in);
 
     /**
      * Traduz a notação de xadrez para coordenadas da matriz.
@@ -108,11 +107,9 @@ public class Program {
      * @param playerBlack   O jogador preto.
      * @param currentPlayer O jogador atual que está fazendo o movimento.
      * @param opponent      O jogador adversário.
-     * @param ANSI_RESET    Reset de cor ANSI.
-     * @param ANSI_YELLOW   Código ANSI para cor amarela.
      */
     public static void printBoard(Piece[][] board, Player playerWhite, Player playerBlack, Player currentPlayer,
-            Player opponent, String ANSI_RESET, String ANSI_YELLOW) {
+            Player opponent) {
         // Imprime as peças capturadas do jogador adversário
         System.out.println();
         System.err.print("  [ ");
@@ -170,13 +167,9 @@ public class Program {
      * @param playerBlack       O jogador preto.
      * @param currentPlayer     O jogador atual que está fazendo o movimento.
      * @param opponent          O jogador adversário.
-     * @param ANSI_RESET        Reset de cor ANSI.
-     * @param ANSI_RED          Código ANSI para cor vermelha.
-     * @param ANSI_YELLOW       Código ANSI para cor amarela.
      */
-    public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player playerWhite,
-            Player playerBlack, Player currentPlayer, Player opponent, String ANSI_RESET, String ANSI_RED,
-            String ANSI_YELLOW) {
+    public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player playerWhite, Player playerBlack,
+            Player currentPlayer, Player opponent) {
         if (board[coordinatesSource[0]][coordinatesSource[1]] == null) {
             System.out.println("Não há peça na posição de origem.");
         }
@@ -198,32 +191,31 @@ public class Program {
                 coordinatesT[3] = j;
                 if (ChessMoveValidator.validateMove(board, coordinatesT, currentPlayer, opponent) == null) {
                     if (board[i][j] == null) {
-                        // Se a posição de destino for vazia, imprime "-" em vermelho para indicar que o
+                        // Se a posição de destino for vazia, imprime "-" em azul para indicar que o
                         // movimento é válido para essa posição|
-                        System.out.print(ANSI_RED + "-" + ANSI_RESET + " ");
-                    } else {
+                        System.out.print(ANSI_BLUE + "-" + ANSI_RESET + " ");
+                    } else if (board[i][j] != board[coordinatesSource[0]][coordinatesSource[1]]) {
                         // Se a posição de destino não for vazia, imprime a peça em vermelho para
                         // indicar que ela pode ser capturada
                         Piece piece = board[i][j];
-                        if (piece.getColor() == 'W') {
-                            System.out.print(ANSI_RED + piece.getLabel() + ANSI_RESET + " ");
-                        } else if (piece.getColor() == 'B') {
-                            // Imprime a peça preta vermelha
-                            System.out.print(ANSI_RED + piece.getLabel() + ANSI_RESET + " ");
-                        }
+                        System.out.print(ANSI_RED + piece.getLabel() + ANSI_RESET + " ");
                     }
                 } else {
-                    if (board[i][j] == null) {
-                        // Imprime "." para casas vazias
-                        System.out.print(". ");
+                    if (board[i][j] == board[coordinatesSource[0]][coordinatesSource[1]]) {
+                        System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
                     } else {
-                        Piece piece = board[i][j];
-                        if (piece.getColor() == 'W') {
-                            // Imprime a peça branca
-                            System.out.print(piece.getLabel() + " ");
-                        } else if (piece.getColor() == 'B') {
-                            // Imprime a peça preta com cor amarela
-                            System.out.print(ANSI_YELLOW + piece.getLabel() + ANSI_RESET + " ");
+                        if (board[i][j] == null) {
+                            // Imprime "." para casas vazias
+                            System.out.print(". ");
+                        } else {
+                            Piece piece = board[i][j];
+                            if (piece.getColor() == 'W') {
+                                // Imprime a peça branca
+                                System.out.print(piece.getLabel() + " ");
+                            } else if (piece.getColor() == 'B') {
+                                // Imprime a peça preta com cor amarela
+                                System.out.print(ANSI_YELLOW + piece.getLabel() + ANSI_RESET + " ");
+                            }
                         }
                     }
                 }
