@@ -17,9 +17,10 @@ public class BoardTeste {
         }
 
         board[0][0] = new King('B', 0, 0);
-        board[0][2] = new King('W', 0, 7);
-        board[3][1] = new Queen('W', 3, 2);
-        // board[4][5] = new Bishop('B', 4, 5);
+        // board[7][1] = new Queen('W', 7, 1);
+        // board[1][5] = new Queen('W', 1, 5);
+        board[1][0] = new Hugo('B', 1, 0);
+        board[7][7] = new King('W', 7, 7);
     }
 
     public Piece[][] getBoard() {
@@ -27,10 +28,25 @@ public class BoardTeste {
     }
 
     public void assignPiecesToPlayers(Player playerWhite, Player playerBlack) {
+        // playerWhite.addPiece(board[7][1]);
+        playerWhite.addPiece(board[7][7]);
         playerBlack.addPiece(board[0][0]);
-        playerWhite.addPiece(board[0][2]);
-        playerWhite.addPiece(board[3][1]);
-        // playerBlack.addPiece(board[4][5]);
+        playerBlack.addPiece(board[1][0]);
+        // playerWhite.addPiece(board[1][5]);
+    }
+
+    // clona o tabuleiro
+    public static Piece[][] clone(Piece board[][]) {
+        Piece[][] tempBoard = new Piece[8][8];
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j] != null) {
+                    tempBoard[i][j] = board[i][j];
+                }
+            }
+        }
+
+        return tempBoard;
     }
 
 }

@@ -6,6 +6,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "p",
+            "request": "launch",
+            "mainClass": "game.p",
+            "projectName": "IleisChess_61c80239"
+        },
+        {
+            "type": "java",
+            "name": "ProgramCopy",
+            "request": "launch",
+            "mainClass": "game.ProgramCopy",
+            "projectName": "IleisChess_61c80239"
+        },
+        {
+            "type": "java",
+            "name": "Program",
+            "request": "launch",
+            "mainClass": "game.Program",
+            "projectName": "IleisChess_61c80239"
+        },
+        {
+            "type": "java",
             "name": "Program",
             "request": "launch",
             "mainClass": "game.Program",
