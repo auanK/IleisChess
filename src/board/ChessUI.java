@@ -48,7 +48,7 @@ public class ChessUI {
                 try {
                     ChessMove.validateMove(board, coordinatesT, currentPlayer, opponent);
                     if (board[i][j] == null) {
-                        System.out.print(ANSI_BLUE + ". " + ANSI_RESET);
+                        System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
                     } else {
                         System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
                     }
