@@ -8,12 +8,14 @@ public abstract class Piece {
     private char color;
     private int positionRow;
     private int positionColumn;
+    private boolean moved;
 
     public Piece(char label, char color, int positionRow, int positionColumn) {
         this.label = label;
         this.color = color;
         this.positionRow = positionRow;
         this.positionColumn = positionColumn;
+        this.moved = false;
     }
 
     public char getLabel() {
@@ -31,6 +33,10 @@ public abstract class Piece {
     public int getPositionColumn() {
         return positionColumn;
     }
+
+     public boolean hasMoved() {
+        return moved;
+     }
 
     public void setPosition(int positionRow, int positionColumn) {
         this.positionRow = positionRow;

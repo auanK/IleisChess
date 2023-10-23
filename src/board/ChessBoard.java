@@ -16,10 +16,10 @@ public class ChessBoard {
         }
 
         board[0][0] = new Rook('W', 0, 0);
-        board[0][7] = new Hugo('W', 0, 7);
+        board[0][7] = new Rook('W', 0, 7);
 
-        board[7][0] = new Ery('B', 7, 0);
-        board[7][7] = new Gui('B', 7, 7);
+        board[7][0] = new Rook('B', 7, 0);
+        board[7][7] = new Rook('B', 7, 7);
 
         board[0][1] = new Knight('W', 0, 1);
         board[0][6] = new Knight('W', 0, 6);
