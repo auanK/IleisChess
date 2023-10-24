@@ -52,44 +52,34 @@ public class ChessMove {
             throw new InvalidMoveException("Movimento inválido, peça não pode se mover para essa posição!");
         }
 
-        /*
-         * Piece destinationPiece = null;
-         * if (board[destinationRow][destinationColumn] != null) {
-         * destinationPiece = board[destinationRow][destinationColumn];
-         * opponent.removePiece(destinationPiece);
-         * }
-         * board[sourceRow][sourceColumn] = null;
-         * board[destinationRow][destinationColumn] = sourcePiece;
-         * sourcePiece.setPosition(destinationRow, destinationColumn);
-         */
-
-        
         Piece destinationPiece = board[destinationRow][destinationColumn];
-        
+
         simulateMove(board, coordinates, currentPlayer, opponent, sourcePiece, destinationPiece);
         boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
         undoMove(board, coordinates, currentPlayer, opponent, sourcePiece, destinationPiece);
 
         if (isCheck) {
-            /* 
-            board[sourceRow][sourceColumn] = sourcePiece;
-            sourcePiece.setPosition(sourceRow, sourceColumn);
-            board[destinationRow][destinationColumn] = destinationPiece;
-            if (destinationPiece != null) {
-                destinationPiece.setPosition(destinationRow, destinationColumn);
-                opponent.addPiece(destinationPiece);
-            }*/
             throw new InvalidMoveException("Movimento inválido, o rei está/ficaria em xeque!");
         }
-        /* 
-        board[sourceRow][sourceColumn] = sourcePiece;
-        sourcePiece.setPosition(sourceRow, sourceColumn);
-        board[destinationRow][destinationColumn] = destinationPiece;
-        if (destinationPiece != null) {
-            destinationPiece.setPosition(destinationRow, destinationColumn);
-            opponent.addPiece(destinationPiece);
+    }
+
+    public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
+            throws InvalidMoveException {
+        validateMove(board, coordinates, currentPlayer, opponent);
+        int sourceRow = coordinates[0];
+        int sourceColumn = coordinates[1];
+        int destinationRow = coordinates[2];
+        int destinationColumn = coordinates[3];
+
+        board[sourceRow][sourceColumn].setPosition(destinationRow, destinationColumn);
+        if (board[destinationRow][destinationColumn] != null) {
+            opponent.removePiece(board[destinationRow][destinationColumn]);
+            currentPlayer.addCapturedPiece(board[destinationRow][destinationColumn]);
+            board[destinationRow][destinationColumn].setPosition(-1, -1);
         }
-*/
+
+        board[destinationRow][destinationColumn] = board[sourceRow][sourceColumn];
+        board[sourceRow][sourceColumn] = null;
     }
 
     public static void simulateMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
@@ -123,24 +113,5 @@ public class ChessMove {
             opponent.addPiece(destinationPiece);
         }
 
-    }
-
-    public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
-            throws InvalidMoveException {
-        validateMove(board, coordinates, currentPlayer, opponent);
-        int sourceRow = coordinates[0];
-        int sourceColumn = coordinates[1];
-        int destinationRow = coordinates[2];
-        int destinationColumn = coordinates[3];
-
-        board[sourceRow][sourceColumn].setPosition(destinationRow, destinationColumn);
-        if (board[destinationRow][destinationColumn] != null) {
-            opponent.removePiece(board[destinationRow][destinationColumn]);
-            currentPlayer.addCapturedPiece(board[destinationRow][destinationColumn]);
-            board[destinationRow][destinationColumn].setPosition(-1, -1);
-        }
-
-        board[destinationRow][destinationColumn] = board[sourceRow][sourceColumn];
-        board[sourceRow][sourceColumn] = null;
     }
 }

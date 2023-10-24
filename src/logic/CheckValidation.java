@@ -31,36 +31,26 @@ public class CheckValidation {
             return false;
         }
 
-        for(Piece piece : currentPlayer.getPieces()) {
+        for (Piece piece : currentPlayer.getPieces()) {
             int sourceRow = piece.getPositionRow();
             int sourceColumn = piece.getPositionColumn();
             for (int destinationRow = 0; destinationRow < 8; destinationRow++) {
                 for (int destinationColumn = 0; destinationColumn < 8; destinationColumn++) {
                     if (piece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn,
                             currentPlayer)) {
-                        Piece destinationPiece = null;
-                        if (board[destinationRow][destinationColumn] != null) {
-                            destinationPiece = board[destinationRow][destinationColumn];
-                            opponent.removePiece(destinationPiece);
-                        }
-                        board[sourceRow][sourceColumn] = null;
-                        board[destinationRow][destinationColumn] = piece;
-                        piece.setPosition(destinationRow, destinationColumn);
-                        if (!isCheck(board, currentPlayer, opponent)) {
-                            board[destinationRow][destinationColumn] = destinationPiece;
-                            if (destinationPiece != null) {
-                                opponent.addPiece(destinationPiece);
-                            }
-                            board[sourceRow][sourceColumn] = piece;
-                            piece.setPosition(sourceRow, sourceColumn);
+                        Piece destinationPiece = board[destinationRow][destinationColumn];
+                        ChessMove.simulateMove(board,
+                                new int[] { sourceRow, sourceColumn, destinationRow, destinationColumn },
+                                currentPlayer, opponent, piece, destinationPiece);
+                        boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
+                        ChessMove.undoMove(board,
+                                new int[] { sourceRow, sourceColumn, destinationRow, destinationColumn },
+                                currentPlayer, opponent, piece, destinationPiece);
+
+                        if (!isCheck) {
                             return false;
                         }
-                        board[destinationRow][destinationColumn] = destinationPiece;
-                        if (destinationPiece != null) {
-                            opponent.addPiece(destinationPiece);
-                        }
-                        board[sourceRow][sourceColumn] = piece;
-                        piece.setPosition(sourceRow, sourceColumn);
+
                     }
                 }
             }

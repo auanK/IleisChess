@@ -20,6 +20,7 @@ public class TesteBoard {
         board[7][7] = new King('B', 7, 7);
         board[7][0] = new Queen('B', 7, 0);
         board[7][1] = new Queen('B', 7, 1);
+        board[1][7] = new Pawn('B', 1, 7);
 
     }
 
@@ -33,6 +34,7 @@ public class TesteBoard {
         playerBlack.addPiece(board[7][7]);
         playerBlack.addPiece(board[7][0]);
         playerBlack.addPiece(board[7][1]);
+        playerBlack.addPiece(board[1][7]);
     }
 
 }

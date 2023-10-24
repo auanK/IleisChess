@@ -66,4 +66,13 @@ public class ChessBoard {
         }
     }
 
+    public static boolean isPromotionSquare(Piece piece) {
+        if (piece.getColor() == 'W' && piece.getPositionRow() == 7 && piece instanceof Pawn) {
+            return true;
+        } else if (piece.getColor() == 'B' && piece.getPositionRow() == 0 && piece instanceof Pawn) {
+            return true;
+        }
+        return false;
+    }
+
 }

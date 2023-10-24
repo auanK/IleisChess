@@ -71,7 +71,7 @@ public class ChessUI {
 
     public static void printCapturedPieces(Player player) {
         System.out.println();
-        System.err.print("  [ ");
+        System.err.print(" Peças capturadas: [ ");
 
         for (Piece piece : player.getCapturedPieces()) {
             String color = piece.getColor() == 'W' ? ANSI_RESET : ANSI_YELLOW;

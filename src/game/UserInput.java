@@ -5,7 +5,11 @@ import java.util.Scanner;
 import board.ChessUI;
 import logic.ChessMove;
 import logic.InvalidMoveException;
+import pieces.Bishop;
+import pieces.Knight;
 import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
 public class UserInput {
     static Scanner sc = new Scanner(System.in);
@@ -67,5 +71,31 @@ public class UserInput {
         coordinates[2] = chessNotation.charAt(3) - '1';
         coordinates[3] = chessNotation.charAt(2) - 'a';
         return coordinates;
+    }
+
+    public static String inputPromotion(Piece[][] board, Piece piece) {
+        String escolha = sc.nextLine();
+        int destinationRow = piece.getPositionRow();
+        int destinationColumn = piece.getPositionColumn();
+        char color = piece.getColor();
+        
+        if (escolha.equals("Q")) {
+            board[destinationRow][destinationColumn] = new Queen(color, destinationRow, destinationColumn);
+            escolha = "Rainha";
+        } else if (escolha.equals("R")) {
+            board[destinationRow][destinationColumn] = new Rook(color, destinationRow, destinationColumn);
+            escolha = "Torre";
+        } else if (escolha.equals("B")) {
+            board[destinationRow][destinationColumn] = new Bishop(color, destinationRow, destinationColumn);
+            escolha = "Bispo";
+        } else if (escolha.equals("N")) {
+            board[destinationRow][destinationColumn] = new Knight(color, destinationRow, destinationColumn);
+            escolha = "Cavalo";
+        } else {
+            System.out.println("Escolha inválida, escolha novamente: ");
+            inputPromotion(board, piece);
+        }
+        return escolha;
+
     }
 }
