@@ -44,7 +44,7 @@ public class Program {
 
             try {
                 ChessMove.movePiece(board, coordinates, currentPlayer, opponent);
-                
+
                 int destinationRow = coordinates[2];
                 int destinationColumn = coordinates[3];
                 if (ChessBoard.isPromotionSquare(board[destinationRow][destinationColumn])) {
@@ -53,10 +53,8 @@ public class Program {
                     String promotionPiece = UserInput.inputPromotion(board, board[destinationRow][destinationColumn]);
                     currentPlayer.addPiece(board[destinationRow][destinationColumn]);
                     System.out.println("Peça escolhida: " + promotionPiece);
-                    
-                }
-                // Continue o jogo
 
+                }
             } catch (InvalidMoveException e) {
                 System.out.println(e.getMessage());
                 continue;
