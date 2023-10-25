@@ -49,7 +49,9 @@ public class Program {
                 int destinationColumn = coordinates[3];
                 if (ChessBoard.isPromotionSquare(board[destinationRow][destinationColumn])) {
                     System.out.println("Escolha a peça para promoção (Q, R, B, N): ");
-                    String promotionPiece = UserInput.inputPromotion(board, board[destinationRow][destinationColumn], currentPlayer);
+                    currentPlayer.removePiece(board[destinationRow][destinationColumn]);
+                    String promotionPiece = UserInput.inputPromotion(board, board[destinationRow][destinationColumn]);
+                    currentPlayer.addPiece(board[destinationRow][destinationColumn]);
                     System.out.println("Peça escolhida: " + promotionPiece);
 
                 }
@@ -58,11 +60,13 @@ public class Program {
                 continue;
             }
 
+            // Troca os jogadores
             Player temp = currentPlayer;
             currentPlayer = opponent;
             opponent = temp;
         }
 
+        // Fim do jogo
         System.out.println("O player " + currentPlayer.getName() + " é o vencedor!");
     }
 }

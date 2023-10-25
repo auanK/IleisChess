@@ -73,35 +73,28 @@ public class UserInput {
         return coordinates;
     }
 
-    public static String inputPromotion(Piece[][] board, Piece piece, Player currentPlayer) {
+    public static String inputPromotion(Piece[][] board, Piece piece) {
         String escolha = sc.nextLine();
         int destinationRow = piece.getPositionRow();
         int destinationColumn = piece.getPositionColumn();
         char color = piece.getColor();
-
-        currentPlayer.removePiece(board[destinationRow][destinationColumn]);
         
         if (escolha.equals("Q")) {
             board[destinationRow][destinationColumn] = new Queen(color, destinationRow, destinationColumn);
-            currentPlayer.addPiece(board[destinationRow][destinationColumn]);
-            return "Rainha";
+            escolha = "Rainha";
         } else if (escolha.equals("R")) {
             board[destinationRow][destinationColumn] = new Rook(color, destinationRow, destinationColumn);
-            currentPlayer.addPiece(board[destinationRow][destinationColumn]);
-            return "Torre";
+            escolha = "Torre";
         } else if (escolha.equals("B")) {
             board[destinationRow][destinationColumn] = new Bishop(color, destinationRow, destinationColumn);
-            currentPlayer.addPiece(board[destinationRow][destinationColumn]);
-            return "Bispo";
+            escolha = "Bispo";
         } else if (escolha.equals("N")) {
             board[destinationRow][destinationColumn] = new Knight(color, destinationRow, destinationColumn);
-            currentPlayer.addPiece(board[destinationRow][destinationColumn]);
-            return "Cavalo";
+            escolha = "Cavalo";
         } else {
             System.out.println("Escolha inválida, escolha novamente: ");
-            inputPromotion(board, piece, currentPlayer);
+            inputPromotion(board, piece);
         }
-
         return escolha;
 
     }
