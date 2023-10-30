@@ -16,7 +16,7 @@ public class TesteBoard {
         }
 
         board[0][0] = new King('W', 0, 0);
-        board[1][0] = new Queen('W', 0, 1);
+        board[2][0] = new Queen('W', 2, 0);
         board[7][7] = new King('B', 7, 7);
         board[7][0] = new Queen('B', 7, 0);
         board[7][1] = new Queen('B', 7, 1);
@@ -29,12 +29,12 @@ public class TesteBoard {
     }
 
     public void assignPiecesToPlayers(Player playerWhite, Player playerBlack) {
-        playerWhite.addPiece(board[0][0]);
-        playerWhite.addPiece(board[1][0]);
         playerBlack.addPiece(board[7][7]);
         playerBlack.addPiece(board[7][0]);
         playerBlack.addPiece(board[7][1]);
         playerBlack.addPiece(board[1][7]);
+        playerWhite.addPiece(board[0][0]);
+        playerWhite.addPiece(board[2][0]);
     }
 
 }
