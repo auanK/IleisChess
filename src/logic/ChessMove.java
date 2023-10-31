@@ -4,6 +4,7 @@ import game.Player;
 import pieces.Piece;
 
 public class ChessMove {
+    // Verifica se a posição de origem é válida.
     public static void isValidSource(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws InvalidMoveException {
         // Salva as coordenadas
@@ -29,6 +30,7 @@ public class ChessMove {
         }
     }
 
+    // Verifica se o movimento é válido.
     public static void validateMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws InvalidMoveException {
 
@@ -84,6 +86,7 @@ public class ChessMove {
         }
     }
 
+    // Move a peça no tabuleiro.
     public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws InvalidMoveException {
         // Verifica se o movimento é válido
@@ -115,6 +118,7 @@ public class ChessMove {
 
     }
 
+    // Simula o movimento da peça no tabuleiro.
     public static void simulateMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
             Piece sourcePiece, Piece destinationPiece) {
         // Salva as coordenadas
@@ -134,6 +138,7 @@ public class ChessMove {
         sourcePiece.setPosition(destinationRow, destinationColumn);
     }
 
+    // Desfaz um movimento simulado.
     public static void undoMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
             Piece sourcePiece, Piece destinationPiece) {
         // Salva as coordenadas

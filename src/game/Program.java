@@ -13,7 +13,7 @@ public class Program {
     private static Player playerBlack = new Player("Black");
 
     public static void main(String[] args) throws InvalidMoveException {
-        // ChessBoard chessBoard = new ChessBoard();
+         //ChessBoard chessBoard = new ChessBoard();
         TesteBoard chessBoard = new TesteBoard();
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
@@ -45,7 +45,7 @@ public class Program {
             try {
                 ChessMove.movePiece(board, coordinates, currentPlayer, opponent);
 
-                /*int destinationRow = coordinates[2];
+                int destinationRow = coordinates[2];
                 int destinationColumn = coordinates[3];
                 if (ChessBoard.isPromotionSquare(board[destinationRow][destinationColumn])) {
                     System.out.println("Escolha a peça para promoção (Q, R, B, N): ");
@@ -54,7 +54,7 @@ public class Program {
                     currentPlayer.addPiece(board[destinationRow][destinationColumn]);
                     System.out.println("Peça escolhida: " + promotionPiece);
                 }
-*/
+
                 
             } catch (InvalidMoveException e) {
                 System.out.println(e.getMessage());

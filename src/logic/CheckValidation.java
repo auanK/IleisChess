@@ -3,6 +3,7 @@ package logic;
 import game.Player;
 import pieces.King;
 import pieces.Piece;
+import pieces.Queen;
 
 public class CheckValidation {
     public static boolean isCheck(Piece[][] board, Player currentPlayer, Player opponent) {
