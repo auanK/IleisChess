@@ -1,7 +1,5 @@
 package pieces;
 
-import game.Player;
-
 // Classe abstrata que representa uma peça.
 public abstract class Piece {
     private char label; // Rótulo da peça.
@@ -69,6 +67,6 @@ public abstract class Piece {
      * @return true se o movimento for válido, false caso contrário
      */
     public abstract boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
-            int destinationColumn, Player currentPlayer);
+            int destinationColumn);
 
 }

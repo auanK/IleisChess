@@ -1,7 +1,5 @@
 package pieces;
 
-import game.Player;
-
 // Classe que representa a peça Rainha.
 public class Queen extends Piece {
     // Construtor da classe.
@@ -15,7 +13,7 @@ public class Queen extends Piece {
      * haja nenhuma peça entre a posição de origem e a posição de destino.
      */
     public boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
-            int destinationColumn, Player currentPlayer) {
+            int destinationColumn) {
         // Calcula a diferença entre as coordenadas de origem e destino.
         int rowDiff = Math.abs(destinationRow - sourceRow);
         int colDiff = Math.abs(destinationColumn - sourceColumn);

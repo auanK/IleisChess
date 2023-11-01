@@ -1,7 +1,5 @@
 package pieces;
 
-import game.Player;
-
 // Classe que representa a peça Cavalo.
 public class Knight extends Piece {
     // Construtor da classe.
@@ -14,7 +12,7 @@ public class Knight extends Piece {
      * (duas casas em uma direção e uma casa em uma direção perpendicular).
      */
     public boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
-            int destinationColumn, Player currentPlayer) {
+            int destinationColumn) {
         // Calcula a diferença entre as linhas e colunas da posição de origem e da
         // posição de destino.
         int rowDiff = Math.abs(destinationRow - sourceRow);

@@ -66,14 +66,13 @@ public class ChessMove {
         }
 
         // Verifica se a peça de origem pode se mover para a posição de destino.
-        if (!sourcePiece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn,
-                currentPlayer)) {
+        if (!sourcePiece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn)) {
             throw new InvalidMoveException("Movimento inválido, peça não pode se mover para essa posição!");
         }
 
         // Salva a peça de destino.
         Piece destinationPiece = board[destinationRow][destinationColumn];
-
+        
         // Simula o movimento e verifica se o rei do jogador atual ficaria em xeque.
         simulateMove(board, coordinates, currentPlayer, opponent, sourcePiece, destinationPiece);
         boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);

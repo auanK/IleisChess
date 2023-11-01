@@ -1,7 +1,5 @@
 package pieces;
 
-import game.Player;
-
 // Classe que representa a peça Peão.
 public class Pawn extends Piece {
     // Construtor da classe.
@@ -15,7 +13,7 @@ public class Pawn extends Piece {
      * na diagonal (apenas para capturar uma peça do oponente).
      */
     public boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
-            int destinationColumn, Player currentPlayer) {
+            int destinationColumn) {
         // Calcula a diferença entre as coordenadas de origem e destino
         int rowDifference = destinationRow - sourceRow;
         int colDifference = Math.abs(destinationColumn - sourceColumn);
@@ -40,7 +38,7 @@ public class Pawn extends Piece {
         // Verifica o movimento diagonal para capturar uma peça do oponente
         else if (colDifference == 1 && rowDifference == moveDirection
                 && board[destinationRow][destinationColumn] != null
-                && !currentPlayer.getPieces().contains(board[destinationRow][destinationColumn])) {
+                && board[destinationRow][destinationColumn].getColor() != color) {
             return true;
         }
 

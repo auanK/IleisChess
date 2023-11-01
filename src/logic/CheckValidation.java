@@ -3,7 +3,6 @@ package logic;
 import game.Player;
 import pieces.King;
 import pieces.Piece;
-import pieces.Queen;
 
 public class CheckValidation {
     public static boolean isCheck(Piece[][] board, Player currentPlayer, Player opponent) {
@@ -18,8 +17,7 @@ public class CheckValidation {
         }
 
         for (Piece piece : opponent.getPieces()) {
-            if (piece.validateMove(board, piece.getPositionRow(), piece.getPositionColumn(), kingRow, kingColumn,
-                    opponent)) {
+            if (piece.validateMove(board, piece.getPositionRow(), piece.getPositionColumn(), kingRow, kingColumn)) {
                 return true;
             }
         }
@@ -37,8 +35,7 @@ public class CheckValidation {
             int sourceColumn = piece.getPositionColumn();
             for (int destinationRow = 0; destinationRow < 8; destinationRow++) {
                 for (int destinationColumn = 0; destinationColumn < 8; destinationColumn++) {
-                    if (piece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn,
-                            currentPlayer)) {
+                    if (piece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn)) {
                         Piece destinationPiece = board[destinationRow][destinationColumn];
                         ChessMove.simulateMove(board,
                                 new int[] { sourceRow, sourceColumn, destinationRow, destinationColumn },
