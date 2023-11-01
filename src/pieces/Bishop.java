@@ -1,7 +1,5 @@
 package pieces;
 
-import game.Player;
-
 // Classe que representa a peça Bispo.
 public class Bishop extends Piece {
     // Construtor da classe.
