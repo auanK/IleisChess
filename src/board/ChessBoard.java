@@ -26,20 +26,20 @@ public class ChessBoard {
         board[7][0] = new Rook('B', 7, 0);
         board[7][7] = new Rook('B', 7, 7);
 
-        board[0][1] = new Knight('W', 0, 1);
-        board[0][6] = new Knight('W', 0, 6);
+        //board[0][1] = new Knight('W', 0, 1);
+        //board[0][6] = new Knight('W', 0, 6);
 
-        board[7][1] = new Knight('B', 7, 1);
-        board[7][6] = new Knight('B', 7, 6);
+        //board[7][1] = new Knight('B', 7, 1);
+        //board[7][6] = new Knight('B', 7, 6);
 
-        board[0][2] = new Bishop('W', 0, 2);
-        board[0][5] = new Bishop('W', 0, 5);
+      //  board[0][2] = new Bishop('W', 0, 2);
+       // board[0][5] = new Bishop('W', 0, 5);
 
-        board[7][2] = new Bishop('B', 7, 2);
-        board[7][5] = new Bishop('B', 7, 5);
-
-        board[0][3] = new Queen('W', 0, 3);
-        board[7][3] = new Queen('B', 7, 3);
+        //board[7][2] = new Bishop('B', 7, 2);
+        //board[7][5] = new Bishop('B', 7, 5);
+//
+      //  board[0][3] = new Queen('W', 0, 4);
+       // board[7][3] = new Queen('B', 7, 4);
 
         board[0][4] = new King('W', 0, 4);
         board[7][4] = new King('B', 7, 4);
@@ -72,6 +72,10 @@ public class ChessBoard {
     }
 
     public static boolean isPromotionSquare(Piece piece) {
+        if (piece == null) {
+            return false;
+        } 
+
         if (piece.getColor() == 'W' && piece.getPositionRow() == 7 && piece instanceof Pawn) {
             return true;
         } else if (piece.getColor() == 'B' && piece.getPositionRow() == 0 && piece instanceof Pawn) {

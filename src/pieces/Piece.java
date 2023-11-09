@@ -37,6 +37,11 @@ public abstract class Piece {
         return positionColumn;
     }
 
+    // Seta se a peça já se moveu
+    public void setMoved() {
+        this.moved = true;
+    }
+
     // Retorna se a peça já se moveu
     public boolean hasMoved() {
         return moved;

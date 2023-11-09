@@ -65,8 +65,10 @@ public class Program {
 
                 
             } catch (InvalidMoveException e) {
-                System.out.println(e.getMessage());
-                continue;
+                if (!(e.getMessage().equals("R"))) {
+                    System.out.println(e.getMessage());
+                    continue;
+                }
             }
 
             // Troca os jogadores
