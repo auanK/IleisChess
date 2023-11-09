@@ -14,6 +14,12 @@ public class Queen extends Piece {
      */
     public boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
             int destinationColumn) {
+
+        // Verifica se a posição de origem é igual a posição de destino.
+        if (sourceRow == destinationRow && sourceColumn == destinationColumn) {
+            return false;
+        }
+
         // Calcula a diferença entre as coordenadas de origem e destino.
         int rowDiff = Math.abs(destinationRow - sourceRow);
         int colDiff = Math.abs(destinationColumn - sourceColumn);

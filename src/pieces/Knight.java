@@ -13,6 +13,12 @@ public class Knight extends Piece {
      */
     public boolean validateMove(Piece[][] board, int sourceRow, int sourceColumn, int destinationRow,
             int destinationColumn) {
+
+        // Verifica se a posição de origem é igual a posição de destino.
+        if (sourceRow == destinationRow && sourceColumn == destinationColumn) {
+            return false;
+        }
+
         // Calcula a diferença entre as linhas e colunas da posição de origem e da
         // posição de destino.
         int rowDiff = Math.abs(destinationRow - sourceRow);

@@ -13,7 +13,7 @@ public class Program {
     private static Player playerBlack = new Player("Black");
 
     public static void main(String[] args) throws InvalidMoveException {
-         //ChessBoard chessBoard = new ChessBoard();
+        // ChessBoard chessBoard = new ChessBoard();
         TesteBoard chessBoard = new TesteBoard();
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
@@ -68,6 +68,6 @@ public class Program {
         }
 
         // Fim do jogo
-        System.out.println("O player " + currentPlayer.getName() + " é o vencedor!");
+        System.out.println("O player " + opponent.getName() + " é o vencedor!");
     }
 }
