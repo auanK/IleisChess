@@ -5,12 +5,14 @@ import logic.ChessMove;
 import logic.InvalidMoveException;
 import pieces.Piece;
 
+// Classe responsável pela interface com o usuário.
 public class ChessUI {
     static String ANSI_RESET = "\u001B[0m";
     static String ANSI_RED = "\u001B[31m";
     static String ANSI_YELLOW = "\u001B[33m";
     static String ANSI_BLUE = "\u001B[36m";
 
+    // Imprime o tabuleiro.
     public static void printBoard(Piece[][] board, Player playerWhite, Player playerBlack) {
         printCapturedPieces(playerBlack);
 
@@ -33,6 +35,7 @@ public class ChessUI {
         printCapturedPieces(playerWhite);
     }
 
+    // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
             Player opponent, Player playerWhite, Player playerBlack) {
         printCapturedPieces(playerBlack);
@@ -45,6 +48,12 @@ public class ChessUI {
                 coordinatesT[1] = coordinatesSource[1];
                 coordinatesT[2] = i;
                 coordinatesT[3] = j;
+
+                if (i == coordinatesSource[0] && j == coordinatesSource[1]) {
+                    System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                    continue;
+                }
+
                 try {
                     ChessMove.validateMove(board, coordinatesT, currentPlayer, opponent);
                     if (board[i][j] == null) {
@@ -69,6 +78,7 @@ public class ChessUI {
         printCapturedPieces(playerWhite);
     }
 
+    // Imprime as peças capturadas de um jogador.
     public static void printCapturedPieces(Player player) {
         System.out.println();
         System.err.print(" Peças capturadas: [ ");

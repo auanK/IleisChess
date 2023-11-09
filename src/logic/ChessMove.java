@@ -41,7 +41,6 @@ public class ChessMove {
             throw e;
         }
 
-        // Salva as coordenadas
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
@@ -57,7 +56,6 @@ public class ChessMove {
             throw new InvalidMoveException("Movimento inválido, posição de origem e destino são iguais!");
         }
 
-        // Salva a peça de origem.
         Piece sourcePiece = board[sourceRow][sourceColumn];
 
         // Verifica se a posição de destino já possui uma peça do jogador atual.
@@ -70,16 +68,14 @@ public class ChessMove {
             throw new InvalidMoveException("Movimento inválido, peça não pode se mover para essa posição!");
         }
 
-        // Salva a peça de destino.
         Piece destinationPiece = board[destinationRow][destinationColumn];
-        
-        // Simula o movimento e verifica se o rei do jogador atual ficaria em xeque.
+
+        // Simula o movimento e verifica se o rei do jogador atual ficaria em xeque, em
+        // seguida desfaz o movimento.
         simulateMove(board, coordinates, currentPlayer, opponent, sourcePiece, destinationPiece);
         boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
-        // Desfaz o movimento.
         undoMove(board, coordinates, currentPlayer, opponent, sourcePiece, destinationPiece);
 
-        // Verifica se o rei do jogador atual ficaria em xeque.
         if (isCheck) {
             throw new InvalidMoveException("Movimento inválido, o rei está/ficaria em xeque!");
         }
@@ -91,7 +87,6 @@ public class ChessMove {
         // Verifica se o movimento é válido
         validateMove(board, coordinates, currentPlayer, opponent);
 
-        // Salva as coordenadas
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
@@ -101,14 +96,13 @@ public class ChessMove {
         Piece sourcePiece = board[sourceRow][sourceColumn];
         sourcePiece.setPosition(destinationRow, destinationColumn);
 
-        // Salva a peça de destino e remove do jogador adversário
+        // Se existir uma peça na posição de destino, remove a peça do jogador
+        // adversário e adiciona as peças capturadas do jogador atual.
         Piece destinationPiece = board[destinationRow][destinationColumn];
         if (destinationPiece != null) {
             opponent.removePiece(destinationPiece);
-            // Adiciona a peça capturada ao jogador atual e seta sua posição para uma
-            // posição inválida
             currentPlayer.addCapturedPiece(destinationPiece);
-            destinationPiece.setPosition(-1, -1);
+            destinationPiece.setPosition(-1, -1); // Posição inválida
         }
 
         // Move a peça no tabuleiro
@@ -120,7 +114,6 @@ public class ChessMove {
     // Simula o movimento da peça no tabuleiro.
     public static void simulateMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
             Piece sourcePiece, Piece destinationPiece) {
-        // Salva as coordenadas
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
@@ -140,7 +133,6 @@ public class ChessMove {
     // Desfaz um movimento simulado.
     public static void undoMove(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
             Piece sourcePiece, Piece destinationPiece) {
-        // Salva as coordenadas
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
@@ -151,7 +143,7 @@ public class ChessMove {
         sourcePiece.setPosition(sourceRow, sourceColumn);
         board[destinationRow][destinationColumn] = destinationPiece;
 
-        // Devolve a peça de destino ao jogador adversário se existir.
+        // Se existir, devolve a peça capturada ao jogador adversário.
         if (destinationPiece != null) {
             destinationPiece.setPosition(destinationRow, destinationColumn);
             opponent.addPiece(destinationPiece);

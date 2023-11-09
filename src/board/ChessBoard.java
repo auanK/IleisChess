@@ -3,12 +3,17 @@ package board;
 import game.Player;
 import pieces.*;
 
+// Classe que cria um tabuleiro de xadrez e distribui as peças.
 public class ChessBoard {
-    private Piece[][] board;
+    private Piece[][] board;    // Matriz de peças.
 
+    // Construtor da classe.
     public ChessBoard() {
+        // Cria a matriz de peças.
         board = new Piece[8][8];
 
+        // Distribui as peças.
+        
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 board[i][j] = null;
