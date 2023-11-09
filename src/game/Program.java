@@ -13,8 +13,8 @@ public class Program {
     private static Player playerBlack = new Player("Black");
 
     public static void main(String[] args) throws InvalidMoveException {
-        // ChessBoard chessBoard = new ChessBoard();
-        TesteBoard chessBoard = new TesteBoard();
+        ChessBoard chessBoard = new ChessBoard();
+        // TesteBoard chessBoard = new TesteBoard();
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 

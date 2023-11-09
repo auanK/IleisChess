@@ -33,25 +33,18 @@ public class CheckValidation {
         for (Piece piece : currentPlayer.getPieces()) {
             int sourceRow = piece.getPositionRow();
             int sourceColumn = piece.getPositionColumn();
+
             for (int destinationRow = 0; destinationRow < 8; destinationRow++) {
                 for (int destinationColumn = 0; destinationColumn < 8; destinationColumn++) {
-                    if (piece.validateMove(board, sourceRow, sourceColumn, destinationRow, destinationColumn)) {
-                        Piece destinationPiece = board[destinationRow][destinationColumn];
-
-                        int coordinates[] = { sourceRow, sourceColumn, destinationRow, destinationColumn };
-                        
-                        ChessMove.simulateMove(board, coordinates, currentPlayer, opponent, piece, destinationPiece);
-                        boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
-                        ChessMove.undoMove(board, coordinates, currentPlayer, opponent, piece, destinationPiece);
-
-                        if (!isCheck) {
-                            return false;
-                        }
+                    int coordinates[] = { sourceRow, sourceColumn, destinationRow, destinationColumn };
+                    try {
+                        ChessMove.validateMove(board, coordinates, currentPlayer, opponent);
+                    } catch (InvalidMoveException e) {
+                        continue;
                     }
                 }
             }
         }
-
         return true;
     }
 }
