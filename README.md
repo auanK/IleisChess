@@ -16,7 +16,6 @@ O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, inic
 
 ### Funcionalidades Planejadas
 
-
 - Regras de empate. (Repetição de jogadas, falta de material, afogamento, etc.)
 - Regras de en passant.
 - Regras de roque.
