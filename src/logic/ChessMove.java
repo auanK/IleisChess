@@ -59,7 +59,7 @@ public class ChessMove {
         Piece sourcePiece = board[sourceRow][sourceColumn];
         Piece destinationPiece = board[destinationRow][destinationColumn];
 
-        if ((sourcePiece instanceof King || sourcePiece instanceof Rook) && destinationPiece != null) {
+        if ((sourcePiece instanceof King || sourcePiece instanceof Rook) && destinationPiece != null && currentPlayer.getPieces().contains(destinationPiece)) {
 
             if (sourcePiece.hasMoved() || destinationPiece.hasMoved()) {
                 throw new InvalidMoveException("Movimento inválido, posição de destino já possui uma peça sua!");
@@ -186,6 +186,7 @@ public class ChessMove {
             rook.setPosition(rookRow, rookColumn - 2);
         
         }
+
         king.setMoved();
         rook.setMoved();
     }

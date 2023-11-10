@@ -62,11 +62,15 @@ public class ChessUI {
                         System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
                     }
                 } catch (InvalidMoveException e) {
-                    if (board[i][j] == null) {
-                        System.out.print(". ");
+                    if (!(e.getMessage().equals("R"))) {
+                        if (board[i][j] == null) {
+                            System.out.print(". ");
+                        } else {
+                            String colorCode = (board[i][j].getColor() == 'W') ? "" : ANSI_YELLOW;
+                            System.out.print(colorCode + board[i][j].getLabel() + ANSI_RESET + " ");
+                        }
                     } else {
-                        String colorCode = (board[i][j].getColor() == 'W') ? "" : ANSI_YELLOW;
-                        System.out.print(colorCode + board[i][j].getLabel() + ANSI_RESET + " ");
+                        System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
                     }
                 }
             }

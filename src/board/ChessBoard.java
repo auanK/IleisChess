@@ -44,10 +44,10 @@ public class ChessBoard {
         board[0][4] = new King('W', 0, 4);
         board[7][4] = new King('B', 7, 4);
 
-        for (int i = 0; i < 8; i++) {
+        /*for (int i = 0; i < 8; i++) {
             board[1][i] = new Pawn('W', 1, i);
             board[6][i] = new Pawn('B', 6, i);
-        }
+        }*/
     }
 
     public Piece[][] getBoard() {
