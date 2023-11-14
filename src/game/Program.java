@@ -50,7 +50,6 @@ public class Program {
 
             // Tenta mover a peça, caso não seja possível, imprime a mensagem de erro.
             try {
-                // Move a peça.
                 ChessMove.movePiece(board, coordinates, currentPlayer, opponent);
 
                 // Verifica se o movimento é uma promoção.

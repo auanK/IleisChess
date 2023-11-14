@@ -16,21 +16,22 @@ public class Castling {
         int destinationRow = coordinates[2];
         int destinationColumn = coordinates[3];
 
-        Piece king = board[sourceRow][sourceColumn];
-        Piece rook = board[destinationRow][destinationColumn];
+        Piece sourcePiece = board[sourceRow][sourceColumn];
+        Piece destinationPiece = board[destinationRow][destinationColumn];
 
         // Verifica se a peça de destino pertence ao jogador atual.
-        if (!currentPlayer.getPieces().contains(rook)) {
+        if (!currentPlayer.getPieces().contains(destinationPiece)) {
             return;
         }
 
         // Verifica se as duas peças são rei e torre.
-        if (!((king instanceof King && rook instanceof Rook) || (king instanceof Rook && rook instanceof King))) {
+        if (!((sourcePiece instanceof King && destinationPiece instanceof Rook)
+                || sourcePiece instanceof Rook && destinationPiece instanceof King)) {
             return;
         }
 
         // Verifica se as duas peças não se moveram.
-        if (king.hasMoved() || rook.hasMoved()) {
+        if (sourcePiece.hasMoved() || destinationPiece.hasMoved()) {
             throw new InvalidMoveException("Movimento inválido, rei ou torre já se moveram!");
         }
 
@@ -43,20 +44,19 @@ public class Castling {
         // Verifica se existem peças entre o rei e a torre.
         validatePathClear(board, sourceRow, sourceColumn, destinationColumn, opponent);
 
-        // Faz o roque.
-        castling(board, coordinates, currentPlayer);
-
-        // Se o rei ficar em xeque, desfaz o roque.
-        isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
-        if (isCheck) {
-            undoCastling(board, coordinates, currentPlayer);
-            throw new InvalidMoveException("Movimento inválido, rei ficaria em xeque!");
+        // Verifica se o rei ficaria em xeque ao se mover.
+        boolean isCheckAfterMove = rockIsCheck(board, coordinates, currentPlayer, opponent);
+        if (isCheckAfterMove) {
+            throw new InvalidMoveException("Movimento inválido, o rei fica em xeque ao se mover!");
         }
 
-        throw new InvalidMoveException("R");
+        throw new InvalidMoveException("Rock!");
     }
 
-    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer) {
+    // Faz o roque.
+    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
+            throws InvalidMoveException {
+        // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];
         Piece rook = board[coordinates[2]][coordinates[3]];
 
@@ -66,6 +66,7 @@ public class Castling {
             rook = aux;
         }
 
+        // Salva as posições das peças e a diferença entre elas.
         int kingRow = king.getPositionRow();
         int kingColumn = king.getPositionColumn();
         int rookRow = rook.getPositionRow();
@@ -73,6 +74,7 @@ public class Castling {
 
         int colDiff = Math.abs(kingColumn - rookColumn);
 
+        // Verifica se o roque é grande ou pequeno e move as peças.
         if (colDiff == 4) {
             board[kingRow][kingColumn] = null;
             board[kingRow][kingColumn - 2] = king;
@@ -81,6 +83,7 @@ public class Castling {
             board[rookRow][rookColumn] = null;
             board[rookRow][rookColumn + 3] = rook;
             rook.setPosition(rookRow, rookColumn + 3);
+
         } else {
             board[kingRow][kingColumn] = null;
             board[kingRow][kingColumn + 2] = king;
@@ -89,14 +92,15 @@ public class Castling {
             board[rookRow][rookColumn] = null;
             board[rookRow][rookColumn - 2] = rook;
             rook.setPosition(rookRow, rookColumn - 2);
-
         }
 
         king.setMoved(true);
         rook.setMoved(true);
     }
 
-    public static void undoCastling(Piece[][] board, int[] coordinates, Player currentPlayer) {
+    // Verifica se o rei ficaria em xeque ao se mover.
+    public static boolean rockIsCheck(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent) {
+        // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];
         Piece rook = board[coordinates[2]][coordinates[3]];
 
@@ -106,61 +110,75 @@ public class Castling {
             rook = aux;
         }
 
+        // Salva as posições das peças e a diferença entre elas.
         int kingRow = king.getPositionRow();
         int kingColumn = king.getPositionColumn();
-        int rookRow = rook.getPositionRow();
         int rookColumn = rook.getPositionColumn();
 
         int colDiff = Math.abs(kingColumn - rookColumn);
 
+        // Verifica se o roque é grande ou pequeno.
+        boolean isCheck = false;
         if (colDiff == 4) {
-            board[kingRow][kingColumn] = null;
-            board[kingRow][kingColumn + 2] = king;
-            king.setPosition(kingRow, kingColumn + 2);
-
-            board[rookRow][rookColumn] = null;
-            board[rookRow][rookColumn - 3] = rook;
-            rook.setPosition(rookRow, rookColumn - 3);
-        } else {
+            // Move o rei e verifica se está em xeque.
             board[kingRow][kingColumn] = null;
             board[kingRow][kingColumn - 2] = king;
             king.setPosition(kingRow, kingColumn - 2);
 
-            board[rookRow][rookColumn] = null;
-            board[rookRow][rookColumn + 2] = rook;
-            rook.setPosition(rookRow, rookColumn + 2);
+            if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
+                isCheck = true;
 
+            }
+
+            // Desfaz o movimento.
+            board[kingRow][kingColumn] = king;
+            board[kingRow][kingColumn - 2] = null;
+            king.setPosition(kingRow, kingColumn);
+        } else {
+            // Move o rei e verifica se está em xeque.
+            board[kingRow][kingColumn] = null;
+            board[kingRow][kingColumn + 2] = king;
+            king.setPosition(kingRow, kingColumn + 2);
+
+            if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
+                isCheck = true;
+            }
+
+            // Desfaz o movimento.
+            board[kingRow][kingColumn + 2] = null;
+            board[kingRow][kingColumn] = king;
+            king.setPosition(kingRow, kingColumn);
         }
 
-        king.setMoved(false);
-        rook.setMoved(false);
+        return isCheck;
     }
 
+    // Verifica se o caminho do roque está livre.
     private static void validatePathClear(Piece[][] board, int row, int start, int end, Player opponent)
             throws InvalidMoveException {
+        // Verifica se o movimento é para a esquerda ou para a direita.
         int step = (start < end) ? 1 : -1;
         int current = start + step;
 
+        // Percorre o caminho entre o rei e a torre.
         while (current != end) {
+            // Verifica se existe alguma peça entre o rei e a torre.
             if (board[row][current] != null) {
                 throw new InvalidMoveException("Movimento inválido, existem peças entre o rei e a torre!");
             }
 
-            checkIfSquareIsUnderAttack(board, opponent, row, current);
-            current += step;
-        }
-    }
+            // Verifica se a casa está sendo atacada por alguma peça do oponente.
+            for (Piece piece : opponent.getPieces()) {
+                int opponentRow = piece.getPositionRow();
+                int opponentColumn = piece.getPositionColumn();
 
-    private static void checkIfSquareIsUnderAttack(Piece[][] board, Player opponent, int row, int column)
-            throws InvalidMoveException {
-        for (Piece piece : opponent.getPieces()) {
-            int opponentRow = piece.getPositionRow();
-            int opponentColumn = piece.getPositionColumn();
-
-            if (piece.validateMove(board, opponentRow, opponentColumn, row, column)) {
-                throw new InvalidMoveException(
-                        "Movimento inválido, existem casas sendo atacadas entre o rei e a torre!");
+                if (piece.validateMove(board, opponentRow, opponentColumn, row, current)) {
+                    throw new InvalidMoveException(
+                            "Movimento inválido, existem casas sendo atacadas entre o rei e a torre!");
+                }
             }
+
+            current += step;
         }
     }
 

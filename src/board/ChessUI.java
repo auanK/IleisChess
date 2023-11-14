@@ -49,7 +49,7 @@ public class ChessUI {
                 coordinatesT[2] = i;
                 coordinatesT[3] = j;
 
-                if (i == coordinatesSource[0] && j == coordinatesSource[1]) {
+                if (i == coordinatesSource[0] && j == coordinatesSource[1] && board[i][j] != null) {
                     System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
                     continue;
                 }
@@ -62,15 +62,22 @@ public class ChessUI {
                         System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
                     }
                 } catch (InvalidMoveException e) {
-                    if (!(e.getMessage().equals("R"))) {
+                    if (e.getMessage().equals("Rock!")) {
+                        if (board[i][j] == null) {
+                            System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
+                        } else if (currentPlayer.getPieces().contains(board[i][j])) {
+                            System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                        } else {
+                            System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
+                        }
+                    } else {
                         if (board[i][j] == null) {
                             System.out.print(". ");
                         } else {
                             String colorCode = (board[i][j].getColor() == 'W') ? "" : ANSI_YELLOW;
                             System.out.print(colorCode + board[i][j].getLabel() + ANSI_RESET + " ");
                         }
-                    } else {
-                        System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+
                     }
                 }
             }
@@ -94,5 +101,4 @@ public class ChessUI {
         System.out.println("]");
         System.out.println();
     }
-
 }

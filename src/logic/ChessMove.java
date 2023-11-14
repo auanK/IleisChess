@@ -88,7 +88,8 @@ public class ChessMove {
         try {
             validateMove(board, coordinates, currentPlayer, opponent);
         } catch (InvalidMoveException e) {
-            if (e.getMessage().equals("R")) {
+            if (e.getMessage().equals("Rock!")) {
+                Castling.castling(board, coordinates, currentPlayer, opponent);
                 return;
             }
             throw e;
