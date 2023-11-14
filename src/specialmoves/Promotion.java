@@ -6,47 +6,93 @@ import pieces.Pawn;
 import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
+import game.Player;
 import java.util.Scanner;
 
 public class Promotion {
-    public static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
+    private static final String QUEEN = "Q";
+    private static final String ROOK = "R";
+    private static final String BISHOP = "B";
+    private static final String KNIGHT = "K";
 
+    // Promove um peão.
+    public static void promotion(Piece[][] board, Piece piece, Player currentPlayer) {
+        // Verifica se o peão está na posição de promoção.
+        if (!isPromotion(piece)) {
+            return;
+        }
+
+        // Imprime as peças disponíveis para promoção e lê a escolha do usuário.
+        System.out.println("Escolha a peça para promoção (Q, R, B, N): ");
+        String choice = inputPromotion(board, piece);
+
+        // Remove o peão da lista de peças do jogador atual e adiciona a peça escolhida.
+        currentPlayer.removePiece(piece);
+        currentPlayer.addPiece(board[piece.getPositionRow()][piece.getPositionColumn()]);
+
+        // Imprime a mensagem de promoção.
+        System.out.println();
+        System.out.println("Peão promovido para " + choice + "!");
+        System.out.println();
+    }
+
+    // Lê a escolha do usuário e cria a peça escolhida.
     public static String inputPromotion(Piece[][] board, Piece piece) {
+        // Lê a escolha do usuário.
         String choice = sc.nextLine();
+
+        // Salva as coordenadas da peça e sua cor.
         int destinationRow = piece.getPositionRow();
         int destinationColumn = piece.getPositionColumn();
         char color = piece.getColor();
 
-        if (choice.equals("Q")) {
-            board[destinationRow][destinationColumn] = new Queen(color, destinationRow, destinationColumn);
-            choice = "Rainha";
-        } else if (choice.equals("R")) {
-            board[destinationRow][destinationColumn] = new Rook(color, destinationRow, destinationColumn);
-            choice = "Torre";
-        } else if (choice.equals("B")) {
-            board[destinationRow][destinationColumn] = new Bishop(color, destinationRow, destinationColumn);
-            choice = "Bispo";
-        } else if (choice.equals("N")) {
-            board[destinationRow][destinationColumn] = new Knight(color, destinationRow, destinationColumn);
-            choice = "Cavalo";
-        } else {
-            System.out.println("Escolha inválida, escolha novamente: ");
-            inputPromotion(board, piece);
-        }
-        return choice;
+        // Verifica se a escolha é válida e caso seja, cria a peça escolhida.
+        String promotionFor = "";
+        do {
+            switch (choice) {
+                case QUEEN:
+                    board[destinationRow][destinationColumn] = new Queen(color, destinationRow, destinationColumn);
+                    promotionFor = "Rainha";
+                    break;
+                case ROOK:
+                    board[destinationRow][destinationColumn] = new Rook(color, destinationRow, destinationColumn);
+                    promotionFor = "Torre";
+                    break;
+                case BISHOP:
+                    board[destinationRow][destinationColumn] = new Bishop(color, destinationRow, destinationColumn);
+                    promotionFor = "Bispo";
+                    break;
+                case KNIGHT:
+                    board[destinationRow][destinationColumn] = new Knight(color, destinationRow, destinationColumn);
+                    promotionFor = "Cavalo";
+                    break;
+                default:
+                    System.out.println("Escolha inválida, escolha novamente: ");
+                    choice = sc.nextLine();
+                    break;
+            }
+        } while (!isValidChoice(choice));
+
+        return promotionFor;
     }
 
-    public static boolean isPromotionSquare(Piece piece) {
-        if (piece == null) {
+    // Verifica se a escolha do usuário é válida.
+    private static boolean isValidChoice(String choice) {
+        return QUEEN.equals(choice) || ROOK.equals(choice) || BISHOP.equals(choice) || KNIGHT.equals(choice);
+    }
+
+    // Verifica se o peão está na posição de promoção.
+    public static boolean isPromotion(Piece piece) {
+        if (piece == null || !(piece instanceof Pawn)) {
             return false;
         }
 
-        if (piece.getColor() == 'W' && piece.getPositionRow() == 7 && piece instanceof Pawn) {
+        if (piece.getColor() == 'W' && piece.getPositionRow() == 7) {
             return true;
-        } else if (piece.getColor() == 'B' && piece.getPositionRow() == 0 && piece instanceof Pawn) {
+        } else if (piece.getColor() == 'B' && piece.getPositionRow() == 0) {
             return true;
         }
         return false;
     }
-
 }

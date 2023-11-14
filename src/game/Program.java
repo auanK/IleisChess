@@ -26,6 +26,9 @@ public class Program {
         while (true) {
             // Imprime o tabuleiro.
             ChessUI.printBoard(board, playerWhite, playerBlack);
+            for (Piece piece : currentPlayer.getPieces()) {
+                System.out.print(piece.getLabel() + " ");
+            }
 
             // Verifica se o jogador atual está em xeque-mate.
             if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
@@ -51,18 +54,11 @@ public class Program {
             // Tenta mover a peça, caso não seja possível, imprime a mensagem de erro.
             try {
                 ChessMove.movePiece(board, coordinates, currentPlayer, opponent);
-
-                // Verifica se o movimento é uma promoção.
                 int destinationRow = coordinates[2];
                 int destinationColumn = coordinates[3];
-                if (Promotion.isPromotionSquare(board[destinationRow][destinationColumn])) {
-                    System.out.println("Escolha a peça para promoção (Q, R, B, N): ");
-                    currentPlayer.removePiece(board[destinationRow][destinationColumn]);
-                    String promotionPiece = Promotion.inputPromotion(board, board[destinationRow][destinationColumn]);
-                    currentPlayer.addPiece(board[destinationRow][destinationColumn]);
-                    System.out.println("Peça escolhida: " + promotionPiece);
-                }
 
+                // Chama a classe Promotion para cuidar da promoção do peão(se necessário).
+                Promotion.promotion(board, board[destinationRow][destinationColumn], currentPlayer);
             } catch (InvalidMoveException e) {
                 System.out.println(e.getMessage());
                 continue;
