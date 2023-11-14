@@ -26,9 +26,6 @@ public class Program {
         while (true) {
             // Imprime o tabuleiro.
             ChessUI.printBoard(board, playerWhite, playerBlack);
-            for (Piece piece : currentPlayer.getPieces()) {
-                System.out.print(piece.getLabel() + " ");
-            }
 
             // Verifica se o jogador atual está em xeque-mate.
             if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
