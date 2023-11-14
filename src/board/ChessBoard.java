@@ -43,12 +43,11 @@ public class ChessBoard {
 
         board[0][4] = new King('W', 0, 4);
 
-        /*
-         * for (int i = 0; i < 8; i++) {
-         * board[1][i] = new Pawn('W', 1, i);
-         * board[6][i] = new Pawn('B', 6, i);
-         * }
-         */
+        for (int i = 0; i < 8; i++) {
+            board[1][i] = new Pawn('W', 1, i);
+            // board[6][i] = new Pawn('B', 6, i);
+        }
+
     }
 
     public Piece[][] getBoard() {
@@ -71,18 +70,4 @@ public class ChessBoard {
 
         }
     }
-
-    public static boolean isPromotionSquare(Piece piece) {
-        if (piece == null) {
-            return false;
-        }
-
-        if (piece.getColor() == 'W' && piece.getPositionRow() == 7 && piece instanceof Pawn) {
-            return true;
-        } else if (piece.getColor() == 'B' && piece.getPositionRow() == 0 && piece instanceof Pawn) {
-            return true;
-        }
-        return false;
-    }
-
 }

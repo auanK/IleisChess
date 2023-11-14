@@ -5,11 +5,7 @@ import java.util.Scanner;
 import board.ChessUI;
 import logic.ChessMove;
 import logic.InvalidMoveException;
-import pieces.Bishop;
-import pieces.Knight;
 import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
 
 // Classe que recebe a entrada do usuário.
 public class UserInput {
@@ -95,32 +91,5 @@ public class UserInput {
         coordinates[2] = chessNotation.charAt(3) - '1';
         coordinates[3] = chessNotation.charAt(2) - 'a';
         return coordinates;
-    }
-
-    // Lê a escolha de promoção do usuário.
-    public static String inputPromotion(Piece[][] board, Piece piece) {
-        String choice = sc.nextLine();
-        int destinationRow = piece.getPositionRow();
-        int destinationColumn = piece.getPositionColumn();
-        char color = piece.getColor();
-
-        if (choice.equals("Q")) {
-            board[destinationRow][destinationColumn] = new Queen(color, destinationRow, destinationColumn);
-            choice = "Rainha";
-        } else if (choice.equals("R")) {
-            board[destinationRow][destinationColumn] = new Rook(color, destinationRow, destinationColumn);
-            choice = "Torre";
-        } else if (choice.equals("B")) {
-            board[destinationRow][destinationColumn] = new Bishop(color, destinationRow, destinationColumn);
-            choice = "Bispo";
-        } else if (choice.equals("N")) {
-            board[destinationRow][destinationColumn] = new Knight(color, destinationRow, destinationColumn);
-            choice = "Cavalo";
-        } else {
-            System.out.println("Escolha inválida, escolha novamente: ");
-            inputPromotion(board, piece);
-        }
-        return choice;
-
     }
 }

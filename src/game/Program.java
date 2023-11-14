@@ -6,6 +6,7 @@ import board.ChessUI;
 import logic.CheckValidation;
 import logic.ChessMove;
 import logic.InvalidMoveException;
+import specialmoves.Promotion;
 
 // Classe principal do jogo.
 public class Program {
@@ -55,10 +56,10 @@ public class Program {
                 // Verifica se o movimento é uma promoção.
                 int destinationRow = coordinates[2];
                 int destinationColumn = coordinates[3];
-                if (ChessBoard.isPromotionSquare(board[destinationRow][destinationColumn])) {
+                if (Promotion.isPromotionSquare(board[destinationRow][destinationColumn])) {
                     System.out.println("Escolha a peça para promoção (Q, R, B, N): ");
                     currentPlayer.removePiece(board[destinationRow][destinationColumn]);
-                    String promotionPiece = UserInput.inputPromotion(board, board[destinationRow][destinationColumn]);
+                    String promotionPiece = Promotion.inputPromotion(board, board[destinationRow][destinationColumn]);
                     currentPlayer.addPiece(board[destinationRow][destinationColumn]);
                     System.out.println("Peça escolhida: " + promotionPiece);
                 }
