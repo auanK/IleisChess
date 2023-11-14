@@ -63,12 +63,9 @@ public class Program {
                     System.out.println("Peça escolhida: " + promotionPiece);
                 }
 
-                
             } catch (InvalidMoveException e) {
-                if (!(e.getMessage().equals("R"))) {
-                    System.out.println(e.getMessage());
-                    continue;
-                }
+                System.out.println(e.getMessage());
+                continue;
             }
 
             // Troca os jogadores

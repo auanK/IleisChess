@@ -2,8 +2,7 @@ package logic;
 
 import game.Player;
 import pieces.Piece;
-import pieces.King;
-import pieces.Rook;
+import specialmoves.Castling;
 
 public class ChessMove {
     // Verifica se a posição de origem é válida.
@@ -59,37 +58,7 @@ public class ChessMove {
         Piece sourcePiece = board[sourceRow][sourceColumn];
         Piece destinationPiece = board[destinationRow][destinationColumn];
 
-        if ((sourcePiece instanceof King || sourcePiece instanceof Rook) && destinationPiece != null && currentPlayer.getPieces().contains(destinationPiece)) {
-
-            if (sourcePiece.hasMoved() || destinationPiece.hasMoved()) {
-                throw new InvalidMoveException("Movimento inválido, posição de destino já possui uma peça sua!");
-            }
-
-            int start, end, current;
-            int step = 1, row = sourceRow;
-
-            start = Math.min(sourceColumn, destinationColumn);
-            end = Math.max(sourceColumn, destinationColumn);
-
-            current = start + step;
-            while (current < end) {
-                if (board[row][current] != null) {
-                    System.out.println(board[row][current].getLabel());
-                    throw new InvalidMoveException("Movimento inválido, existem peças entre o rei e a torre!");
-                }
-                for (Piece piece : opponent.getPieces()) {
-                    int opponentRow = piece.getPositionRow();
-                    int opponentColumn = piece.getPositionColumn();
-
-                    if (piece.validateMove(board, opponentRow, opponentColumn, row, current)) {
-                        throw new InvalidMoveException("Movimento inválido, o rei passa por uma posição de xeque!");
-                    }
-                }
-                current += step;
-            }
-
-            throw new InvalidMoveException("R");
-        }
+        Castling.validateCastling(board, coordinates, currentPlayer, opponent);
 
         // Verifica se a posição de destino já possui uma peça do jogador atual.
         if (currentPlayer.getPieces().contains(board[destinationRow][destinationColumn])) {
@@ -119,11 +88,10 @@ public class ChessMove {
         try {
             validateMove(board, coordinates, currentPlayer, opponent);
         } catch (InvalidMoveException e) {
-            if (!(e.getMessage().equals("R"))) {
-                throw e;
+            if (e.getMessage().equals("R")) {
+                return;
             }
-            castling(board, coordinates, currentPlayer);
-            return;
+            throw e;
         }
 
         int sourceRow = coordinates[0];
@@ -147,48 +115,8 @@ public class ChessMove {
         // Move a peça no tabuleiro
         board[destinationRow][destinationColumn] = sourcePiece;
         board[sourceRow][sourceColumn] = null;
-        sourcePiece.setMoved();
+        sourcePiece.setMoved(true);
 
-    }
-
-    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer) {
-        Piece king = board[coordinates[0]][coordinates[1]];
-        Piece rook = board[coordinates[2]][coordinates[3]];
-
-        if (!(king instanceof King)) {
-            Piece aux = king;
-            king = rook;
-            rook = aux;
-        }
-
-        int kingRow = king.getPositionRow();
-        int kingColumn = king.getPositionColumn();
-        int rookRow = rook.getPositionRow();
-        int rookColumn = rook.getPositionColumn();
-
-        int colDiff = Math.abs(kingColumn - rookColumn);
-
-        if (colDiff == 4) {
-            board[kingRow][kingColumn] = null;
-            board[kingRow][kingColumn - 2] = king;
-            king.setPosition(kingRow, kingColumn - 2);
-
-            board[rookRow][rookColumn] = null;
-            board[rookRow][rookColumn + 3] = rook;
-            rook.setPosition(rookRow, rookColumn + 3);
-        } else {
-            board[kingRow][kingColumn] = null;
-            board[kingRow][kingColumn + 2] = king;
-            king.setPosition(kingRow, kingColumn + 2);
-
-            board[rookRow][rookColumn] = null;
-            board[rookRow][rookColumn - 2] = rook;
-            rook.setPosition(rookRow, rookColumn - 2);
-        
-        }
-
-        king.setMoved();
-        rook.setMoved();
     }
 
     // Simula o movimento da peça no tabuleiro.

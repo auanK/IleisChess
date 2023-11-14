@@ -2,11 +2,11 @@ package pieces;
 
 // Classe abstrata que representa uma peça.
 public abstract class Piece {
-    private char label;             // Rótulo da peça.
-    private char color;             // Cor da peça.
-    private int positionRow;        // Linha da posição da peça.
-    private int positionColumn;     // Coluna da posição da peça.
-    private boolean moved;          // Indica se a peça já se moveu.
+    private char label; // Rótulo da peça.
+    private char color; // Cor da peça.
+    private int positionRow; // Linha da posição da peça.
+    private int positionColumn; // Coluna da posição da peça.
+    private boolean moved; // Indica se a peça já se moveu.
 
     // Construtor da classe.
     public Piece(char label, char color, int positionRow, int positionColumn) {
@@ -38,8 +38,8 @@ public abstract class Piece {
     }
 
     // Seta se a peça já se moveu
-    public void setMoved() {
-        this.moved = true;
+    public void setMoved(boolean moved) {
+        this.moved = moved;
     }
 
     // Retorna se a peça já se moveu

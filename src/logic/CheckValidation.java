@@ -47,6 +47,7 @@ public class CheckValidation {
                     int coordinates[] = { sourceRow, sourceColumn, destinationRow, destinationColumn };
                     try {
                         ChessMove.validateMove(board, coordinates, currentPlayer, opponent);
+                        return false;
                     } catch (InvalidMoveException e) {
                         continue;
                     }
