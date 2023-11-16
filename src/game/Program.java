@@ -45,7 +45,7 @@ public class Program {
                 currentPlayer.setCheck(false);
             }
 
-            // Verifica se o jogador atual está em stalemate.
+            // Verifica se ocorreu um empasse.
             if (Drawn.isStalemate(board, currentPlayer, opponent)) {
                 System.out.println("Stalemate!");
                 drawn = true;

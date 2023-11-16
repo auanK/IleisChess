@@ -5,9 +5,9 @@ import pieces.Piece;
 
 // Classe que verifica se o jogo está empatado.
 public class Drawn {
-    // Verifica se o jogo ocorreu um empasse.
+    // Verifica se ocorreu um empasse.
     public static boolean isStalemate(Piece[][] board, Player currentPlayer, Player opponent) {
-        // Verifica se o jogador atual está em check.
+        // Se o rei está em xeque, não há empasse.
         if (currentPlayer.isCheck()) {
             return false;
         }
