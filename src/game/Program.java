@@ -1,13 +1,14 @@
 package game;
 
+import board.BoardDrawIM;
 import board.ChessBoard;
 import pieces.Piece;
 import board.ChessUI;
+import drawn.Drawn;
 import logic.CheckValidation;
 import logic.MoveExecutor;
 import logic.InvalidMoveException;
 import specialmoves.Promotion;
-import logic.Drawn;
 
 // Classe principal do jogo.
 public class Program {
@@ -16,7 +17,8 @@ public class Program {
 
     public static void main(String[] args) throws InvalidMoveException {
         // Cria o tabuleiro e distribui as peças.
-        ChessBoard chessBoard = new ChessBoard();
+        // ChessBoard chessBoard = new ChessBoard();
+        BoardDrawIM chessBoard = new BoardDrawIM();
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
@@ -48,6 +50,13 @@ public class Program {
             // Verifica se ocorreu um empasse.
             if (Drawn.isStalemate(board, currentPlayer, opponent)) {
                 System.out.println("Stalemate!");
+                drawn = true;
+                break;
+            }
+
+            // Verifica se ocorreu empate por insuficiência de material.
+            if (Drawn.insufficientMaterial(currentPlayer, opponent)) {
+                System.out.println("Empate por insuficiência de material!");
                 drawn = true;
                 break;
             }
