@@ -2,7 +2,7 @@
 
 ## Sobre o Projeto
 
-O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, iniciado como um trabalho da cadeira de Programação Orientada a Objetos do curso de Ciência da Computação na Universidade Federal do Ceará Campus Quixáda (UFC).
+O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, com interface gráfica simples, que visa a implementação de todas as regras do xadrez padrão. O projeto foi desenvolvido como um trabalho para a disciplina de Programação Orientada a Objetos, do curso de Ciência da Computação da Universidade Federal do Ceará - Campus Quixadá, lecionada pelo professor Rubens.
 
 ## Funcionalidades
 
@@ -13,12 +13,12 @@ O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, inic
 - Representação de jogadas válidas de acordo com as regras do xadrez.
 - Regras de xeque e xeque-mate.
 - Regras de promoção de peões.
+- Regras de roque.
 
 ### Funcionalidades Planejadas
 
 - Regras de empate.
 - Regras de en passant.
-- Regras de roque.
 - Possivelmente uma interface gráfica mais elaborada.
 
 ## Autor
