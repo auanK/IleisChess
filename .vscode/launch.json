@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ChessGame",
+            "request": "launch",
+            "mainClass": "game.ChessGame",
+            "projectName": "IleisChess_51ce7dca"
+        },
+        {
+            "type": "java",
             "name": "p",
             "request": "launch",
             "mainClass": "game.p",

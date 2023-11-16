@@ -1,4 +1,4 @@
-package drawn;
+package draw;
 
 import game.Player;
 import logic.MoveValidator;
@@ -6,7 +6,7 @@ import pieces.*;
 
 import java.util.List;
 
-public class Drawn {
+public class Draw {
     // Verifica se ocorreu empate por afogamento.
     public static boolean isStalemate(Piece[][] board, Player currentPlayer, Player opponent) {
         // Se o rei está em xeque, não há empate.
@@ -48,5 +48,43 @@ public class Drawn {
         }
 
         return false;
+    }
+
+    public static class DrawType {
+        private DrawTypes drawType;
+
+        public DrawType() {
+            this.drawType = null;
+        }
+
+        public void setDrawType(DrawTypes drawType) {
+            this.drawType = drawType;
+        }
+
+        public DrawTypes getDrawType() {
+            return drawType;
+        }
+
+        public void print() {
+            switch (drawType) {
+                case AGREEMENT:
+                    System.out.println("Empate por acordo!");
+                    break;
+                case STALEMATE:
+                    System.out.println("Empate por afogamento!");
+                    break;
+                case INSUFFICIENT_MATERIAL:
+                    System.out.println("Empate por insuficiência de material!");
+                    break;
+            }
+        }
+
+    }
+
+    // Enum que representa os tipos de empate.
+    public enum DrawTypes {
+        AGREEMENT,
+        STALEMATE,
+        INSUFFICIENT_MATERIAL,
     }
 }

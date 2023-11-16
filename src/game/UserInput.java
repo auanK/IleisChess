@@ -3,6 +3,8 @@ package game;
 import java.util.Scanner;
 
 import board.ChessUI;
+import draw.Draw;
+import draw.Draw.DrawType;
 import logic.MoveValidator;
 import logic.InvalidMoveException;
 import pieces.Piece;
@@ -13,7 +15,7 @@ public class UserInput {
 
     // Lê as coordenadas digitadas pelo usuário.
     public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, Player playerWhite,
-            Player playerBlack) {
+            Player playerBlack, DrawType drawType) {
 
         String source = sc.nextLine();
 
@@ -27,8 +29,8 @@ public class UserInput {
             System.out.println("O jogador " + currentPlayer.getName() + " pediu empate, aceita? (y/n)");
             String draw = sc.nextLine();
             if (draw.equals("y")) {
-                System.out.println("Empate!");
-                System.exit(0);
+                drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
+                return null;
             }
         }
 
