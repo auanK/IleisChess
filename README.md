@@ -14,11 +14,12 @@ O IleisChess é um projeto em desenvolvimento de um jogo de xadrez em Java, com 
 - Regras de xeque e xeque-mate.
 - Regras de promoção de peões.
 - Regras de roque.
+- Regras de empate. (Acordo, afogamento e material insuficiente)
 
 ### Funcionalidades Planejadas
 
-- Regras de empate.
 - Regras de en passant.
+- Regras de empate. (Repetição de jogadas e 50 movimentos sem captura ou movimento de peão)
 - Possivelmente uma interface gráfica mais elaborada.
 
 ## Autor
