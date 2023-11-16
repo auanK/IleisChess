@@ -36,8 +36,7 @@ public class Castling {
         }
 
         // Verifica se está em xeque.
-        boolean isCheck = CheckValidation.isCheck(board, currentPlayer, opponent);
-        if (isCheck) {
+        if (currentPlayer.isCheck()) {
             throw new InvalidMoveException("Movimento inválido, roque não pode ser feito com o rei em xeque!");
         }
 

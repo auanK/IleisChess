@@ -6,6 +6,7 @@ import pieces.Piece;
 
 public class Player {
     private String name;                // Nome do jogador
+    private boolean isCheck;            // Flag que indica se o jogador está em check
     private List<Piece> pieces;         // Lista de peças do jogador
     private List<Piece> capturedPieces; // Lista de peças capturadas
 
@@ -44,5 +45,15 @@ public class Player {
     // Adiciona uma peça à lista de peças capturadas.
     public void addCapturedPiece(Piece piece) {
         capturedPieces.add(piece);
+    }
+
+    // Remove uma peça da lista de peças capturadas.
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    // Define se o jogador está em check.
+    public void setCheck(boolean check) {
+        isCheck = check;
     }
 }

@@ -32,7 +32,7 @@ public class CheckValidation {
     // Verifica se o rei está em xeque-mate
     public static boolean isCheckMate(Piece[][] board, Player currentPlayer, Player opponent) {
         // Se o rei não está em xeque, não há xeque-mate.
-        if (!isCheck(board, currentPlayer, opponent)) {
+        if (!currentPlayer.isCheck()) {
             return false;
         }
 

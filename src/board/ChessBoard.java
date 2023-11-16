@@ -64,7 +64,9 @@ public class ChessBoard {
     public void assignPiecesToPlayers(Player playerWhite, Player playerBlack) {
         for (int i = 0; i < 8; i++) {
             playerWhite.addPiece(board[0][i]);
+            playerWhite.addPiece(board[1][i]);
             playerBlack.addPiece(board[7][i]);
+            playerBlack.addPiece(board[6][i]);
         }
     }
 }

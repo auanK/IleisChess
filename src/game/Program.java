@@ -37,7 +37,10 @@ public class Program {
 
             // Verifica se o jogador atual está em xeque.
             if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
+                currentPlayer.setCheck(true);
                 System.out.println(currentPlayer.getName() + " em xeque!");
+            } else {
+                currentPlayer.setCheck(false);
             }
 
             System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
