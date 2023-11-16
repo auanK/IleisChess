@@ -12,24 +12,7 @@ public class Drawn {
             return false;
         }
 
-        // Verifica se o jogador atual tem algum movimento válido.
-        for (Piece piece : currentPlayer.getPieces()) {
-            int sourceRow = piece.getPositionRow();
-            int sourceColumn = piece.getPositionColumn();
-
-            for (int destinationRow = 0; destinationRow < 8; destinationRow++) {
-                for (int destinationColumn = 0; destinationColumn < 8; destinationColumn++) {
-                    int coordinates[] = { sourceRow, sourceColumn, destinationRow, destinationColumn };
-                    try {
-                        ChessMove.validateMove(board, coordinates, currentPlayer, opponent);
-                        return false;
-                    } catch (InvalidMoveException e) {
-                        continue;
-                    }
-                }
-            }
-        }
-        
-        return true;
+        // Verifica se alguma peça do jogador atual pode se mover para alguma posição
+        return !MoveValidator.hasValidMove(board, currentPlayer, opponent);
     }
 }

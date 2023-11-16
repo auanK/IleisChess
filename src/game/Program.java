@@ -4,7 +4,7 @@ import board.ChessBoard;
 import pieces.Piece;
 import board.ChessUI;
 import logic.CheckValidation;
-import logic.ChessMove;
+import logic.MoveExecutor;
 import logic.InvalidMoveException;
 import specialmoves.Promotion;
 import logic.Drawn;
@@ -62,7 +62,7 @@ public class Program {
 
             // Tenta mover a peça, caso não seja possível, imprime a mensagem de erro.
             try {
-                ChessMove.movePiece(board, coordinates, currentPlayer, opponent);
+                MoveExecutor.movePiece(board, coordinates, currentPlayer, opponent);
                 int destinationRow = coordinates[2];
                 int destinationColumn = coordinates[3];
 

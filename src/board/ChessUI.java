@@ -1,8 +1,8 @@
 package board;
 
 import game.Player;
-import logic.ChessMove;
 import logic.InvalidMoveException;
+import logic.MoveValidator;
 import pieces.Piece;
 
 // Classe responsável pela interface com o usuário.
@@ -55,7 +55,7 @@ public class ChessUI {
                 }
 
                 try {
-                    ChessMove.validateMove(board, coordinatesT, currentPlayer, opponent);
+                    MoveValidator.validateMove(board, coordinatesT, currentPlayer, opponent);
                     if (board[i][j] == null) {
                         System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
                     } else {

@@ -3,7 +3,7 @@ package game;
 import java.util.Scanner;
 
 import board.ChessUI;
-import logic.ChessMove;
+import logic.MoveValidator;
 import logic.InvalidMoveException;
 import pieces.Piece;
 
@@ -40,7 +40,7 @@ public class UserInput {
             if (source.length() == 2) {
                 // Verifica se a entrada é válida e imprime os movimentos possíveis.
                 int[] coordinatesSource = parseChessNotation(source);
-                ChessMove.isValidSource(board, coordinatesSource, currentPlayer, opponent);
+                MoveValidator.isValidSource(board, coordinatesSource, currentPlayer, opponent);
                 ChessUI.printValidMoves(board, coordinatesSource, currentPlayer, opponent, playerWhite, playerBlack);
 
                 // Lê a posição de destino.

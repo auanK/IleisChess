@@ -36,24 +36,7 @@ public class CheckValidation {
             return false;
         }
 
-        // Se o rei está em xeque, verifica se há algum movimento possível para o rei,
-        // ou para qualquer outra peça, que tire o rei do xeque.
-        for (Piece piece : currentPlayer.getPieces()) {
-            int sourceRow = piece.getPositionRow();
-            int sourceColumn = piece.getPositionColumn();
-
-            for (int destinationRow = 0; destinationRow < 8; destinationRow++) {
-                for (int destinationColumn = 0; destinationColumn < 8; destinationColumn++) {
-                    int coordinates[] = { sourceRow, sourceColumn, destinationRow, destinationColumn };
-                    try {
-                        ChessMove.validateMove(board, coordinates, currentPlayer, opponent);
-                        return false;
-                    } catch (InvalidMoveException e) {
-                        continue;
-                    }
-                }
-            }
-        }
-        return true;
+        // Verifica se alguma peça do jogador atual pode se mover para alguma posição
+        return !MoveValidator.hasValidMove(board, currentPlayer, opponent);
     }
 }
