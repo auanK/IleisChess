@@ -3,8 +3,8 @@ package pieces;
 // Classe que representa a peça Peão.
 public class Pawn extends Piece {
     // Construtor da classe.
-    public Pawn(char cor, int positionRow, int positionColumn) {
-        super('P', cor, positionRow, positionColumn);
+    public Pawn(char color, char colorSquare, int positionRow, int positionColumn) {
+        super('P', color, colorSquare, positionRow, positionColumn);
     }
 
     /**

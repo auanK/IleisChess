@@ -3,8 +3,8 @@ package pieces;
 // Classe que representa a peça Rainha.
 public class Queen extends Piece {
     // Construtor da classe.
-    public Queen(char cor, int positionRow, int positionColumn) {
-        super('Q', cor, positionRow, positionColumn);
+    public Queen(char color, char colorSquare, int positionRow, int positionColumn) {
+        super('Q', color, colorSquare, positionRow, positionColumn);
     }
 
     /**

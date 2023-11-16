@@ -3,8 +3,8 @@ package pieces;
 // Classe que representa a peça Cavalo.
 public class Knight extends Piece {
     // Construtor da classe.
-    public Knight(char cor, int positionRow, int positionColumn) {
-        super('N', cor, positionRow, positionColumn);
+    public Knight(char color, char colorSquare, int positionRow, int positionColumn) {
+        super('N', color, colorSquare, positionRow, positionColumn);
     }
 
     /**

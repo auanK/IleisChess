@@ -2,16 +2,18 @@ package pieces;
 
 // Classe abstrata que representa uma peça.
 public abstract class Piece {
-    private char label; // Rótulo da peça.
-    private char color; // Cor da peça.
-    private int positionRow; // Linha da posição da peça.
+    private char label;         // Rótulo da peça.
+    private char color;         // Cor da peça.
+    private char colorSquare;  // Cor do quadrado de origem da peça.
+    private int positionRow;    // Linha da posição da peça.
     private int positionColumn; // Coluna da posição da peça.
-    private boolean moved; // Indica se a peça já se moveu.
+    private boolean moved;      // Indica se a peça já se moveu.
 
     // Construtor da classe.
-    public Piece(char label, char color, int positionRow, int positionColumn) {
+    public Piece(char label, char color, char colorSquare, int positionRow, int positionColumn) {
         this.label = label;
         this.color = color;
+        this.colorSquare = colorSquare;
         this.positionRow = positionRow;
         this.positionColumn = positionColumn;
         this.moved = false;
@@ -25,6 +27,11 @@ public abstract class Piece {
     // Retorna a cor da peça
     public char getColor() {
         return color;
+    }
+
+    // Retorna a cor do quadrado de origem da peça.
+    public char getColorSquare() {
+        return colorSquare;
     }
 
     // Retorna a linha da posição da peça

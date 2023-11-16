@@ -3,8 +3,8 @@ package pieces;
 // Classe que representa a peça Bispo.
 public class Bishop extends Piece {
     // Construtor da classe.
-    public Bishop(char cor, int positionRow, int positionColumn) {
-        super('B', cor, positionRow, positionColumn);
+    public Bishop(char color, char colorSquare,int positionRow, int positionColumn) {
+        super('B', color, colorSquare, positionRow, positionColumn);
     }
 
     /**

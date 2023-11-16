@@ -2,8 +2,8 @@ package pieces;
 
 public class Rook extends Piece {
     // Construtor da classe.
-    public Rook(char cor, int positionRow, int positionColumn) {
-        super('R', cor, positionRow, positionColumn);
+    public Rook(char color, char colorSquare, int positionRow, int positionColumn) {
+        super('R', color, colorSquare, positionRow, positionColumn);
     }
 
     /**

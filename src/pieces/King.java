@@ -3,8 +3,8 @@ package pieces;
 // Classe que representa a peça Rei.
 public class King extends Piece {
     // Construtor da classe.
-    public King(char cor, int positionRow, int positionColumn) {
-        super('K', cor, positionRow, positionColumn);
+    public King(char color, char colorSquare, int positionRow, int positionColumn) {
+        super('K', color, colorSquare, positionRow, positionColumn);
     }
 
     /*
