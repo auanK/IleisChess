@@ -91,4 +91,13 @@ public class UserInput {
         coordinates[3] = chessNotation.charAt(2) - 'a';
         return coordinates;
     }
+
+    // Lê o nome dos jogadores.
+    public static void inputName(Player playerWhite, Player playerBlack) {
+        System.out.println("Digite o nome do jogador das peças brancas: ");
+        playerWhite.setName(sc.nextLine());
+
+        System.out.println("Digite o nome do jogador das peças pretas: ");
+        playerBlack.setName(sc.nextLine());
+    }
 }

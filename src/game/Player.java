@@ -22,6 +22,11 @@ public class Player {
         return name;
     }
 
+    // Define o nome do jogador.
+    public void setName(String name) {
+        this.name = name;
+    }
+
     // Retorna a lista de peças.
     public List<Piece> getPieces() {
         return pieces;

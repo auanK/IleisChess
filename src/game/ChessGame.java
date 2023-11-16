@@ -11,12 +11,8 @@ import logic.Exceptions;
 import specialmoves.Promotion;
 
 public class ChessGame {
-
-    private static final String WHITE_PLAYER_NAME = "White";
-    private static final String BLACK_PLAYER_NAME = "Black";
-
-    private static Player playerWhite = new Player(WHITE_PLAYER_NAME);
-    private static Player playerBlack = new Player(BLACK_PLAYER_NAME);
+    private static Player playerWhite = new Player("White");
+    private static Player playerBlack = new Player("Black");
 
     private static Player currentPlayer = playerWhite;
     private static Player opponent = playerBlack;
@@ -37,6 +33,9 @@ public class ChessGame {
         // Cria as flags de empate e xeque-mate.
         boolean checkMate = false;
         DrawType drawType = new DrawType();
+
+        // Lê o nome dos jogadores.
+        UserInput.inputName(playerWhite, playerBlack);
 
         // Loop principal do jogo.
         while (true) {
