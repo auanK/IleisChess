@@ -7,6 +7,7 @@ import logic.CheckValidation;
 import logic.ChessMove;
 import logic.InvalidMoveException;
 import specialmoves.Promotion;
+import logic.Drawn;
 
 // Classe principal do jogo.
 public class Program {
@@ -23,15 +24,16 @@ public class Program {
         Player currentPlayer = playerWhite;
         Player opponent = playerBlack;
 
+        boolean checkMate = false;
+        boolean drawn = false;
+
         while (true) {
             // Imprime o tabuleiro.
             ChessUI.printBoard(board, playerWhite, playerBlack);
 
             // Verifica se o jogador atual está em xeque-mate.
             if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
-                System.out.println();
-                System.out.println(currentPlayer.getName() + " em xeque-mate!");
-                System.out.println();
+                checkMate = true;
                 break;
             }
 
@@ -41,6 +43,13 @@ public class Program {
                 System.out.println(currentPlayer.getName() + " em xeque!");
             } else {
                 currentPlayer.setCheck(false);
+            }
+
+            // Verifica se o jogador atual está em stalemate.
+            if (Drawn.isStalemate(board, currentPlayer, opponent)) {
+                System.out.println("Stalemate!");
+                drawn = true;
+                break;
             }
 
             System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
@@ -71,6 +80,10 @@ public class Program {
         }
 
         // Fim do jogo
-        System.out.println("O player " + opponent.getName() + " é o vencedor!");
+        if (drawn) {
+            System.out.println("Empate!");
+        } else if (checkMate) {
+            System.out.println("Xeque-mate! " + opponent.getName() + " venceu!");
+        }
     }
 }
