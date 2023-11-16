@@ -7,7 +7,7 @@ import draw.Draw;
 import draw.Draw.DrawType;
 import logic.CheckValidation;
 import logic.MoveExecutor;
-import logic.InvalidMoveException;
+import logic.Exceptions;
 import specialmoves.Promotion;
 
 public class ChessGame {
@@ -30,12 +30,12 @@ public class ChessGame {
     private static void playChessGame() {
         // Cria o tabuleiro e associa as peças aos jogadores.
         ChessBoard chessBoard = new ChessBoard();
+
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
         // Cria as flags de empate e xeque-mate.
         boolean checkMate = false;
-        boolean draw = false;
         DrawType drawType = new DrawType();
 
         // Loop principal do jogo.
@@ -52,30 +52,28 @@ public class ChessGame {
             // Verifica se o jogador está em xeque.
             handleCheck(board);
 
-            // Verifica se ocoreu afogamento. 
+            // Verifica se ocoreu afogamento.
             if (Draw.isStalemate(board, currentPlayer, opponent)) {
-                draw = true;
                 drawType.setDrawType(Draw.DrawTypes.STALEMATE);
                 break;
             }
 
             // Verifica se ocorreu empate por insuficiência de material.
             if (Draw.insufficientMaterial(currentPlayer, opponent)) {
-                draw = true;
                 drawType.setDrawType(Draw.DrawTypes.INSUFFICIENT_MATERIAL);
                 break;
             }
 
-            // Realiza um movimento.
+            // Realiza um movimento, se possível.
             try {
                 makeMove(board, drawType);
-            } catch (InvalidMoveException e) {
-                continue;
-            }
+            } catch (Exceptions e) {
+                // Se a exceção não for de empate, continua o jogo.
+                if (!(e.getMessage().equals("Draw!"))) {
+                    continue;
+                }
 
-            // Verifica se houve um empate por acordo.
-            if (drawType.getDrawType() != null) {
-                draw = true;
+                drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
                 break;
             }
 
@@ -83,7 +81,7 @@ public class ChessGame {
             switchPlayers();
         }
 
-        handleGameResult(draw, drawType, checkMate);
+        handleGameResult(drawType, checkMate);
     }
 
     // Verifica se o jogador está em xeque.
@@ -97,16 +95,11 @@ public class ChessGame {
     }
 
     // Realiza um movimento.
-    private static void makeMove(Piece[][] board, DrawType drawType) throws InvalidMoveException {
+    private static void makeMove(Piece[][] board, DrawType drawType) throws Exceptions {
         System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
 
         // Lê a entrada do jogador.
-        int[] moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack, drawType);
-
-        // Se recebeu null, o repetir o loop.
-        if (moveCoordinates == null) {
-            throw new InvalidMoveException("Movimento inválido!");
-        }
+        int[] moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack);
 
         try {
             MoveExecutor.movePiece(board, moveCoordinates, currentPlayer, opponent);
@@ -114,13 +107,13 @@ public class ChessGame {
             int destinationColumn = moveCoordinates[3];
 
             Promotion.promotion(board, board[destinationRow][destinationColumn], currentPlayer);
-        } catch (InvalidMoveException e) {
+        } catch (Exceptions e) {
             System.out.println(e.getMessage());
         }
     }
 
-    private static void handleGameResult(boolean draw, DrawType drawType, boolean checkMate) {
-        if (draw) {
+    private static void handleGameResult(DrawType drawType, boolean checkMate) {
+        if (drawType.isDraw()) {
             drawType.print();
         } else if (checkMate) {
             System.out.println("Xeque-mate! " + opponent.getName() + " venceu!");

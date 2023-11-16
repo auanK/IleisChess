@@ -1,7 +1,7 @@
 package board;
 
 import game.Player;
-import logic.InvalidMoveException;
+import logic.Exceptions;
 import logic.MoveValidator;
 import pieces.Piece;
 
@@ -61,7 +61,7 @@ public class ChessUI {
                     } else {
                         System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
                     }
-                } catch (InvalidMoveException e) {
+                } catch (Exceptions e) {
                     if (e.getMessage().equals("Rock!")) {
                         if (board[i][j] == null) {
                             System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);

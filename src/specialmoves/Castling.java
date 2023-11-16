@@ -2,7 +2,7 @@ package specialmoves;
 
 import game.Player;
 import logic.CheckValidation;
-import logic.InvalidMoveException;
+import logic.Exceptions;
 import pieces.King;
 import pieces.Piece;
 import pieces.Rook;
@@ -10,7 +10,7 @@ import pieces.Rook;
 public class Castling {
     // Valida o roque.
     public static void validateCastling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
-            throws InvalidMoveException {
+            throws Exceptions {
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
@@ -32,12 +32,12 @@ public class Castling {
 
         // Verifica se as duas peças não se moveram.
         if (sourcePiece.hasMoved() || destinationPiece.hasMoved()) {
-            throw new InvalidMoveException("Movimento inválido, rei ou torre já se moveram!");
+            throw new Exceptions("Movimento inválido, rei ou torre já se moveram!");
         }
 
         // Verifica se está em xeque.
         if (currentPlayer.isCheck()) {
-            throw new InvalidMoveException("Movimento inválido, roque não pode ser feito com o rei em xeque!");
+            throw new Exceptions("Movimento inválido, roque não pode ser feito com o rei em xeque!");
         }
 
         // Verifica se existem peças entre o rei e a torre.
@@ -46,15 +46,15 @@ public class Castling {
         // Verifica se o rei ficaria em xeque ao se mover.
         boolean isCheckAfterMove = rockIsCheck(board, coordinates, currentPlayer, opponent);
         if (isCheckAfterMove) {
-            throw new InvalidMoveException("Movimento inválido, o rei fica em xeque ao se mover!");
+            throw new Exceptions("Movimento inválido, o rei fica em xeque ao se mover!");
         }
 
-        throw new InvalidMoveException("Rock!");
+        throw new Exceptions("Rock!");
     }
 
     // Faz o roque.
     public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
-            throws InvalidMoveException {
+            throws Exceptions {
         // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];
         Piece rook = board[coordinates[2]][coordinates[3]];
@@ -154,7 +154,7 @@ public class Castling {
 
     // Verifica se o caminho do roque está livre.
     private static void validatePathClear(Piece[][] board, int row, int start, int end, Player opponent)
-            throws InvalidMoveException {
+            throws Exceptions {
         // Verifica se o movimento é para a esquerda ou para a direita.
         int step = (start < end) ? 1 : -1;
         int current = start + step;
@@ -163,7 +163,7 @@ public class Castling {
         while (current != end) {
             // Verifica se existe alguma peça entre o rei e a torre.
             if (board[row][current] != null) {
-                throw new InvalidMoveException("Movimento inválido, existem peças entre o rei e a torre!");
+                throw new Exceptions("Movimento inválido, existem peças entre o rei e a torre!");
             }
 
             // Verifica se a casa está sendo atacada por alguma peça do oponente.
@@ -172,7 +172,7 @@ public class Castling {
                 int opponentColumn = piece.getPositionColumn();
 
                 if (piece.validateMove(board, opponentRow, opponentColumn, row, current)) {
-                    throw new InvalidMoveException(
+                    throw new Exceptions(
                             "Movimento inválido, existem casas sendo atacadas entre o rei e a torre!");
                 }
             }

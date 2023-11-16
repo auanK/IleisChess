@@ -8,11 +8,11 @@ import specialmoves.Castling;
 public class MoveExecutor {
     // Move a peça no tabuleiro.
     public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
-            throws InvalidMoveException {
+            throws Exceptions {
         // Verifica se o movimento é válido
         try {
             MoveValidator.validateMove(board, coordinates, currentPlayer, opponent);
-        } catch (InvalidMoveException e) {
+        } catch (Exceptions e) {
             if (e.getMessage().equals("Rock!")) {
                 Castling.castling(board, coordinates, currentPlayer, opponent);
                 return;

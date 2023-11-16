@@ -3,10 +3,8 @@ package game;
 import java.util.Scanner;
 
 import board.ChessUI;
-import draw.Draw;
-import draw.Draw.DrawType;
 import logic.MoveValidator;
-import logic.InvalidMoveException;
+import logic.Exceptions;
 import pieces.Piece;
 
 // Classe que recebe a entrada do usuário.
@@ -15,7 +13,7 @@ public class UserInput {
 
     // Lê as coordenadas digitadas pelo usuário.
     public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, Player playerWhite,
-            Player playerBlack, DrawType drawType) {
+            Player playerBlack) throws Exceptions{
 
         String source = sc.nextLine();
 
@@ -29,8 +27,7 @@ public class UserInput {
             System.out.println("O jogador " + currentPlayer.getName() + " pediu empate, aceita? (y/n)");
             String draw = sc.nextLine();
             if (draw.equals("y")) {
-                drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
-                return null;
+                throw new Exceptions("Draw!");
             }
         }
 
@@ -55,7 +52,7 @@ public class UserInput {
 
                 // Verifica se a o a string de destino é válida.
                 if (destination.length() != 2) {
-                    throw new InvalidMoveException("Movimento inválido, formato de destino incorreto");
+                    throw new Exceptions("Movimento inválido, formato de destino incorreto");
                 }
 
                 // Converte a notação de xadrez para coordenadas da matriz.
@@ -69,9 +66,9 @@ public class UserInput {
                 // Converte a notação de xadrez para coordenadas da matriz.
                 coordinates = parseChessNotation(source);
             } else {
-                throw new InvalidMoveException("Movimento inválido, notação inválida.");
+                throw new Exceptions("Movimento inválido, notação inválida.");
             }
-        } catch (InvalidMoveException e) {
+        } catch (Exceptions e) {
             System.out.println(e.getMessage());
             return null;
         }
