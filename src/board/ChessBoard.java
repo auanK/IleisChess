@@ -1,9 +1,15 @@
 package board;
 
 import game.Player;
-import pieces.*;
+import pieces.Bishop;
+import pieces.King;
+import pieces.Knight;
+import pieces.Pawn;
+import pieces.Piece;
+import pieces.Queen;
+import pieces.Rook;
 
-// Classe que cria um tabuleiro de xadrez e distribui as peças.
+// Classe que implementa o tabuleiro de xadrez padrão.
 public class ChessBoard {
     private Piece[][] board; // Matriz de peças.
 

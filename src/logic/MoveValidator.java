@@ -4,6 +4,7 @@ import game.Player;
 import pieces.Piece;
 import specialmoves.Castling;
 
+// Classe que implementa a validação de movimentos.
 public class MoveValidator {
     // Verifica se a posição de origem é válida.
     public static void isValidSource(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)

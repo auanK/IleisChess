@@ -7,7 +7,7 @@ import logic.Exceptions;
 import logic.MoveValidator;
 import pieces.Piece;
 
-// Classe que recebe a entrada do usuário.
+// Classe que implementa a entrada do usuário.
 public class UserInput {
     private static Scanner sc = new Scanner(System.in);
 

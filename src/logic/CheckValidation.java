@@ -4,7 +4,7 @@ import game.Player;
 import pieces.King;
 import pieces.Piece;
 
-// Classe que verifica se o rei está em xeque ou xeque-mate.
+// Classe que implementa o xeque e o xeque-mate.
 public class CheckValidation {
     // Verifica se o rei está em xeque
     public static boolean isCheck(Piece[][] board, Player currentPlayer, Player opponent) {

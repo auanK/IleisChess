@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pieces.Piece;
 
+// Classe que implementa o jogador.
 public class Player {
     private String name;                // Nome do jogador
     private boolean isCheck;            // Flag que indica se o jogador está em check

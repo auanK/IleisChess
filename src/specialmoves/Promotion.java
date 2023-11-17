@@ -1,5 +1,7 @@
 package specialmoves;
 
+import java.util.Scanner;
+
 import pieces.Bishop;
 import pieces.Knight;
 import pieces.Pawn;
@@ -7,7 +9,6 @@ import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
 import game.Player;
-import java.util.Scanner;
 
 public class Promotion {
     private static final Scanner sc = new Scanner(System.in);

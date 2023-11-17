@@ -7,6 +7,52 @@ import logic.MoveValidator;
 import pieces.Piece;
 
 public class Draw {
+    // Objeto que define o tipo de empate.
+    public static class DrawType {
+        private DrawTypes drawType; // Tipo de empate.
+
+        // Construtor da classe.
+        public DrawType() {
+            this.drawType = null;
+        }
+
+        // Define o tipo de empate.
+        public void setDrawType(DrawTypes drawType) {
+            this.drawType = drawType;
+        }
+
+        // Retorna o tipo de empate.
+        public DrawTypes getDrawType() {
+            return drawType;
+        }
+
+        public boolean isDraw() {
+            return drawType != null;
+        }
+
+        // Imprime o tipo de empate.
+        public void print() {
+            switch (drawType) {
+                case AGREEMENT:
+                    System.out.println("Empate por acordo!");
+                    break;
+                case STALEMATE:
+                    System.out.println("Empate por afogamento!");
+                    break;
+                case INSUFFICIENT_MATERIAL:
+                    System.out.println("Empate por insuficiência de material!");
+                    break;
+            }
+        }
+    }
+
+    // Enum que contém os tipos de empate.
+    public enum DrawTypes {
+        AGREEMENT,
+        STALEMATE,
+        INSUFFICIENT_MATERIAL,
+    }
+
     // Verifica se ocorreu empate por afogamento.
     public static boolean isStalemate(Piece[][] board, Player currentPlayer, Player opponent) {
         // Se o rei está em xeque, não há empate.
@@ -49,52 +95,5 @@ public class Draw {
         }
 
         return false;
-    }
-
-    // Representa o tipo de empate.
-    public static class DrawType {
-        private DrawTypes drawType; // Tipo de empate.
-
-        // Construtor da classe.
-        public DrawType() {
-            this.drawType = null;
-        }
-
-        // Define o tipo de empate.
-        public void setDrawType(DrawTypes drawType) {
-            this.drawType = drawType;
-        }
-
-        // Retorna o tipo de empate.
-        public DrawTypes getDrawType() {
-            return drawType;
-        }
-
-        public boolean isDraw() {
-            return drawType != null;
-        }
-
-        // Imprime o tipo de empate.
-        public void print() {
-            switch (drawType) {
-                case AGREEMENT:
-                    System.out.println("Empate por acordo!");
-                    break;
-                case STALEMATE:
-                    System.out.println("Empate por afogamento!");
-                    break;
-                case INSUFFICIENT_MATERIAL:
-                    System.out.println("Empate por insuficiência de material!");
-                    break;
-            }
-        }
-
-    }
-
-    // Enum que representa os tipos de empate.
-    public enum DrawTypes {
-        AGREEMENT,
-        STALEMATE,
-        INSUFFICIENT_MATERIAL,
     }
 }

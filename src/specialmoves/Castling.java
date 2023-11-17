@@ -7,6 +7,7 @@ import pieces.King;
 import pieces.Piece;
 import pieces.Rook;
 
+// Classe que implementa o roque.
 public class Castling {
     // Valida o roque.
     public static void validateCastling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
@@ -126,7 +127,6 @@ public class Castling {
 
             if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
                 isCheck = true;
-
             }
 
             // Desfaz o movimento.
