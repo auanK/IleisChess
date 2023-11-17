@@ -1,5 +1,6 @@
 package board;
 
+import game.ChessGame;
 import game.Player;
 import logic.Exceptions;
 import logic.MoveValidator;
@@ -7,13 +8,16 @@ import pieces.Piece;
 
 // Classe responsável pela interface com o usuário.
 public class ChessUI {
-    static String ANSI_RESET = "\u001B[0m";
-    static String ANSI_RED = "\u001B[31m";
-    static String ANSI_YELLOW = "\u001B[33m";
-    static String ANSI_BLUE = "\u001B[36m";
+    private static String ANSI_RESET = "\u001B[0m";
+    private static String ANSI_RED = "\u001B[31m";
+    private static String ANSI_YELLOW = "\u001B[33m";
+    private static String ANSI_BLUE = "\u001B[36m";
+
+    private static Player playerWhite = ChessGame.getPlayerWhite();
+    private static Player playerBlack = ChessGame.getPlayerBlack();
 
     // Imprime o tabuleiro.
-    public static void printBoard(Piece[][] board, Player playerWhite, Player playerBlack) {
+    public static void printBoard(Piece[][] board) {
         printCapturedPieces(playerBlack);
 
         for (int row = 7; row >= 0; row--) {
@@ -37,7 +41,10 @@ public class ChessUI {
 
     // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
-            Player opponent, Player playerWhite, Player playerBlack) {
+            Player opponent) {
+        Player playerWhite = ChessGame.getPlayerWhite();
+        Player playerBlack = ChessGame.getPlayerBlack();
+
         printCapturedPieces(playerBlack);
 
         for (int i = 7; i >= 0; i--) {

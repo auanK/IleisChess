@@ -1,15 +1,16 @@
 package game;
 
 import board.ChessBoard;
-import pieces.Piece;
 import board.ChessUI;
 import draw.Draw;
 import draw.Draw.DrawType;
 import logic.CheckValidation;
-import logic.MoveExecutor;
 import logic.Exceptions;
+import logic.MoveExecutor;
+import pieces.Piece;
 import specialmoves.Promotion;
 
+// Classe principal do jogo.
 public class ChessGame {
     private static Player playerWhite = new Player("White");
     private static Player playerBlack = new Player("Black");
@@ -17,73 +18,59 @@ public class ChessGame {
     private static Player currentPlayer = playerWhite;
     private static Player opponent = playerBlack;
 
-    // Classe principal do jogo.
+    // Método main.
     public static void main(String[] args) {
         playChessGame();
     }
 
     // Inicia o jogo.
     private static void playChessGame() {
-        // Cria o tabuleiro e associa as peças aos jogadores.
+        // Cria o tabuleiro e o preenche com as peças.
         ChessBoard chessBoard = new ChessBoard();
-
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
-        // Cria as flags de empate e xeque-mate.
         boolean checkMate = false;
         DrawType drawType = new DrawType();
 
-        // Lê o nome dos jogadores.
         UserInput.inputName(playerWhite, playerBlack);
 
-        // Loop principal do jogo.
         while (true) {
-            // Imprime o tabuleiro.
-            ChessUI.printBoard(board, playerWhite, playerBlack);
+            ChessUI.printBoard(board);
 
-            // Verifica se o jogador está em xeque-mate.
             if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
                 checkMate = true;
                 break;
             }
 
-            // Verifica se o jogador está em xeque.
             handleCheck(board);
 
-            // Verifica se ocoreu afogamento.
             if (Draw.isStalemate(board, currentPlayer, opponent)) {
                 drawType.setDrawType(Draw.DrawTypes.STALEMATE);
                 break;
             }
 
-            // Verifica se ocorreu empate por insuficiência de material.
             if (Draw.insufficientMaterial(currentPlayer, opponent)) {
                 drawType.setDrawType(Draw.DrawTypes.INSUFFICIENT_MATERIAL);
                 break;
             }
 
-            // Realiza um movimento, se possível.
             try {
                 makeMove(board, drawType);
             } catch (Exceptions e) {
-                // Se a exceção não for de empate, continua o jogo.
-                if (!(e.getMessage().equals("Draw!"))) {
-                    continue;
+                if (e.getMessage().equals("Draw!")) {
+                    drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
+                    break;
                 }
-
-                drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
-                break;
+                continue;
             }
 
-            // Troca o jogador atual.
             switchPlayers();
         }
 
         handleGameResult(drawType, checkMate);
     }
 
-    // Verifica se o jogador está em xeque.
     private static void handleCheck(Piece[][] board) {
         if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
             currentPlayer.setCheck(true);
@@ -93,12 +80,17 @@ public class ChessGame {
         }
     }
 
-    // Realiza um movimento.
     private static void makeMove(Piece[][] board, DrawType drawType) throws Exceptions {
         System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
 
-        // Lê a entrada do jogador.
-        int[] moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack);
+        int[] moveCoordinates;
+        try {
+            moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack);
+        } catch (Exceptions e) {
+            String message = e.getMessage();
+            System.out.println(message);
+            throw new Exceptions(message);
+        }
 
         try {
             MoveExecutor.movePiece(board, moveCoordinates, currentPlayer, opponent);
@@ -123,5 +115,13 @@ public class ChessGame {
         Player aux = currentPlayer;
         currentPlayer = opponent;
         opponent = aux;
+    }
+
+    public static Player getPlayerWhite() {
+        return playerWhite;
+    }
+
+    public static Player getPlayerBlack() {
+        return playerBlack;
     }
 }
