@@ -1,5 +1,6 @@
 package logic;
 
+import game.ChessLog;
 import game.Player;
 import pieces.Piece;
 import specialmoves.Castling;
@@ -7,14 +8,14 @@ import specialmoves.Castling;
 // Classe que executa o movimento das peças no tabuleiro.
 public class MoveExecutor {
     // Move a peça no tabuleiro.
-    public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
+    public static void movePiece(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent, ChessLog log)
             throws Exceptions {
         // Verifica se o movimento é válido
         try {
             MoveValidator.validateMove(board, coordinates, currentPlayer, opponent);
         } catch (Exceptions e) {
             if (e.getMessage().equals("Rock!")) {
-                Castling.castling(board, coordinates, currentPlayer, opponent);
+                Castling.castling(board, coordinates, currentPlayer, opponent, log);
                 return;
             }
             throw e;
@@ -29,6 +30,8 @@ public class MoveExecutor {
         Piece sourcePiece = board[sourceRow][sourceColumn];
         sourcePiece.setPosition(destinationRow, destinationColumn);
 
+        String notation = sourcePiece.getLabel() + log.parseChessNotation(sourceRow, sourceColumn);
+
         // Se existir uma peça na posição de destino, remove a peça do jogador
         // adversário e adiciona as peças capturadas do jogador atual.
         Piece destinationPiece = board[destinationRow][destinationColumn];
@@ -36,12 +39,18 @@ public class MoveExecutor {
             opponent.removePiece(destinationPiece);
             currentPlayer.addCapturedPiece(destinationPiece);
             destinationPiece.setPosition(-1, -1); // Posição inválida
+
+            notation += "x" + destinationPiece.getLabel();
         }
 
         // Move a peça no tabuleiro
         board[destinationRow][destinationColumn] = sourcePiece;
         board[sourceRow][sourceColumn] = null;
         sourcePiece.setMoved(true);
+
+        notation += log.parseChessNotation(destinationRow, destinationColumn);
+
+        log.add(notation);
 
     }
 

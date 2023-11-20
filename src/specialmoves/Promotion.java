@@ -2,13 +2,14 @@ package specialmoves;
 
 import java.util.Scanner;
 
+import game.ChessLog;
+import game.Player;
 import pieces.Bishop;
 import pieces.Knight;
 import pieces.Pawn;
 import pieces.Piece;
 import pieces.Queen;
 import pieces.Rook;
-import game.Player;
 
 public class Promotion {
     private static final Scanner sc = new Scanner(System.in);
@@ -18,7 +19,7 @@ public class Promotion {
     private static final String KNIGHT = "K";
 
     // Promove um peão.
-    public static void promotion(Piece[][] board, Piece piece, Player currentPlayer) {
+    public static void promotion(Piece[][] board, Piece piece, Player currentPlayer, ChessLog log) {
         // Verifica se o peão está na posição de promoção.
         if (!isPromotion(piece)) {
             return;
@@ -30,12 +31,16 @@ public class Promotion {
 
         // Remove o peão da lista de peças do jogador atual e adiciona a peça escolhida.
         currentPlayer.removePiece(piece);
-        currentPlayer.addPiece(board[piece.getPositionRow()][piece.getPositionColumn()]);
+        Piece promotedPiece = board[piece.getPositionRow()][piece.getPositionColumn()];
+        currentPlayer.addPiece(promotedPiece);
 
         // Imprime a mensagem de promoção.
         System.out.println();
         System.out.println("Peão promovido para " + choice + "!");
         System.out.println();
+
+        // Adiciona a promoção ao log.
+        log.addChar(promotedPiece.getLabel());
     }
 
     // Lê a escolha do usuário e cria a peça escolhida.
@@ -54,19 +59,23 @@ public class Promotion {
         do {
             switch (choice) {
                 case QUEEN:
-                    board[destinationRow][destinationColumn] = new Queen(color, colorSquare, destinationRow, destinationColumn);
+                    board[destinationRow][destinationColumn] = new Queen(color, colorSquare, destinationRow,
+                            destinationColumn);
                     promotionFor = "Rainha";
                     break;
                 case ROOK:
-                    board[destinationRow][destinationColumn] = new Rook(color, colorSquare, destinationRow, destinationColumn);
+                    board[destinationRow][destinationColumn] = new Rook(color, colorSquare, destinationRow,
+                            destinationColumn);
                     promotionFor = "Torre";
                     break;
                 case BISHOP:
-                    board[destinationRow][destinationColumn] = new Bishop(color, colorSquare, destinationRow, destinationColumn);
+                    board[destinationRow][destinationColumn] = new Bishop(color, colorSquare, destinationRow,
+                            destinationColumn);
                     promotionFor = "Bispo";
                     break;
                 case KNIGHT:
-                    board[destinationRow][destinationColumn] = new Knight(color, colorSquare, destinationRow, destinationColumn);
+                    board[destinationRow][destinationColumn] = new Knight(color, colorSquare, destinationRow,
+                            destinationColumn);
                     promotionFor = "Cavalo";
                     break;
                 default:

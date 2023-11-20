@@ -1,5 +1,6 @@
 package specialmoves;
 
+import game.ChessLog;
 import game.Player;
 import logic.CheckValidation;
 import logic.Exceptions;
@@ -54,7 +55,7 @@ public class Castling {
     }
 
     // Faz o roque.
-    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
+    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent, ChessLog log)
             throws Exceptions {
         // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];
@@ -74,6 +75,8 @@ public class Castling {
 
         int colDiff = Math.abs(kingColumn - rookColumn);
 
+        String notation = "";
+
         // Verifica se o roque é grande ou pequeno e move as peças.
         if (colDiff == 4) {
             board[kingRow][kingColumn] = null;
@@ -83,7 +86,7 @@ public class Castling {
             board[rookRow][rookColumn] = null;
             board[rookRow][rookColumn + 3] = rook;
             rook.setPosition(rookRow, rookColumn + 3);
-
+            notation = "O-O-O";
         } else {
             board[kingRow][kingColumn] = null;
             board[kingRow][kingColumn + 2] = king;
@@ -92,10 +95,13 @@ public class Castling {
             board[rookRow][rookColumn] = null;
             board[rookRow][rookColumn - 2] = rook;
             rook.setPosition(rookRow, rookColumn - 2);
+            notation = "O-O";
         }
 
         king.setMoved(true);
         rook.setMoved(true);
+
+        log.add(notation);
     }
 
     // Verifica se o rei ficaria em xeque ao se mover.

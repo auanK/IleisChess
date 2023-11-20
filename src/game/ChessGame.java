@@ -12,11 +12,12 @@ import specialmoves.Promotion;
 
 // Classe principal do jogo.
 public class ChessGame {
-    private static Player playerWhite = new Player("White");
-    private static Player playerBlack = new Player("Black");
+    private static Player playerWhite = new Player("Branco");
+    private static Player playerBlack = new Player("Preto");
 
     private static Player currentPlayer = playerWhite;
     private static Player opponent = playerBlack;
+    private static ChessLog log = new ChessLog();
 
     // Método main.
     public static void main(String[] args) {
@@ -38,12 +39,18 @@ public class ChessGame {
         while (true) {
             ChessUI.printBoard(board);
 
+            handleCheck(board);
+
             if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
                 checkMate = true;
+                log.addChar('#');
                 break;
             }
 
-            handleCheck(board);
+            if (currentPlayer.isCheck()) {
+                log.addChar('+');
+                System.out.println("Xeque!");
+            }
 
             if (Draw.isStalemate(board, currentPlayer, opponent)) {
                 drawType.setDrawType(Draw.DrawTypes.STALEMATE);
@@ -62,22 +69,15 @@ public class ChessGame {
                     drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
                     break;
                 }
+                System.out.println(e.getMessage());
                 continue;
             }
+            log.print();
 
             switchPlayers();
         }
 
         handleGameResult(drawType, checkMate);
-    }
-
-    private static void handleCheck(Piece[][] board) {
-        if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
-            currentPlayer.setCheck(true);
-            System.out.println(currentPlayer.getName() + " em xeque!");
-        } else {
-            currentPlayer.setCheck(false);
-        }
     }
 
     private static void makeMove(Piece[][] board, DrawType drawType) throws Exceptions {
@@ -87,19 +87,25 @@ public class ChessGame {
         try {
             moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack);
         } catch (Exceptions e) {
-            String message = e.getMessage();
-            System.out.println(message);
-            throw new Exceptions(message);
+            throw new Exceptions(e.getMessage());
         }
 
         try {
-            MoveExecutor.movePiece(board, moveCoordinates, currentPlayer, opponent);
+            MoveExecutor.movePiece(board, moveCoordinates, currentPlayer, opponent, log);
             int destinationRow = moveCoordinates[2];
             int destinationColumn = moveCoordinates[3];
 
-            Promotion.promotion(board, board[destinationRow][destinationColumn], currentPlayer);
+            Promotion.promotion(board, board[destinationRow][destinationColumn], currentPlayer, log);
         } catch (Exceptions e) {
-            System.out.println(e.getMessage());
+            throw new Exceptions(e.getMessage());
+        }
+    }
+
+    private static void handleCheck(Piece[][] board) {
+        if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
+            currentPlayer.setCheck(true);
+        } else {
+            currentPlayer.setCheck(false);
         }
     }
 
