@@ -2,8 +2,9 @@ package game;
 
 import board.ChessBoard;
 import board.ChessUI;
-import draw.Draw;
-import draw.Draw.DrawType;
+import draw.Draws;
+import draw.DrawType.DrawTypes;
+import draw.DrawType;
 import logic.CheckValidation;
 import logic.Exceptions;
 import logic.MoveExecutor;
@@ -12,8 +13,8 @@ import specialmoves.Promotion;
 
 // Classe principal do jogo.
 public class ChessGame {
-    private static Player playerWhite = new Player("Branco");
-    private static Player playerBlack = new Player("Preto");
+    private static Player playerWhite = new Player("");
+    private static Player playerBlack = new Player("");
 
     private static Player currentPlayer = playerWhite;
     private static Player opponent = playerBlack;
@@ -31,13 +32,17 @@ public class ChessGame {
         Piece[][] board = chessBoard.getBoard();
         chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
+        // Flags para o fim do jogo.
         boolean checkMate = false;
-        DrawType drawType = new DrawType();
+        DrawType draw = new DrawType();
 
         UserInput.inputName(playerWhite, playerBlack);
 
         while (true) {
             ChessUI.printBoard(board);
+
+            String position = ChessBoard.getKey(board);
+            log.addPosition(position);
 
             handleCheck(board);
 
@@ -52,40 +57,49 @@ public class ChessGame {
                 System.out.println("Xeque!");
             }
 
-            if (Draw.isStalemate(board, currentPlayer, opponent)) {
-                drawType.setDrawType(Draw.DrawTypes.STALEMATE);
+            if (Draws.isStalemate(board, currentPlayer, opponent)) {
+                draw.setDrawType(DrawType.DrawTypes.STALEMATE);
                 break;
             }
 
-            if (Draw.insufficientMaterial(currentPlayer, opponent)) {
-                drawType.setDrawType(Draw.DrawTypes.INSUFFICIENT_MATERIAL);
+            if (Draws.insufficientMaterial(currentPlayer, opponent)) {
+                draw.setDrawType(DrawType.DrawTypes.INSUFFICIENT_MATERIAL);
+                break;
+            }
+
+            if (Draws.isFiftyMoveRule(log)) {
+                draw.setDrawType(DrawType.DrawTypes.FIFTY_MOVES_RULE);
                 break;
             }
 
             try {
-                makeMove(board, drawType);
+                makeMove(board);
             } catch (Exceptions e) {
-                if (e.getMessage().equals("Draw!")) {
-                    drawType.setDrawType(Draw.DrawTypes.AGREEMENT);
+                String message = e.getMessage();
+                if (message.equals("Draw!")) {
+                    draw.setDrawType(DrawType.DrawTypes.AGREEMENT);
+                    break;
+                }
+                if (message.equals("Draw TR!")) {
+                    draw.setDrawType(DrawType.DrawTypes.THREEFOLD_REPETITION);
                     break;
                 }
                 System.out.println(e.getMessage());
                 continue;
             }
-            log.print();
 
             switchPlayers();
         }
 
-        handleGameResult(drawType, checkMate);
+        handleGameResult(draw, checkMate);
     }
 
-    private static void makeMove(Piece[][] board, DrawType drawType) throws Exceptions {
+    private static void makeMove(Piece[][] board) throws Exceptions {
         System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
 
         int[] moveCoordinates;
         try {
-            moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, playerWhite, playerBlack);
+            moveCoordinates = UserInput.inputCoordinates(board, currentPlayer, opponent, log);
         } catch (Exceptions e) {
             throw new Exceptions(e.getMessage());
         }
@@ -109,9 +123,9 @@ public class ChessGame {
         }
     }
 
-    private static void handleGameResult(DrawType drawType, boolean checkMate) {
-        if (drawType.isDraw()) {
-            drawType.print();
+    private static void handleGameResult(DrawType draw, boolean checkMate) {
+        if (draw.isDraw()) {
+            draw.print();
         } else if (checkMate) {
             System.out.println("Xeque-mate! " + opponent.getName() + " venceu!");
         }
@@ -123,10 +137,12 @@ public class ChessGame {
         opponent = aux;
     }
 
+    // Retorna o jogador branco.
     public static Player getPlayerWhite() {
         return playerWhite;
     }
 
+    // Retorna o jogador preto.
     public static Player getPlayerBlack() {
         return playerBlack;
     }

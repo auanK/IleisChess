@@ -42,9 +42,6 @@ public class ChessUI {
     // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
             Player opponent) {
-        Player playerWhite = ChessGame.getPlayerWhite();
-        Player playerBlack = ChessGame.getPlayerBlack();
-
         printCapturedPieces(playerBlack);
 
         for (int i = 7; i >= 0; i--) {

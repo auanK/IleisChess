@@ -3,6 +3,7 @@ package game;
 import java.util.Scanner;
 
 import board.ChessUI;
+import draw.Draws;
 import logic.Exceptions;
 import logic.MoveValidator;
 import pieces.Piece;
@@ -12,12 +13,11 @@ public class UserInput {
     private static Scanner sc = new Scanner(System.in);
 
     // Lê as coordenadas digitadas pelo usuário.
-    public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, Player playerWhite,
-            Player playerBlack) throws Exceptions {
+    public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log) throws Exceptions {
         String source = sc.nextLine();
 
         // Verifica comandos especiais
-        handleSpecialCommands(source, currentPlayer);
+        handleSpecialCommands(source, currentPlayer, log);
 
         // Coordenadas de origem e destino.
         int[] coordinates = new int[4];
@@ -41,10 +41,13 @@ public class UserInput {
     }
 
     // Lida com comandos especiais como 'exit' e 'draw'.
-    private static void handleSpecialCommands(String command, Player currentPlayer) throws Exceptions {
+    private static void handleSpecialCommands(String command, Player currentPlayer, ChessLog log) throws Exceptions {
         if (command.equals("exit")) {
             System.exit(0);
         } else if (command.equals("draw")) {
+            if (Draws.isThreefoldRepetition(log.getPositions())) {
+                throw new Exceptions("Draw TR!");
+            }
             handleDrawRequest(currentPlayer);
         }
     }
