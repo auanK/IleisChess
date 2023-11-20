@@ -2,21 +2,21 @@ package draw;
 
 // Classe que implementa a flag de empate.
 public class DrawType {
-    private DrawTypes drawType; // Tipo de empate.
+    private DrawTypes drawType; // Tipo de empate. (null = não há empate)
 
     // Construtor da classe.
     public DrawType() {
         this.drawType = null;
     }
 
-    // Define o tipo de empate.
-    public void setDrawType(DrawTypes draw) {
-        this.drawType = draw;
-    }
-
     // Retorna o tipo de empate.
     public DrawTypes getDrawType() {
         return drawType;
+    }
+
+    // Define o tipo de empate.
+    public void setDrawType(DrawTypes draw) {
+        this.drawType = draw;
     }
 
     public boolean isDraw() {

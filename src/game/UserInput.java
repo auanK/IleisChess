@@ -13,11 +13,19 @@ public class UserInput {
     private static Scanner sc = new Scanner(System.in);
 
     // Lê as coordenadas digitadas pelo usuário.
-    public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log) throws Exceptions {
+    public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log)
+            throws Exceptions {
         String source = sc.nextLine();
 
-        // Verifica comandos especiais
-        handleSpecialCommands(source, currentPlayer, log);
+        // Verifica se o jogador quer solicitar um empate.
+        if (source.equals("draw")) {
+            // Verifica se é um empate por tripla repetição.
+            if (Draws.isThreefoldRepetition(log.getPositions())) {
+                throw new Exceptions("Draw Threefold Repetition!");
+            }
+            // Lida com a solicitação de empate.
+            handleDrawRequest(currentPlayer);
+        }
 
         // Coordenadas de origem e destino.
         int[] coordinates = new int[4];
@@ -38,18 +46,6 @@ public class UserInput {
         }
 
         return coordinates;
-    }
-
-    // Lida com comandos especiais como 'exit' e 'draw'.
-    private static void handleSpecialCommands(String command, Player currentPlayer, ChessLog log) throws Exceptions {
-        if (command.equals("exit")) {
-            System.exit(0);
-        } else if (command.equals("draw")) {
-            if (Draws.isThreefoldRepetition(log.getPositions())) {
-                throw new Exceptions("Draw TR!");
-            }
-            handleDrawRequest(currentPlayer);
-        }
     }
 
     // Lida com solicitação de empate.
@@ -76,11 +72,11 @@ public class UserInput {
 
         // Verifica se o jogador quer selecionar outra peça.
         if (destination.equals("cancel")) {
-            coordinates = null;
+            throw new Exceptions("Seleção cancelada.");
         } else {
             // Verifica se a string de destino é válida.
             if (destination.length() != 2) {
-                throw new Exceptions("Movimento inválido, formato de destino incorreto");
+                throw new Exceptions("Movimento inválido, formato de destino incorreto!");
             }
 
             // Converte a notação de xadrez para coordenadas da matriz.

@@ -3,7 +3,6 @@ package game;
 import board.ChessBoard;
 import board.ChessUI;
 import draw.Draws;
-import draw.DrawType.DrawTypes;
 import draw.DrawType;
 import logic.CheckValidation;
 import logic.Exceptions;
@@ -80,7 +79,7 @@ public class ChessGame {
                     draw.setDrawType(DrawType.DrawTypes.AGREEMENT);
                     break;
                 }
-                if (message.equals("Draw TR!")) {
+                if (message.equals("Draw Threefold Repetition!")) {
                     draw.setDrawType(DrawType.DrawTypes.THREEFOLD_REPETITION);
                     break;
                 }

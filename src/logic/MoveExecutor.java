@@ -14,7 +14,8 @@ public class MoveExecutor {
         try {
             MoveValidator.validateMove(board, coordinates, currentPlayer, opponent);
         } catch (Exceptions e) {
-            if (e.getMessage().equals("Rock!")) {
+            // Se o movimento for um roque, o tratamento é diferente.
+            if (e.getMessage().equals("Castling!")) {
                 Castling.castling(board, coordinates, currentPlayer, opponent, log);
                 return;
             }
@@ -40,6 +41,7 @@ public class MoveExecutor {
             currentPlayer.addCapturedPiece(destinationPiece);
             destinationPiece.setPosition(-1, -1); // Posição inválida
 
+            // Adiciona a peça capturada à notação.
             notation += "x" + destinationPiece.getLabel();
         }
 
@@ -48,9 +50,9 @@ public class MoveExecutor {
         board[sourceRow][sourceColumn] = null;
         sourcePiece.setMoved(true);
 
+        // Criar a notação do movimento e adiciona ao log.
         notation += log.parseChessNotation(destinationRow, destinationColumn);
-
-        log.add(notation);
+        log.addMove(notation);
 
     }
 

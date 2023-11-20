@@ -59,23 +59,19 @@ public class Promotion {
         do {
             switch (choice) {
                 case QUEEN:
-                    board[destinationRow][destinationColumn] = new Queen(color, colorSquare, destinationRow,
-                            destinationColumn);
+                    board[destinationRow][destinationColumn] = new Queen(color, colorSquare, destinationRow, destinationColumn);
                     promotionFor = "Rainha";
                     break;
                 case ROOK:
-                    board[destinationRow][destinationColumn] = new Rook(color, colorSquare, destinationRow,
-                            destinationColumn);
+                    board[destinationRow][destinationColumn] = new Rook(color, colorSquare, destinationRow, destinationColumn);
                     promotionFor = "Torre";
                     break;
                 case BISHOP:
-                    board[destinationRow][destinationColumn] = new Bishop(color, colorSquare, destinationRow,
-                            destinationColumn);
+                    board[destinationRow][destinationColumn] = new Bishop(color, colorSquare, destinationRow, destinationColumn);
                     promotionFor = "Bispo";
                     break;
                 case KNIGHT:
-                    board[destinationRow][destinationColumn] = new Knight(color, colorSquare, destinationRow,
-                            destinationColumn);
+                    board[destinationRow][destinationColumn] = new Knight(color, colorSquare, destinationRow, destinationColumn);
                     promotionFor = "Cavalo";
                     break;
                 default:

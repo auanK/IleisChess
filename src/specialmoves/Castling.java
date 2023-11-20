@@ -101,7 +101,8 @@ public class Castling {
         king.setMoved(true);
         rook.setMoved(true);
 
-        log.add(notation);
+        // Adiciona a notação ao log.
+        log.addMove(notation);
     }
 
     // Verifica se o rei ficaria em xeque ao se mover.

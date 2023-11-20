@@ -2,48 +2,47 @@ package game;
 
 import java.util.ArrayList;
 
+// Classe que implementa o log da partida.
 public class ChessLog {
-    private ArrayList<String> log;
-    private ArrayList<String> positions;
+    private ArrayList<String> logMoves; // Array de movimentos.
+    private ArrayList<String> logPositions; // Array de posições.
 
+    // Construtor da classe.
     public ChessLog() {
-        this.log = new ArrayList<>();
-        this.positions = new ArrayList<>();
+        this.logMoves = new ArrayList<>();
+        this.logPositions = new ArrayList<>();
     }
 
-    // Getters e Setters para log
+    // Retorna o array de movimentos.
     public ArrayList<String> getLog() {
-        return log;
+        return logMoves;
     }
 
-    public void setLog(ArrayList<String> log) {
-        this.log = log;
-    }
-
-    // Getters e Setters para positions
+    // Retorna o array de posições.
     public ArrayList<String> getPositions() {
-        return positions;
+        return logPositions;
     }
 
-    public void setPositions(ArrayList<String> positions) {
-        this.positions = positions;
+    // Adiciona um movimento ao array de movimentos.    
+    public void addMove(String move) {
+        logMoves.add(move);
     }
 
-    // Método para adicionar um movimento ao log
-    public void add(String move) {
-        log.add(move);
+     // Adiciona uma posição ao array de posições.
+    public void addPosition(String position) {
+        logPositions.add(position);
     }
 
-    // Método para adicionar um caractere ao último movimento
+    // Adiciona um caractere ao último movimento.
     public void addChar(char c) {
-        String lastMove = log.get(log.size() - 1);
+        String lastMove = logMoves.get(logMoves.size() - 1);
         lastMove += c;
-        log.set(log.size() - 1, lastMove);
+        logMoves.set(logMoves.size() - 1, lastMove);
     }
 
-    // Método para retornar os últimos n movimentos
+    // Retorna os últimos n movimentos.
     public String[] getLastMoves(int n) {
-        int size = log.size();
+        int size = logMoves.size();
 
         if (n < 0 || n > size) {
             return null;
@@ -52,31 +51,23 @@ public class ChessLog {
         String[] lastMoves = new String[n];
 
         for (int i = 0; i < n; i++) {
-            lastMoves[i] = log.get(size - n + i);
+            lastMoves[i] = logMoves.get(size - n + i);
         }
 
         return lastMoves;
     }
 
-    // Método para adicionar uma posição ao array de posições
-    public void addPosition(String position) {
-        positions.add(position);
+    // Retorna o tamanho do array de movimentos.
+    public int sizeLogMoves() {
+        return logMoves.size();
     }
 
-    // Método para obter o tamanho do log
-    public int size() {
-        return log.size();
+    // Retorna o tamanho do array de posições.
+    public int sizeLogPositions() {
+        return logPositions.size();
     }
 
-    // Método para imprimir os movimentos
-    public void print() {
-        for (String move : log) {
-            System.out.print(move + ' ');
-        }
-        System.out.println();
-    }
-
-    // Método para analisar a notação de xadrez com base na linha e coluna
+    // Retorna uma String com a notação algébrica do movimento.
     public String parseChessNotation(int row, int column) {
         return (char) (column + 97) + String.valueOf(row + 1);
     }

@@ -54,7 +54,7 @@ public class ChessBoard {
         board[0][4] = new King('W', 'B', 0, 4);
         board[7][4] = new King('B', 'W', 7, 4);
 
-        /* 
+        
         // Coloca os peões.
         char colorWhiteSquare = 'W';
         char colorBlackSquare = 'B';
@@ -64,7 +64,7 @@ public class ChessBoard {
             colorWhiteSquare = (colorWhiteSquare == 'W') ? 'B' : 'W';
             colorBlackSquare = (colorBlackSquare == 'W') ? 'B' : 'W';
         }
-*/
+
     }
 
     public static String getKey(Piece[][] board) {
@@ -99,9 +99,9 @@ public class ChessBoard {
     public void assignPiecesToPlayers(Player playerWhite, Player playerBlack) {
         for (int i = 0; i < 8; i++) {
             playerWhite.addPiece(board[0][i]);
-            //playerWhite.addPiece(board[1][i]);
+            playerWhite.addPiece(board[1][i]);
             playerBlack.addPiece(board[7][i]);
-            //playerBlack.addPiece(board[6][i]);
+            playerBlack.addPiece(board[6][i]);
         }
     }
 }

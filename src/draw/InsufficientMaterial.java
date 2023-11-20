@@ -6,7 +6,7 @@ import pieces.Bishop;
 import pieces.Knight;
 import pieces.Piece;
 
-// Classe que verifica se há material suficiente para um xeque-mate.
+// Tipos de empate por insuficiência de material.
 public class InsufficientMaterial {
     // Rei contra rei é empate.
     public static boolean isKingVsKing(int piecesCount, int opponentPiecesCount) {

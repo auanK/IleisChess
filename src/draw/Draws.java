@@ -1,6 +1,6 @@
 package draw;
 
-import java.lang.reflect.Array;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import pieces.Piece;
 
 // Classe que implementa os empates.
 public class Draws {
-    // Verifica se ocorreu empate por afogamento.
+    // Empate por afogamento.
     public static boolean isStalemate(Piece[][] board, Player currentPlayer, Player opponent) {
         // Se o rei está em xeque, não há empate.
         if (currentPlayer.isCheck()) {
@@ -79,7 +79,6 @@ public class Draws {
             if (repetitions >= 3) {
                 return true;
             }
-
         }
 
         // Se nenhuma posição se repetiu 3 vezes, não há empate.
