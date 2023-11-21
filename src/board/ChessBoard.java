@@ -38,7 +38,6 @@ public class ChessBoard {
 
         board[7][1] = new Knight('B', 'B', 7, 1);
         board[7][6] = new Knight('B', 'W', 7, 6);
-
         // Coloca os bispos.
         board[0][2] = new Bishop('W', 'B', 0, 2);
         board[0][5] = new Bishop('W', 'W', 0, 5);
@@ -53,8 +52,7 @@ public class ChessBoard {
         // Coloca os reis.
         board[0][4] = new King('W', 'B', 0, 4);
         board[7][4] = new King('B', 'W', 7, 4);
-
-        
+ 
         // Coloca os peões.
         char colorWhiteSquare = 'W';
         char colorBlackSquare = 'B';
@@ -64,12 +62,14 @@ public class ChessBoard {
             colorWhiteSquare = (colorWhiteSquare == 'W') ? 'B' : 'W';
             colorBlackSquare = (colorBlackSquare == 'W') ? 'B' : 'W';
         }
-
+    
+        // deixa um movimento do en passant disponível para cada lado
+        board[4][1] = new Pawn('W', 'B', 4, 1);
     }
 
     public static String getKey(Piece[][] board) {
         StringBuilder key = new StringBuilder();
-        
+
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j] == null) {
@@ -85,10 +85,9 @@ public class ChessBoard {
                 }
             }
         }
-        
+
         return key.toString();
     }
-    
 
     // Retorna a matriz de peças.
     public Piece[][] getBoard() {
@@ -100,8 +99,10 @@ public class ChessBoard {
         for (int i = 0; i < 8; i++) {
             playerWhite.addPiece(board[0][i]);
             playerWhite.addPiece(board[1][i]);
-            playerBlack.addPiece(board[7][i]);
             playerBlack.addPiece(board[6][i]);
+            playerBlack.addPiece(board[7][i]);
         }
+
+        playerWhite.addPiece(board[4][1]);
     }
 }

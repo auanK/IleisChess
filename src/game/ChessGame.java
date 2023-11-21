@@ -15,8 +15,8 @@ public class ChessGame {
     private static Player playerWhite = new Player("");
     private static Player playerBlack = new Player("");
 
-    private static Player currentPlayer = playerWhite;
-    private static Player opponent = playerBlack;
+    private static Player currentPlayer = playerBlack;
+    private static Player opponent = playerWhite;
     private static ChessLog log = new ChessLog();
 
     // Método main.
@@ -45,21 +45,21 @@ public class ChessGame {
 
             handleCheck(board);
 
-            if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
-                checkMate = true;
-                log.addChar('#');
-                break;
-            }
+            //if (CheckValidation.isCheckMate(board, currentPlayer, opponent)) {
+            //    checkMate = true;
+            //    log.addChar('#');
+            //    break;
+            //}
 
-            if (currentPlayer.isCheck()) {
-                log.addChar('+');
-                System.out.println("Xeque!");
-            }
+            //if (currentPlayer.isCheck()) {
+            //    log.addChar('+');
+            //    System.out.println("Xeque!");
+           // }
 
-            if (Draws.isStalemate(board, currentPlayer, opponent)) {
-                draw.setDrawType(DrawType.DrawTypes.STALEMATE);
-                break;
-            }
+            //if (Draws.isStalemate(board, currentPlayer, opponent)) {
+            //    draw.setDrawType(DrawType.DrawTypes.STALEMATE);
+            //    break;
+            //}
 
             if (Draws.insufficientMaterial(currentPlayer, opponent)) {
                 draw.setDrawType(DrawType.DrawTypes.INSUFFICIENT_MATERIAL);
@@ -144,5 +144,10 @@ public class ChessGame {
     // Retorna o jogador preto.
     public static Player getPlayerBlack() {
         return playerBlack;
+    }
+
+    // Retorna o log do jogo.
+    public static ChessLog getLog() {
+        return log;
     }
 }

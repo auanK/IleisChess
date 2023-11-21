@@ -98,14 +98,14 @@ public class Castling {
             notation = "O-O";
         }
 
-        king.setMoved(true);
-        rook.setMoved(true);
+        king.addMove();
+        rook.addMove();
 
         // Adiciona a notação ao log.
         log.addMove(notation);
     }
 
-    // Verifica se o rei ficaria em xeque ao se mover.
+    // Verifica se o movimento de roque deixaria o rei em xeque.
     public static boolean rockIsCheck(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent) {
         // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];

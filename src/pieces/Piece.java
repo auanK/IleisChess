@@ -7,7 +7,7 @@ public abstract class Piece {
     private char colorSquare;  // Cor do quadrado de origem da peça.
     private int positionRow;    // Linha da posição da peça.
     private int positionColumn; // Coluna da posição da peça.
-    private boolean moved;      // Indica se a peça já se moveu.
+    private int count_moves;    // Contador de movimentos da peça.
 
     // Construtor da classe.
     public Piece(char label, char color, char colorSquare, int positionRow, int positionColumn) {
@@ -16,7 +16,7 @@ public abstract class Piece {
         this.colorSquare = colorSquare;
         this.positionRow = positionRow;
         this.positionColumn = positionColumn;
-        this.moved = false;
+        this.count_moves = 0;
     }
 
     // Retorna o rótulo da peça
@@ -44,14 +44,19 @@ public abstract class Piece {
         return positionColumn;
     }
 
-    // Seta se a peça já se moveu
-    public void setMoved(boolean moved) {
-        this.moved = moved;
+    // Retorna o quantas vezes a peça se moveu.
+    public int getCountMoves() {
+        return count_moves;
     }
 
     // Retorna se a peça já se moveu
     public boolean hasMoved() {
-        return moved;
+        return count_moves > 0;
+    }
+
+    // Incrementa o contador de movimentos da peça.
+    public void addMove() {
+        count_moves++;
     }
 
     // Seta a linha e a coluna da posição da peça.

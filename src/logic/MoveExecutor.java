@@ -4,6 +4,7 @@ import game.ChessLog;
 import game.Player;
 import pieces.Piece;
 import specialmoves.Castling;
+import specialmoves.EnPassant;
 
 // Classe que executa o movimento das peças no tabuleiro.
 public class MoveExecutor {
@@ -12,13 +13,21 @@ public class MoveExecutor {
             throws Exceptions {
         // Verifica se o movimento é válido
         try {
-            MoveValidator.validateMove(board, coordinates, currentPlayer, opponent);
+            MoveValidator.validateMove(board, coordinates, currentPlayer, opponent, log);
         } catch (Exceptions e) {
+            String message = e.getMessage();
+
             // Se o movimento for um roque, o tratamento é diferente.
-            if (e.getMessage().equals("Castling!")) {
+            if (message.equals("Rock!")) {
                 Castling.castling(board, coordinates, currentPlayer, opponent, log);
                 return;
             }
+
+            if (message.equals("En Passant!")) {
+                EnPassant.enPassant(board, coordinates, currentPlayer, opponent, log);
+                return;
+            }
+
             throw e;
         }
 
@@ -48,7 +57,7 @@ public class MoveExecutor {
         // Move a peça no tabuleiro
         board[destinationRow][destinationColumn] = sourcePiece;
         board[sourceRow][sourceColumn] = null;
-        sourcePiece.setMoved(true);
+        sourcePiece.addMove();
 
         // Criar a notação do movimento e adiciona ao log.
         notation += log.parseChessNotation(destinationRow, destinationColumn);

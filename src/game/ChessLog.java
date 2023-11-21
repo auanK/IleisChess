@@ -71,4 +71,18 @@ public class ChessLog {
     public String parseChessNotation(int row, int column) {
         return (char) (column + 97) + String.valueOf(row + 1);
     }
+
+    public void print () {
+        System.out.println();
+        System.out.println("Movimentos: ");
+        for (String move : logMoves) {
+            System.out.print(move + " ");
+        }
+        System.out.println();
+        System.out.println("Posições: ");
+        for (String position : logPositions) {
+            System.out.print(position + " ");
+        }
+        System.out.println();
+    }
 }

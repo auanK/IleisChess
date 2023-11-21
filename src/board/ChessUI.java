@@ -1,6 +1,7 @@
 package board;
 
 import game.ChessGame;
+import game.ChessLog;
 import game.Player;
 import logic.Exceptions;
 import logic.MoveValidator;
@@ -42,6 +43,9 @@ public class ChessUI {
     // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
             Player opponent) {
+
+        ChessLog log = ChessGame.getLog();
+
         printCapturedPieces(playerBlack);
 
         for (int i = 7; i >= 0; i--) {
@@ -59,7 +63,7 @@ public class ChessUI {
                 }
 
                 try {
-                    MoveValidator.validateMove(board, coordinatesT, currentPlayer, opponent);
+                    MoveValidator.validateMove(board, coordinatesT, currentPlayer, opponent, log);
                     if (board[i][j] == null) {
                         System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
                     } else {
@@ -67,6 +71,14 @@ public class ChessUI {
                     }
                 } catch (Exceptions e) {
                     if (e.getMessage().equals("Rock!")) {
+                        if (board[i][j] == null) {
+                            System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
+                        } else if (currentPlayer.getPieces().contains(board[i][j])) {
+                            System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                        } else {
+                            System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
+                        }
+                    } else if (e.getMessage().equals("En Passant!")) {
                         if (board[i][j] == null) {
                             System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
                         } else if (currentPlayer.getPieces().contains(board[i][j])) {

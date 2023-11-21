@@ -31,7 +31,7 @@ public class Pawn extends Piece {
         // Verifica se o peão está se movendo na vertical
         if (sourceColumn == destinationColumn) {
             // Movimento de uma casa para frente
-            if (rowDifference == moveDirection) {
+            if (rowDifference == moveDirection && board[destinationRow][destinationColumn] == null) {
                 return true;
             }
             // Movimento de duas casas para frente (apenas na primeira jogada)
