@@ -1,7 +1,6 @@
 package logic;
 
 import game.Player;
-import game.ChessLog;
 import pieces.King;
 import pieces.Piece;
 
