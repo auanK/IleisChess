@@ -49,12 +49,6 @@ public class PlayChess {
             String position = ChessBoard.getKey(board);
             log.addPosition(position);
 
-            String salva = Input.readString();
-            if (salva.equals("salva")) {
-                loadGameObjects();
-                continue;
-            }
-
             // Verifica se o jogador atual está em xeque.
             if (CheckValidation.isCheck(board, currentPlayer, opponent)) {
                 currentPlayer.setCheck(true);
@@ -125,38 +119,6 @@ public class PlayChess {
 
         // Lida com o salvamento do log.
         Input.inputSaveLog(playerWhite.getName(), playerBlack.getName(), log, draw, playerBlack);
-    }
-
-    public static void saveGameObjects(Player whitePlayer, Player blackPlayer, Piece[][] board){
-        try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("save.obj"))) {
-            // Salva os jogadores e o tabuleiro
-            outputStream.writeObject(whitePlayer);
-            outputStream.writeObject(blackPlayer);
-            outputStream.writeObject(currentPlayer);
-            outputStream.writeObject(opponent);
-            outputStream.writeObject(log);
-            outputStream.writeObject(board);
-            System.out.println("Jogo salvo com sucesso.");
-        } catch (IOException e) {
-            System.out.println("Erro ao salvar o jogo: " + e.getMessage());
-        }
-    }
-
-    public static void loadGameObjects(){
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("save.obj"))) {
-            // Carrega os jogadores e o tabuleiro
-            Player whitePlayer = (Player) inputStream.readObject();
-            Player blackPlayer = (Player) inputStream.readObject();
-            currentPlayer = (Player) inputStream.readObject();
-            opponent = (Player) inputStream.readObject();
-            log = (ChessLog) inputStream.readObject();
-            Piece[][] board = (Piece[][]) inputStream.readObject();
-
-            // Inicia o jogo
-            playChessGame(board, whitePlayer, blackPlayer, 0);
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Erro ao carregar o jogo: " + e.getMessage());
-        }
     }
 
     // Lida com a tentativa de movimento.
