@@ -1,6 +1,10 @@
 package game;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 import draw.DrawType;
 import pieces.Piece;
@@ -8,13 +12,13 @@ import pieces.Piece;
 // Classe responsável por salvar e carregar o jogo.
 public class SaveGame {
     public static void saveGame(Piece[][] board, Player currentPlayer,
-            Player opponent, ChessLog log, DrawType draw) {
+            Player opponent, ChessLog log, DrawType draw, boolean resign, String file) {
         String fileName = "";
         String path = "saves/";
 
         // Lê o nome do arquivo.
         System.out.print("Nome do arquivo: ");
-        fileName = Input.readString() + ".obj";
+        fileName = file + ".obj";
 
         // Cria o arquivo.
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(path + fileName))) {
@@ -24,14 +28,8 @@ public class SaveGame {
             outputStream.writeObject(opponent);
             outputStream.writeObject(log);
             outputStream.writeObject(draw);
-
-            System.out.println("Salvando jogo...");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Jogo salvo com sucesso!");
+            outputStream.writeBoolean(resign);
+            
 
         } catch (IOException e) {
             System.out.println("Erro ao salvar o jogo: " + e.getMessage());
@@ -46,12 +44,17 @@ public class SaveGame {
         Player playerWhite;
         Player playerBlack;
         ChessLog log;
+        DrawType draw;
+        boolean resign = false;
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("saves/" + filename))) {
             // Carregar os jogadores e o tabuleiro
             board = (Piece[][]) inputStream.readObject();
             currentPlayer = (Player) inputStream.readObject();
             opponent = (Player) inputStream.readObject();
             log = (ChessLog) inputStream.readObject();
+            draw = (DrawType) inputStream.readObject();
+
+            resign = inputStream.readBoolean();
 
             playerWhite = currentPlayer;
             playerBlack = opponent;
@@ -64,6 +67,7 @@ public class SaveGame {
             throw e;
         }
 
-        PlayChess.setAttributes(board, playerWhite, playerBlack, currentPlayer, opponent, log);
+        PlayChess.setAttributes(board, playerWhite, playerBlack, currentPlayer, opponent, log, draw, resign);
+
     }
 }

@@ -13,9 +13,10 @@ public class BoardUI {
     private static String red = "\u001B[31m";
     private static String yellow = "\u001B[33m";
     private static String blue = "\u001B[36m";
-    
+
     // Imprime o tabuleiro.
     public static void printBoard(Piece[][] board, Player playerWhite, Player playerBlack) {
+        System.out.print("\033[H\033[2J");
         printCapturedPieces(playerBlack);
 
         for (int row = 7; row >= 0; row--) {
@@ -40,6 +41,9 @@ public class BoardUI {
     // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
             Player opponent) {
+        System.out.print("\033[H\033[2J");
+
+        // Salva quem é o jogador branco e quem é o jogador preto.
         Player playerWhite = currentPlayer;
         Player playerBlack = opponent;
         if (currentPlayer.getColor() == 'B') {

@@ -17,22 +17,21 @@ public class EnPassant {
         int destinationColumn = coordinates[3];
 
         ChessLog log = PlayChess.getLog();
-
         // Salva a peça de origem e verifica se é um peão.
         Piece sourcePiece = board[sourceRow][sourceColumn];
         if (!(sourcePiece instanceof Pawn)) {
             return;
         }
-
+        
         // Verifica se o movimento é diagonal.
         int rowDiff = Math.abs(sourceRow - destinationRow);
         int colDiff = Math.abs(sourceColumn - destinationColumn);
         if (rowDiff > 1 || colDiff > 1) {
             return;
         }
-
+        
         int direction = sourcePiece.getColor() == 'W' ? 1 : -1;
-
+        
         // Verifica se o jogador selecionou a peça do adversário e corrige o destino.
         if (sourceRow == destinationRow) {
             Piece destinationPiece = board[destinationRow][destinationColumn];
@@ -42,7 +41,7 @@ public class EnPassant {
                 return;
             }
         }
-
+        
         // Garante que o destino é uma posição válida.
         if (destinationRow == 0 || destinationRow == 7) {
             return;
@@ -77,6 +76,12 @@ public class EnPassant {
         if (size == 5 || size == 6) {
             lastSourceRow = lastMove.charAt(4) - '1';
             lastSourceColumn = lastMove.charAt(3) - 'a';
+
+            int firstSourceColumn = lastMove.charAt(1) - 'a';
+            int colDiff2 = Math.abs(firstSourceColumn - lastSourceColumn);
+            if (colDiff2 != 2) {
+                return;
+            }
         } else {
             return;
         }

@@ -3,21 +3,11 @@ package board;
 import game.Player;
 import pieces.*;
 
-// Classe que implementa o tabuleiro de xadrez a um lance do mate com en passant.
-public class EnPassantMate {
-    private Piece[][] board; // Matriz de peças.
+// Tabuleiro de xadrez a um lance do mate com en passant.
+public class EnPassantMate extends Board {
 
     // Construtor da classe.
     public EnPassantMate() {
-        board = new Piece[8][8];
-
-        // Preenche a matriz com peças nulas.
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j] = null;
-            }
-        }
-
         board[0][0] = new Rook('W', 'B', 0, 0);
 
         board[0][4] = new King('W', 'B', 0, 4);
@@ -41,7 +31,7 @@ public class EnPassantMate {
         board[4][4] = new Pawn('W', 'B', 4, 4);
         board[4][5] = new Pawn('B', 'W', 4, 5);
 
-        // Peão que causar o mate.
+        // Peão que será capturado.
         board[6][6] = new Pawn('B', 'B', 6, 6);
 
         board[4][7] = new Pawn('W', 'W', 4, 7);
@@ -61,18 +51,11 @@ public class EnPassantMate {
         board[7][5] = new Rook('B', 'B', 7, 5);
     }
 
-    // Retorna a matriz de peças.
-    public Piece[][] getBoard() {
-        return board;
-    }
-
     // Atribui as peças aos jogadores.
     public void assignPiecesToPlayers(Player playerWhite, Player playerBlack) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-
                 Piece piece = board[i][j];
-
                 if (piece != null) {
                     if (piece.getColor() == 'W') {
                         playerWhite.addPiece(piece);

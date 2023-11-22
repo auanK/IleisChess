@@ -1,8 +1,11 @@
 package ui;
 
+import board.ChessBoard;
+import board.Choice;
 import board.EnPassantMate;
 import game.PlayChess;
 import game.Player;
+import game.ChessLog;
 import game.Input;
 import pieces.Piece;
 
@@ -22,7 +25,8 @@ public class CustomScenarios {
             System.out.println(green + "1 - Mate com en passant");
             System.out.println("2 - Mate com roque");
             System.out.println("3 - Mate com promoção");
-            System.out.println("4 - Empate por afogamento" + reset);
+            System.out.println("4 - Empate por afogamento");
+            System.out.println("5 - Sim");
             System.out.println(red + "5 - Sair" + reset);
             System.out.print("Opção: ");
             String option = Input.readString();
@@ -35,7 +39,7 @@ public class CustomScenarios {
                     Player playerBlack = new Player('B');
 
                     enPassantMate.assignPiecesToPlayers(playerWhite, playerBlack);
-                    PlayChess.playChessGame(board, playerWhite, playerBlack, 1, false, null);
+                    PlayChess.playChessGame(board, playerWhite, playerBlack, 1,  null, null);
                     return;
                 case "2":
                     System.out.println("Mate com roque");
@@ -47,6 +51,21 @@ public class CustomScenarios {
                     System.out.println("Empate por afogamento");
                     return;
                 case "5":
+                    System.out.println("sim");
+                    Choice choice = new Choice();
+                    Piece[][] boardChoice = choice.getBoard();
+
+                    Player playerWhiteChoice = new Player('W');
+                    Player playerBlackChoice = new Player('B');
+
+                    choice.assignPiecesToPlayers(playerWhiteChoice, playerBlackChoice);
+                    ChessLog log = new ChessLog();
+                    log.addMove("InitialW");
+                    log.addMove("Pc6c7");
+                    log.addMove("Pf7f5");
+                    PlayChess.playChessGame(boardChoice, playerWhiteChoice, playerBlackChoice, 0,  null, log);
+                    return;
+                case "6":
                     System.out.println("Sair");
                     return;
                 default:

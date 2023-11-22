@@ -9,8 +9,8 @@ public class CheckValidation {
     // Verifica se o rei está em xeque
     public static boolean isCheck(Piece[][] board, Player currentPlayer, Player opponent) {
         // Encontra a posição do rei.
-        int kingRow = 0;
-        int kingColumn = 0;
+        int kingRow = -1;
+        int kingColumn = -1;
         for (Piece piece : currentPlayer.getPieces()) {
             if (piece instanceof King) {
                 kingRow = piece.getPositionRow();

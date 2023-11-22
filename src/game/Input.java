@@ -1,6 +1,5 @@
 package game;
 
-import java.io.IOException;
 import java.util.Scanner;
 
 import draw.DrawType;
@@ -15,6 +14,10 @@ import ui.BoardUI;
 public class Input {
     private static Scanner sc = new Scanner(System.in);
 
+    private static String reset = "\u001B[0m";
+    private static String red = "\u001B[31m";
+    private static String yellow = "\u001B[33m";
+
     // Lê as coordenadas digitadas pelo usuário.
     public static int[] inputCoordinates(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log)
             throws Exceptions {
@@ -28,6 +31,10 @@ public class Input {
             }
             // Lida com a solicitação de empate.
             handleDrawRequest(currentPlayer);
+        }
+
+        if (source.equals("resign")) {
+            throw new Exceptions("Withdraw!");
         }
 
         if (source.equals("save")) {
@@ -127,9 +134,23 @@ public class Input {
         playerBlack.setName(sc.nextLine());
     }
 
+    public static void inputResign() {
+        System.out.println("Deseja mesmo desistir?");
+
+        String option = Input.readString();
+        while (!isValidChoice(option)) {
+            System.out.println("Opção inválida! Digite novamente: ");
+            option = Input.readString();
+        }
+
+        if (option.equals("Y") || option.equals("y")) {
+            PlayChess.setResign(true);
+        }
+    }
+
     // Lê a escolha de salvar o log da partida.
     public static void inputSaveLog(String playerWhite, String playerBlack, ChessLog log,
-            DrawType draw, Player currentPlayer) {
+            DrawType draw, boolean resign, Player loser) {
         System.out.println("Deseja salvar o log da partida? (y/n)");
 
         // Lê a escolha do usuário e enquanto não for válida, lê novamente.
@@ -146,11 +167,14 @@ public class Input {
             while (!saved) {
                 // Obtem a string que representa o fim da partida.
                 String end = "";
-                if (draw.isDraw()) {
+                if (resign) {
+                    end = " o jogador " + loser.getName() + " desistindo!";
+                }
+                else if (draw.isDraw()) {
                     end = draw.getDrawTypeString();
                     System.out.println(end);
                 } else {
-                    end = " xeque-mate para " + currentPlayer.getName() + "!";
+                    end = " xeque-mate para " + loser.getName() + "!";
                 }
 
                 // Obtem a hora atual.
@@ -169,22 +193,26 @@ public class Input {
 
             }
         }
+        System.out.println();
     }
 
     public static void inputSaveGame(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log,
-            DrawType draw) {
-        System.out.println("Deseja salvar o jogo? (y/n)");
+            DrawType draw, boolean resign) {
+        System.out.println("Deseja salvar o jogo? " + yellow +  "(y/n)" + reset);
 
         String option = Input.readString();
         while (!isValidChoice(option)) {
-            System.out.println("Opção inválida! Digite novamente: ");
+            System.out.println(red + "Opção inválida! Digite novamente: " + reset);
             option = Input.readString();
         }
 
         if (option.equals("Y") || option.equals("y")) {
-            SaveGame.saveGame(board, currentPlayer, opponent, log, draw);
+            String file = Input.readString();
+            SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, file);
         }
 
+        System.out.println();
+        System.out.println();
     }
 
     // Verifica se uma escolha é válida.

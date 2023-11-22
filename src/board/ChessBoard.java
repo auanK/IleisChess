@@ -1,30 +1,14 @@
 package board;
 
 import game.Player;
-import pieces.Bishop;
-import pieces.King;
-import pieces.Knight;
-import pieces.Pawn;
-import pieces.Piece;
-import pieces.Queen;
-import pieces.Rook;
+import pieces.*;
 
 // Classe que implementa o tabuleiro de xadrez padrão.
-public class ChessBoard {
-    private Piece[][] board; // Matriz de peças.
-
+public class ChessBoard extends Board{
     // Construtor da classe.
     public ChessBoard() {
-        // Cria a matriz de peças.
-        board = new Piece[8][8];
-
-        // Preenche a matriz com peças nulas.
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board[i][j] = null;
-            }
-        }
-
+        super();
+        
         // Coloca as torres.
         board[0][0] = new Rook('W', 'B', 0, 0);
         board[0][7] = new Rook('W', 'W', 0, 7);
@@ -62,36 +46,6 @@ public class ChessBoard {
             colorWhiteSquare = (colorWhiteSquare == 'W') ? 'B' : 'W';
             colorBlackSquare = (colorBlackSquare == 'W') ? 'B' : 'W';
         }
-    
-        // deixa um movimento do en passant disponível para cada lado
-        board[4][1] = new Pawn('W', 'B', 4, 1);
-    }
-
-    public static String getKey(Piece[][] board) {
-        StringBuilder key = new StringBuilder();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j] == null) {
-                    key.append("0");
-                } else {
-                    Piece piece = board[i][j];
-                    key.append(piece.getLabel());
-                    if (piece.getColor() == 'W') {
-                        key.append("W");
-                    } else {
-                        key.append("B");
-                    }
-                }
-            }
-        }
-
-        return key.toString();
-    }
-
-    // Retorna a matriz de peças.
-    public Piece[][] getBoard() {
-        return board;
     }
 
     // Distribui as peças para os jogadores.
@@ -102,7 +56,5 @@ public class ChessBoard {
             playerBlack.addPiece(board[6][i]);
             playerBlack.addPiece(board[7][i]);
         }
-
-        playerWhite.addPiece(board[4][1]);
     }
 }

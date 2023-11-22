@@ -16,15 +16,21 @@ public class MainUI {
     public static void ui(String[] args) {
         while (true) {
             System.out.print("\033[H\033[2J");
-            System.out.println(cyan + "Bem-vindo ao " + yellow + "IleisChess" + cyan + "!" + reset);
+
+            System.out.println(cyan + "=== Bem-vindo ao " + yellow + "IleisChess" + cyan + "! ===" + reset);
             System.out.println();
+
             System.out.println("Digite o que deseja fazer:");
+            System.out.println();
+
             System.out.println(green + "1 - Novo jogo");
             System.out.println("2 - Carregar jogo");
             System.out.println("3 - Cenarios personalizados");
             System.out.println("4 - Ajuda");
             System.out.println(red + "5 - Sair" + reset);
-
+            
+            
+            System.out.println();
             System.out.print("Opção: ");
             String option = Input.readString();
 
@@ -37,7 +43,7 @@ public class MainUI {
                     Player playerBlack = new Player('B');
                     chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
-                    PlayChess.playChessGame(board, playerWhite, playerBlack, 0, false, null);
+                    PlayChess.playChessGame(board, playerWhite, playerBlack, 0,  null, null);
                     break;
                 case "2":
                     LoadUI.loadUI();

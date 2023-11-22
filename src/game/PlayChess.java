@@ -22,48 +22,55 @@ public class PlayChess {
     private static Player opponent;
     private static ChessLog log = new ChessLog();
     private static DrawType draw = new DrawType();
-    
+    private static boolean resign = false;
+
+    private static String cyan = "\u001B[36m";
+    private static String red = "\u001B[31m";
+    private static String reset = "\u001B[0m";
+
     // Inicia o jogo.
     public static void playChessGame(Piece[][] boardLoad, Player playerWhiteLoad, Player playerBlackLoad, int initial,
-            boolean load, String filename) {
-
-        // Inicializa os atributos da classe.
-        board = boardLoad;
-        playerWhite = playerWhiteLoad;
-        playerBlack = playerBlackLoad;
-        
-        // Define o jogador atual e o oponente.
-        if (initial == 0) {
-            currentPlayer = playerWhite;
-            opponent = playerBlack;
-        } else {
-            currentPlayer = playerBlack;
-            opponent = playerWhite;
-        }
-
+            String filename, ChessLog logLoad) {
+        // Verifica se o jogo está sendo carregado ou não.
         if (filename == null) {
+            board = boardLoad;
+            playerWhite = playerWhiteLoad;
+            playerBlack = playerBlackLoad;
+
             // Adiciona o movimento inicial ao log.
-            log.addMove("Initial" + currentPlayer.getColor());
+            if (initial == 0) {
+                currentPlayer = playerWhite;
+                opponent = playerBlack;
+            } else {
+                currentPlayer = playerBlack;
+                opponent = playerWhite;
+            }
+
+            if (logLoad != null) {
+                log = logLoad;
+            }
 
             // Lê o nome dos jogadores.
             Input.inputName(playerWhite, playerBlack);
 
         } else {
-            // Carrega o jogo. 
+            // Carrega o jogo.
             try {
                 SaveGame.loadGame(filename);
             } catch (IOException | ClassNotFoundException e) {
                 System.out.println("Erro ao carregar o jogo: " + e.getMessage());
             }
-
         }
 
         boolean checkMate = false;
 
         // Loop principal do jogo.
         while (true) {
+            // Faz um backup
+            SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
+
             // Imprime o tabuleiro.
-            BoardUI.printBoard(board, currentPlayer, opponent);
+            BoardUI.printBoard(board, playerWhite, playerBlack);
 
             // Salva a posição atual do tabuleiro.
             String position = ChessBoard.getKey(board);
@@ -85,7 +92,7 @@ public class PlayChess {
 
             // Se estiver em xeque, adiciona ao último movimento o caractere '+'.
             if (currentPlayer.isCheck()) {
-                System.out.println(currentPlayer.getName() + ", você está em xeque!");
+                System.out.println(cyan + currentPlayer.getName() + reset + ", você está em " + red + "xeque!" + reset);
                 log.addChar('+');
             }
 
@@ -104,6 +111,10 @@ public class PlayChess {
             // Verifica se o jogo terminou em empate pela regra das 50 jogadas.
             if (Draws.isFiftyMoveRule(log)) {
                 draw.setDrawType(DrawType.DrawTypes.FIFTY_MOVES_RULE);
+                break;
+            }
+
+            if (resign) {
                 break;
             }
 
@@ -126,12 +137,17 @@ public class PlayChess {
                 }
 
                 if (message.equals("Save!")) {
-                    Input.inputSaveGame(board, currentPlayer, opponent, log, draw);
+                    Input.inputSaveGame(board, currentPlayer, opponent, log, draw, resign);
                     continue;
                 }
 
+                if (message.equals("Withdraw!")) {
+                    Input.inputResign();
+                    System.out.println(resign);
+                }
+
                 // Imprime a mensagem de erro e pula para a próxima iteração.
-                System.out.println(e.getMessage());
+                System.out.println(red + message + reset);
                 continue;
             }
 
@@ -143,10 +159,10 @@ public class PlayChess {
         handleGameResult(draw, checkMate);
 
         // Lida com o salvamento do log.
-        Input.inputSaveLog(playerWhite.getName(), playerBlack.getName(), log, draw, opponent);
+        Input.inputSaveLog(playerWhite.getName(), playerBlack.getName(), log, draw, resign, currentPlayer);
 
         // Lida com o salvamento do jogo.
-        Input.inputSaveGame(board, currentPlayer, opponent, log, draw);
+        Input.inputSaveGame(board, currentPlayer, opponent, log, draw, resign);
     }
 
     // Lida com a tentativa de movimento.
@@ -179,11 +195,18 @@ public class PlayChess {
 
     // Lida com o resultado do jogo.
     private static void handleGameResult(DrawType draw, boolean checkMate) {
-        if (draw.isDraw()) {
+        if (resign) {
+            System.out.println("O(A) jogador(a) " + cyan + currentPlayer.getName() + cyan + " desistiu!");
+            if (opponent.getColor() == 'W') {
+                log.addMove("0-1");
+            } else {
+                log.addMove("1-0");
+            }
+        } else if (draw.isDraw()) {
             draw.print();
             log.addMove("1/2-1/2");
         } else if (checkMate) {
-            System.out.println("Xeque-mate! " + opponent.getName() + " venceu!");
+            System.out.println("Xeque-mate! " + cyan + opponent.getName() + reset + " venceu!");
             if (opponent.getColor() == 'W') {
                 log.addMove("1-0");
             } else {
@@ -207,12 +230,21 @@ public class PlayChess {
 
     // Seta os atributos da classe. (Usado para carregar o jogo)
     public static void setAttributes(Piece[][] boardLoad, Player playerWhiteLoad, Player playerBlackLoad,
-            Player currentPlayerLoad, Player opponentLoad, ChessLog logLoad) {
+            Player currentPlayerLoad, Player opponentLoad, ChessLog logLoad, DrawType drawLoad, boolean resignLoad) {
         board = boardLoad;
         playerWhite = playerWhiteLoad;
         playerBlack = playerBlackLoad;
         currentPlayer = currentPlayerLoad;
         opponent = opponentLoad;
         log = logLoad;
+        draw = drawLoad;
+        resign = resignLoad;
     }
+
+    // Seta a desistencia
+    public static void setResign(boolean resignLoad) {
+        resign = resignLoad;
+    }
+
+
 }
