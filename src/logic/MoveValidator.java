@@ -2,7 +2,6 @@ package logic;
 
 import game.Player;
 import pieces.Piece;
-import pieces.King;
 import specialmoves.Castling;
 import specialmoves.EnPassant;
 import game.PlayChess;
