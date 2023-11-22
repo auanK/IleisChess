@@ -41,8 +41,6 @@ public class Promotion {
 
         // Adiciona a promoção ao log.
         log.addChar(promotedPiece.getLabel());
-
-        log.print();
     }
 
     // Lê a escolha do usuário e cria a peça escolhida.

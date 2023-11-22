@@ -4,7 +4,7 @@ import game.Player;
 import pieces.Piece;
 import specialmoves.Castling;
 import specialmoves.EnPassant;
-import game.ChessGame;
+import game.PlayChess;
 import game.ChessLog;
 
 // Classe que implementa a validação de movimentos.
@@ -63,7 +63,7 @@ public class MoveValidator {
         Piece destinationPiece = board[destinationRow][destinationColumn];
 
         Castling.validateCastling(board, coordinates, currentPlayer, opponent);
-        EnPassant.validateEnPassant(board, coordinates, currentPlayer, opponent, log);
+        EnPassant.validateEnPassant(board, coordinates, currentPlayer, opponent);
 
         // Verifica se a posição de destino já possui uma peça do jogador atual.
         if (currentPlayer.getPieces().contains(board[destinationRow][destinationColumn])) {
@@ -88,7 +88,7 @@ public class MoveValidator {
 
     // Verifica se existe algum movimento válido para o jogador atual.
     public static boolean hasValidMove(Piece[][] board, Player currentPlayer, Player opponent) {
-        ChessLog log = ChessGame.getLog();
+        ChessLog log = PlayChess.getLog();
         for (Piece piece : currentPlayer.getPieces()) {
             int sourceRow = piece.getPositionRow();
             int sourceColumn = piece.getPositionColumn();

@@ -14,6 +14,25 @@ public class DrawType {
         return drawType;
     }
 
+    // Retorna o tipo de empate em String.
+    public String getDrawTypeString() {
+        if (drawType != null) {
+            switch (drawType) {
+                case AGREEMENT:
+                    return "empate por acordo";
+                case STALEMATE:
+                    return "empate por afogamento";
+                case INSUFFICIENT_MATERIAL:
+                    return "empate por insuficiência de material";
+                case THREEFOLD_REPETITION:
+                    return "empate por tripla repetição";
+                case FIFTY_MOVES_RULE:
+                    return "empate por regra dos 50 movimentos";
+            }
+        }
+        return null;
+    }
+
     // Define o tipo de empate.
     public void setDrawType(DrawTypes draw) {
         this.drawType = draw;

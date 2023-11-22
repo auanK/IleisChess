@@ -19,12 +19,12 @@ public class MoveExecutor {
 
             // Se o movimento for um roque, o tratamento é diferente.
             if (message.equals("Rock!")) {
-                Castling.castling(board, coordinates, currentPlayer, opponent, log);
+                Castling.castling(board, coordinates, currentPlayer, opponent);
                 return;
             }
 
             if (message.equals("En Passant!")) {
-                EnPassant.enPassant(board, coordinates, currentPlayer, opponent, log);
+                EnPassant.enPassant(board, coordinates, currentPlayer, opponent);
                 return;
             }
 

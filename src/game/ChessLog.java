@@ -1,6 +1,11 @@
 package game;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+
+import logic.Exceptions;
 
 // Classe que implementa o log da partida.
 public class ChessLog {
@@ -23,12 +28,12 @@ public class ChessLog {
         return logPositions;
     }
 
-    // Adiciona um movimento ao array de movimentos.    
+    // Adiciona um movimento ao array de movimentos.
     public void addMove(String move) {
         logMoves.add(move);
     }
 
-     // Adiciona uma posição ao array de posições.
+    // Adiciona uma posição ao array de posições.
     public void addPosition(String position) {
         logPositions.add(position);
     }
@@ -57,6 +62,31 @@ public class ChessLog {
         return lastMoves;
     }
 
+    // Salva o log da partida em um arquivo de texto.
+    public void saveLog(String filename, String playerWhite, String playerBlack, String end) throws Exceptions {
+        try {
+            FileWriter fileWriter = new FileWriter(filename);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            printWriter.println("Resumo da partida: ");
+            printWriter.println("Jogador das peças brancas: " + playerWhite);
+            printWriter.println("Jogador das peças pretas: " + playerBlack);
+            printWriter.println("A partida terminou em " + end);
+            printWriter.println();
+
+            printWriter.println("Log de movimentos: ");
+
+            for (String move : logMoves) {
+                printWriter.print(move + " ");
+            }
+            printWriter.println();
+
+            printWriter.close();
+        } catch (IOException e) {
+            throw new Exceptions("Erro ao salvar o log da partida!");
+        }
+    }
+
     // Retorna o tamanho do array de movimentos.
     public int sizeLogMoves() {
         return logMoves.size();
@@ -70,19 +100,5 @@ public class ChessLog {
     // Retorna uma String com a notação algébrica do movimento.
     public String parseChessNotation(int row, int column) {
         return (char) (column + 97) + String.valueOf(row + 1);
-    }
-
-    public void print () {
-        System.out.println();
-        System.out.println("Movimentos: ");
-        for (String move : logMoves) {
-            System.out.print(move + " ");
-        }
-        System.out.println();
-        System.out.println("Posições: ");
-        for (String position : logPositions) {
-            System.out.print(position + " ");
-        }
-        System.out.println();
     }
 }

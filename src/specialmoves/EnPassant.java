@@ -1,6 +1,7 @@
 package specialmoves;
 
 import game.ChessLog;
+import game.PlayChess;
 import game.Player;
 import logic.CheckValidation;
 import logic.Exceptions;
@@ -8,13 +9,14 @@ import pieces.Piece;
 import pieces.Pawn;
 
 public class EnPassant {
-    public static void validateEnPassant(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
-            ChessLog log)
+    public static void validateEnPassant(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws Exceptions {
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
         int destinationColumn = coordinates[3];
+
+        ChessLog log = PlayChess.getLog();
 
         // Salva a peça de origem e verifica se é um peão.
         Piece sourcePiece = board[sourceRow][sourceColumn];
@@ -110,13 +112,15 @@ public class EnPassant {
     }
 
     // Faz o en passant.
-    public static void enPassant(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent,
-            ChessLog log)
+    public static void enPassant(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws Exceptions {
         int sourceRow = coordinates[0];
         int sourceColumn = coordinates[1];
         int destinationRow = coordinates[2];
         int destinationColumn = coordinates[3];
+
+        // Recebe o log da partida.
+        ChessLog log = PlayChess.getLog();
 
         // Salva o peão de origem.
         Piece sourcePiece = board[sourceRow][sourceColumn];

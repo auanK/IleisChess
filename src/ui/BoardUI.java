@@ -1,24 +1,21 @@
-package board;
+package ui;
 
-import game.ChessGame;
+import game.PlayChess;
 import game.ChessLog;
 import game.Player;
 import logic.Exceptions;
 import logic.MoveValidator;
 import pieces.Piece;
 
-// Classe responsável pela interface com o usuário.
-public class ChessUI {
-    private static String ANSI_RESET = "\u001B[0m";
-    private static String ANSI_RED = "\u001B[31m";
-    private static String ANSI_YELLOW = "\u001B[33m";
-    private static String ANSI_BLUE = "\u001B[36m";
-
-    private static Player playerWhite = ChessGame.getPlayerWhite();
-    private static Player playerBlack = ChessGame.getPlayerBlack();
-
+// Classe responsável pela interface do tabuleiro.
+public class BoardUI {
+    private static String reset = "\u001B[0m";
+    private static String red = "\u001B[31m";
+    private static String yellow = "\u001B[33m";
+    private static String blue = "\u001B[36m";
+    
     // Imprime o tabuleiro.
-    public static void printBoard(Piece[][] board) {
+    public static void printBoard(Piece[][] board, Player playerWhite, Player playerBlack) {
         printCapturedPieces(playerBlack);
 
         for (int row = 7; row >= 0; row--) {
@@ -27,8 +24,8 @@ public class ChessUI {
                 if (board[row][col] == null) {
                     System.out.print(". ");
                 } else {
-                    String colorCode = (board[row][col].getColor() == 'W') ? "" : ANSI_YELLOW;
-                    System.out.print(colorCode + board[row][col].getLabel() + ANSI_RESET + " ");
+                    String colorCode = (board[row][col].getColor() == 'W') ? "" : yellow;
+                    System.out.print(colorCode + board[row][col].getLabel() + reset + " ");
                 }
             }
             System.out.println();
@@ -43,8 +40,14 @@ public class ChessUI {
     // Imprime o tabuleiro com as posições válidas para a peça selecionada.
     public static void printValidMoves(Piece[][] board, int[] coordinatesSource, Player currentPlayer,
             Player opponent) {
+        Player playerWhite = currentPlayer;
+        Player playerBlack = opponent;
+        if (currentPlayer.getColor() == 'B') {
+            playerWhite = opponent;
+            playerBlack = currentPlayer;
+        }
 
-        ChessLog log = ChessGame.getLog();
+        ChessLog log = PlayChess.getLog();
 
         printCapturedPieces(playerBlack);
 
@@ -58,40 +61,40 @@ public class ChessUI {
                 coordinatesT[3] = j;
 
                 if (i == coordinatesSource[0] && j == coordinatesSource[1] && board[i][j] != null) {
-                    System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                    System.out.print(blue + board[i][j].getLabel() + reset + " ");
                     continue;
                 }
 
                 try {
                     MoveValidator.validateMove(board, coordinatesT, currentPlayer, opponent, log);
                     if (board[i][j] == null) {
-                        System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
+                        System.out.print(blue + "_ " + reset);
                     } else {
-                        System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
+                        System.out.print(red + board[i][j].getLabel() + reset + " ");
                     }
                 } catch (Exceptions e) {
                     if (e.getMessage().equals("Rock!")) {
                         if (board[i][j] == null) {
-                            System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
+                            System.out.print(blue + "_ " + reset);
                         } else if (currentPlayer.getPieces().contains(board[i][j])) {
-                            System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                            System.out.print(blue + board[i][j].getLabel() + reset + " ");
                         } else {
-                            System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
+                            System.out.print(red + board[i][j].getLabel() + reset + " ");
                         }
                     } else if (e.getMessage().equals("En Passant!")) {
                         if (board[i][j] == null) {
-                            System.out.print(ANSI_BLUE + "_ " + ANSI_RESET);
+                            System.out.print(blue + "_ " + reset);
                         } else if (currentPlayer.getPieces().contains(board[i][j])) {
-                            System.out.print(ANSI_BLUE + board[i][j].getLabel() + ANSI_RESET + " ");
+                            System.out.print(blue + board[i][j].getLabel() + reset + " ");
                         } else {
-                            System.out.print(ANSI_RED + board[i][j].getLabel() + ANSI_RESET + " ");
+                            System.out.print(red + board[i][j].getLabel() + reset + " ");
                         }
                     } else {
                         if (board[i][j] == null) {
                             System.out.print(". ");
                         } else {
-                            String colorCode = (board[i][j].getColor() == 'W') ? "" : ANSI_YELLOW;
-                            System.out.print(colorCode + board[i][j].getLabel() + ANSI_RESET + " ");
+                            String colorCode = (board[i][j].getColor() == 'W') ? "" : yellow;
+                            System.out.print(colorCode + board[i][j].getLabel() + reset + " ");
                         }
 
                     }
@@ -111,8 +114,8 @@ public class ChessUI {
         System.err.print(" Peças capturadas: [ ");
 
         for (Piece piece : player.getCapturedPieces()) {
-            String color = piece.getColor() == 'W' ? ANSI_RESET : ANSI_YELLOW;
-            System.out.print(color + piece.getLabel() + ANSI_RESET + " ");
+            String color = piece.getColor() == 'W' ? reset : yellow;
+            System.out.print(color + piece.getLabel() + reset + " ");
         }
         System.out.println("]");
         System.out.println();

@@ -1,5 +1,6 @@
 package specialmoves;
 
+import game.PlayChess;
 import game.ChessLog;
 import game.Player;
 import logic.CheckValidation;
@@ -55,7 +56,7 @@ public class Castling {
     }
 
     // Faz o roque.
-    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent, ChessLog log)
+    public static void castling(Piece[][] board, int[] coordinates, Player currentPlayer, Player opponent)
             throws Exceptions {
         // Encontra as peças.
         Piece king = board[coordinates[0]][coordinates[1]];
@@ -75,6 +76,8 @@ public class Castling {
 
         int colDiff = Math.abs(kingColumn - rookColumn);
 
+        // Recebe o log da partida.
+        ChessLog log = PlayChess.getLog();
         String notation = "";
 
         // Verifica se o roque é grande ou pequeno e move as peças.

@@ -2,14 +2,16 @@ package game;
 
 import java.util.Scanner;
 
-import board.ChessUI;
+import draw.DrawType;
 import draw.Draws;
 import logic.Exceptions;
 import logic.MoveValidator;
+
 import pieces.Piece;
+import ui.BoardUI;
 
 // Classe que implementa a entrada do usuário.
-public class UserInput {
+public class Input {
     private static Scanner sc = new Scanner(System.in);
 
     // Lê as coordenadas digitadas pelo usuário.
@@ -49,23 +51,13 @@ public class UserInput {
     }
 
     // Lida com solicitação de empate.
-    private static void handleDrawRequest(Player currentPlayer) throws Exceptions {
-        System.out.println("O(a) jogador(a) " + currentPlayer.getName() + " pediu empate, aceita? (y/n)");
-        String draw = sc.nextLine();
-        if (draw.equals("y")) {
-            throw new Exceptions("Draw!");
-        } else {
-            throw new Exceptions("Empate recusado!");
-        }
-    }
-
     // Lida com a seleção de peças.
     private static void handlePieceSelection(Piece[][] board, Player currentPlayer, Player opponent, int[] coordinates,
             String source) throws Exceptions {
         // Verifica se a entrada é válida e imprime os movimentos possíveis.
         int[] coordinatesSource = parseChessNotation(source);
         MoveValidator.isValidSource(board, coordinatesSource, currentPlayer, opponent);
-        ChessUI.printValidMoves(board, coordinatesSource, currentPlayer, opponent);
+        BoardUI.printValidMoves(board, coordinatesSource, currentPlayer, opponent);
 
         // Lê a posição de destino.
         String destination = sc.nextLine();
@@ -86,6 +78,22 @@ public class UserInput {
             coordinates[1] = coordinatesSource[1];
             coordinates[2] = coordinatesDestination[0];
             coordinates[3] = coordinatesDestination[1];
+        }
+    }
+
+    private static void handleDrawRequest(Player currentPlayer) throws Exceptions {
+        System.out.println("O(a) jogador(a) " + currentPlayer.getName() + " pediu empate, aceita? (y/n)");
+        String draw = sc.nextLine();
+
+        while (!isValidChoice(draw)) {
+            System.out.println("Opção inválida! Digite novamente: ");
+            draw = sc.nextLine();
+        }
+
+        if (draw.equals("Y") || draw.equals("y")) {
+            throw new Exceptions("Draw!");
+        } else {
+            throw new Exceptions("Empate recusado!");
         }
     }
 
@@ -112,5 +120,59 @@ public class UserInput {
 
         System.out.println("Digite o nome do(a) jogador(a) das peças pretas: ");
         playerBlack.setName(sc.nextLine());
+    }
+
+    // Lê a escolha de salvar o log da partida.
+    public static void inputSaveLog(String playerWhite, String playerBlack, ChessLog log,
+            DrawType draw, Player currentPlayer) {
+        System.out.println("Deseja salvar o log da partida? (y/n)");
+
+        // Lê a escolha do usuário e enquanto não for válida, lê novamente.
+        String option = Input.readString();
+        while (!isValidChoice(option)) {
+            System.out.println("Opção inválida! Digite novamente: ");
+            option = Input.readString();
+        }
+
+        // Se o usuário escolheu salvar o log, tenta salvar.
+        if (option.equals("Y") || option.equals("y")) {
+            // Enquanto não conseguir salvar, lê novamente.
+            boolean saved = false;
+            while (!saved) {
+                // Obtem a string que representa o fim da partida.
+                String end = "";
+                if (draw.isDraw()) {
+                    end = draw.getDrawTypeString();
+                    System.out.println(end);
+                } else {
+                    end = " xeque-mate para " + currentPlayer.getName() + "!";
+                }
+
+                // Obtem a hora atual.
+                String hour = java.time.LocalTime.now().toString().substring(0, 8).replace(':', '-');
+
+                // Obtem o nome do arquivo.
+                String filename = "log/" + hour + "_" + playerWhite + "vs" + playerBlack + ".txt";
+
+                // Tenta salvar o log.
+                try {
+                    log.saveLog(filename, playerWhite, playerBlack, end);
+                    saved = true;
+                } catch (Exceptions e) {
+                    System.out.println(e.getMessage());
+                }
+
+            }
+        }
+    }
+
+    // Verifica se uma escolha é válida.
+    private static boolean isValidChoice(String option) {
+        return option.equals("Y") || option.equals("y") || option.equals("N") || option.equals("n");
+    }
+
+    // Lê uma string.
+    public static String readString() {
+        return sc.nextLine();
     }
 }

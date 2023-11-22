@@ -7,13 +7,22 @@ import pieces.Piece;
 // Classe que implementa o jogador.
 public class Player {
     private String name;                // Nome do jogador
+    private char color;                 // Cor do jogador
     private boolean isCheck;            // Flag que indica se o jogador está em check
     private List<Piece> pieces;         // Lista de peças do jogador
-    private List<Piece> capturedPieces; // Lista de peças capturadas
+    private ArrayList<Piece> capturedPieces; // Lista de peças capturadas
+
 
     // Construtor da classe.
-    public Player(String name) {
+    public Player(String name, char color) {
         this.name = name;
+        this.color = color;
+        this.pieces = new ArrayList<>();
+        this.capturedPieces = new ArrayList<>();
+    }
+
+    public Player(char color) {
+        this.color = color;
         this.pieces = new ArrayList<>();
         this.capturedPieces = new ArrayList<>();
     }
@@ -26,6 +35,16 @@ public class Player {
     // Define o nome do jogador.
     public void setName(String name) {
         this.name = name;
+    }
+
+    // Retorna a cor do jogador.
+    public char getColor() {
+        return color;
+    }
+
+    // Define a cor do jogador.
+    public void setColor(char color) {
+        this.color = color;
     }
 
     // Retorna a lista de peças.
