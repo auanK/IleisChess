@@ -35,7 +35,7 @@ public class CustomScenarios {
                     Player playerBlack = new Player('B');
 
                     enPassantMate.assignPiecesToPlayers(playerWhite, playerBlack);
-                    PlayChess.playChessGame(board, playerWhite, playerBlack, 1);
+                    PlayChess.playChessGame(board, playerWhite, playerBlack, 1, false, null);
                     return;
                 case "2":
                     System.out.println("Mate com roque");

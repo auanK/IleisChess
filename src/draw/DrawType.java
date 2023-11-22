@@ -1,7 +1,9 @@
 package draw;
 
+import java.io.Serializable;
+
 // Classe que implementa a flag de empate.
-public class DrawType {
+public class DrawType implements Serializable {
     private DrawTypes drawType; // Tipo de empate. (null = não há empate)
 
     // Construtor da classe.

@@ -1,6 +1,6 @@
 package game;
 
-import java.io.*;
+import java.io.IOException;
 
 import board.ChessBoard;
 import draw.Draws;
@@ -14,14 +14,25 @@ import ui.BoardUI;
 
 // Classe onde o jogo é executado.
 public class PlayChess {
-    // Declara o log da partida e os jogadores.
-    private static ChessLog log = new ChessLog();
+    // Parâmetros do jogo.
+    private static Piece[][] board;
+    private static Player playerWhite;
+    private static Player playerBlack;
     private static Player currentPlayer;
     private static Player opponent;
-
+    private static ChessLog log = new ChessLog();
+    private static DrawType draw = new DrawType();
+    
     // Inicia o jogo.
-    public static void playChessGame(Piece[][] board, Player playerWhite, Player playerBlack, int initial) {
-        // Usa a flag initial para definir o jogador inicial.
+    public static void playChessGame(Piece[][] boardLoad, Player playerWhiteLoad, Player playerBlackLoad, int initial,
+            boolean load, String filename) {
+
+        // Inicializa os atributos da classe.
+        board = boardLoad;
+        playerWhite = playerWhiteLoad;
+        playerBlack = playerBlackLoad;
+        
+        // Define o jogador atual e o oponente.
         if (initial == 0) {
             currentPlayer = playerWhite;
             opponent = playerBlack;
@@ -30,15 +41,24 @@ public class PlayChess {
             opponent = playerWhite;
         }
 
-        // Flags para o fim do jogo.
+        if (filename == null) {
+            // Adiciona o movimento inicial ao log.
+            log.addMove("Initial" + currentPlayer.getColor());
+
+            // Lê o nome dos jogadores.
+            Input.inputName(playerWhite, playerBlack);
+
+        } else {
+            // Carrega o jogo. 
+            try {
+                SaveGame.loadGame(filename);
+            } catch (IOException | ClassNotFoundException e) {
+                System.out.println("Erro ao carregar o jogo: " + e.getMessage());
+            }
+
+        }
+
         boolean checkMate = false;
-        DrawType draw = new DrawType();
-
-        // Adiciona o movimento inicial ao log.
-        log.addMove("Initial" + currentPlayer.getColor());
-
-        // Lê o nome dos jogadores.
-        Input.inputName(playerWhite, playerBlack);
 
         // Loop principal do jogo.
         while (true) {
@@ -105,6 +125,11 @@ public class PlayChess {
                     break;
                 }
 
+                if (message.equals("Save!")) {
+                    Input.inputSaveGame(board, currentPlayer, opponent, log, draw);
+                    continue;
+                }
+
                 // Imprime a mensagem de erro e pula para a próxima iteração.
                 System.out.println(e.getMessage());
                 continue;
@@ -118,7 +143,10 @@ public class PlayChess {
         handleGameResult(draw, checkMate);
 
         // Lida com o salvamento do log.
-        Input.inputSaveLog(playerWhite.getName(), playerBlack.getName(), log, draw, playerBlack);
+        Input.inputSaveLog(playerWhite.getName(), playerBlack.getName(), log, draw, opponent);
+
+        // Lida com o salvamento do jogo.
+        Input.inputSaveGame(board, currentPlayer, opponent, log, draw);
     }
 
     // Lida com a tentativa de movimento.
@@ -162,6 +190,7 @@ public class PlayChess {
                 log.addMove("0-1");
             }
         }
+        System.out.println();
     }
 
     // Troca os jogadores.
@@ -174,5 +203,16 @@ public class PlayChess {
     // Retorna o log da partida.
     public static ChessLog getLog() {
         return log;
+    }
+
+    // Seta os atributos da classe. (Usado para carregar o jogo)
+    public static void setAttributes(Piece[][] boardLoad, Player playerWhiteLoad, Player playerBlackLoad,
+            Player currentPlayerLoad, Player opponentLoad, ChessLog logLoad) {
+        board = boardLoad;
+        playerWhite = playerWhiteLoad;
+        playerBlack = playerBlackLoad;
+        currentPlayer = currentPlayerLoad;
+        opponent = opponentLoad;
+        log = logLoad;
     }
 }

@@ -19,9 +19,9 @@ public class MainUI {
             System.out.println(cyan + "Bem-vindo ao " + yellow + "IleisChess" + cyan + "!" + reset);
             System.out.println();
             System.out.println("Digite o que deseja fazer:");
-            System.out.println(green + "1 - Jogar");
-            System.out.println("2 - Cenários personalizados");
-            System.out.println("3 - Regras");
+            System.out.println(green + "1 - Novo jogo");
+            System.out.println("2 - Carregar jogo");
+            System.out.println("3 - Cenarios personalizados");
             System.out.println("4 - Ajuda");
             System.out.println(red + "5 - Sair" + reset);
 
@@ -37,13 +37,14 @@ public class MainUI {
                     Player playerBlack = new Player('B');
                     chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
-                    PlayChess.playChessGame(board, playerWhite, playerBlack, 0);
+                    PlayChess.playChessGame(board, playerWhite, playerBlack, 0, false, null);
                     break;
                 case "2":
-                    CustomScenarios.customScenarios();
+                    LoadUI.loadUI();
                     break;
                 case "3":
-                    System.out.println("Regras");
+
+                    CustomScenarios.customScenarios();
                     break;
                 case "4":
                     System.out.println("Ajuda");

@@ -3,12 +3,13 @@ package game;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import logic.Exceptions;
 
 // Classe que implementa o log da partida.
-public class ChessLog {
+public class ChessLog implements Serializable {
     private ArrayList<String> logMoves; // Array de movimentos.
     private ArrayList<String> logPositions; // Array de posições.
 

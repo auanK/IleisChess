@@ -1,7 +1,9 @@
 package pieces;
 
+import java.io.Serializable;
+
 // Classe abstrata que representa uma peça.
-public abstract class Piece {
+public abstract class Piece implements Serializable {
     private char label;         // Rótulo da peça.
     private char color;         // Cor da peça.
     private char colorSquare;  // Cor do quadrado de origem da peça.

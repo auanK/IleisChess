@@ -1,11 +1,13 @@
 package game;
 
+import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 import pieces.Piece;
 
 // Classe que implementa o jogador.
-public class Player {
+public class Player implements Serializable {
     private String name;                // Nome do jogador
     private char color;                 // Cor do jogador
     private boolean isCheck;            // Flag que indica se o jogador está em check

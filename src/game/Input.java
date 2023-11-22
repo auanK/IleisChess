@@ -1,5 +1,6 @@
 package game;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import draw.DrawType;
@@ -27,6 +28,10 @@ public class Input {
             }
             // Lida com a solicitação de empate.
             handleDrawRequest(currentPlayer);
+        }
+
+        if (source.equals("save")) {
+            throw new Exceptions("Save!");
         }
 
         // Coordenadas de origem e destino.
@@ -164,6 +169,22 @@ public class Input {
 
             }
         }
+    }
+
+    public static void inputSaveGame(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log,
+            DrawType draw) {
+        System.out.println("Deseja salvar o jogo? (y/n)");
+
+        String option = Input.readString();
+        while (!isValidChoice(option)) {
+            System.out.println("Opção inválida! Digite novamente: ");
+            option = Input.readString();
+        }
+
+        if (option.equals("Y") || option.equals("y")) {
+            SaveGame.saveGame(board, currentPlayer, opponent, log, draw);
+        }
+
     }
 
     // Verifica se uma escolha é válida.
