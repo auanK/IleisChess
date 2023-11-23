@@ -9,12 +9,14 @@ import logic.MoveValidator;
 
 import pieces.Piece;
 import ui.BoardUI;
+import ui.UtilTools;
 
 // Classe que implementa a entrada do usuário.
 public class Input {
     private static Scanner sc = new Scanner(System.in);
 
     private static String reset = "\u001B[0m";
+    private static String cyan = "\u001B[36m";
     private static String red = "\u001B[31m";
     private static String yellow = "\u001B[33m";
 
@@ -94,7 +96,8 @@ public class Input {
     }
 
     private static void handleDrawRequest(Player currentPlayer) throws Exceptions {
-        System.out.println("O(a) jogador(a) " + currentPlayer.getName() + " pediu empate, aceita? (y/n)");
+        System.out.println("O(a) jogador(a) " + cyan + currentPlayer.getName() + reset + " pediu empate, aceita? "
+                + yellow + "(y/n)" + reset + " ");
         String draw = sc.nextLine();
 
         while (!isValidChoice(draw)) {
@@ -129,6 +132,7 @@ public class Input {
     public static void inputName(Player playerWhite, Player playerBlack) {
         System.out.println("Digite o nome do(a) jogador(a) das peças brancas: ");
         playerWhite.setName(sc.nextLine());
+        System.out.println();
 
         System.out.println("Digite o nome do(a) jogador(a) das peças pretas: ");
         playerBlack.setName(sc.nextLine());
@@ -139,7 +143,7 @@ public class Input {
 
         String option = Input.readString();
         while (!isValidChoice(option)) {
-            System.out.println("Opção inválida! Digite novamente: ");
+            invalidChoice();
             option = Input.readString();
         }
 
@@ -151,12 +155,13 @@ public class Input {
     // Lê a escolha de salvar o log da partida.
     public static void inputSaveLog(String playerWhite, String playerBlack, ChessLog log,
             DrawType draw, boolean resign, Player loser) {
-        System.out.println("Deseja salvar o log da partida? (y/n)");
+        System.out.println();
+        System.out.print("Deseja salvar o log da partida? " + yellow + "(y/n)" + reset + " ");
 
         // Lê a escolha do usuário e enquanto não for válida, lê novamente.
         String option = Input.readString();
         while (!isValidChoice(option)) {
-            System.out.println("Opção inválida! Digite novamente: ");
+            invalidChoice();
             option = Input.readString();
         }
 
@@ -169,10 +174,8 @@ public class Input {
                 String end = "";
                 if (resign) {
                     end = " o jogador " + loser.getName() + " desistindo!";
-                }
-                else if (draw.isDraw()) {
+                } else if (draw.isDraw()) {
                     end = draw.getDrawTypeString();
-                    System.out.println(end);
                 } else {
                     end = " xeque-mate para " + loser.getName() + "!";
                 }
@@ -198,18 +201,24 @@ public class Input {
 
     public static void inputSaveGame(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log,
             DrawType draw, boolean resign) {
-        System.out.println("Deseja salvar o jogo? " + yellow +  "(y/n)" + reset);
+        System.out.println();
+        System.out.print("Deseja salvar o jogo? " + yellow + "(y/n)" + reset + " ");
 
         String option = Input.readString();
         while (!isValidChoice(option)) {
-            System.out.println(red + "Opção inválida! Digite novamente: " + reset);
+            invalidChoice();
             option = Input.readString();
         }
 
+        System.out.println();
+        System.out.print("Digite o nome do arquivo: ");
         if (option.equals("Y") || option.equals("y")) {
             String file = Input.readString();
             SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, file);
         }
+
+        System.out.println("Salvando jogo...");
+        UtilTools.sleep(500);
 
         System.out.println();
         System.out.println();
@@ -223,5 +232,15 @@ public class Input {
     // Lê uma string.
     public static String readString() {
         return sc.nextLine();
+    }
+
+    public static void enter() {
+        System.out.println();
+        System.out.println("Pressione enter para continuar...");
+        sc.nextLine();
+    }
+
+    public static void invalidChoice() {
+        System.out.println(red + "Opção inválida! Tente novamente." + reset);
     }
 }

@@ -11,6 +11,7 @@ import logic.MoveExecutor;
 import pieces.Piece;
 import specialmoves.Promotion;
 import ui.BoardUI;
+import ui.UtilTools;
 
 // Classe onde o jogo é executado.
 public class PlayChess {
@@ -62,12 +63,21 @@ public class PlayChess {
             }
         }
 
+        // Flag de xeque-mate.
         boolean checkMate = false;
+
+        // Flag de recuperação.
+        int recovery = 0;
 
         // Loop principal do jogo.
         while (true) {
-            // Faz um backup
-            SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
+            // Salva o jogo a cada 2 jogadas.
+            if (recovery == 2) {
+                SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
+                recovery = 0;
+            } else {
+                recovery++;
+            }
 
             // Imprime o tabuleiro.
             BoardUI.printBoard(board, playerWhite, playerBlack);
@@ -148,6 +158,8 @@ public class PlayChess {
 
                 // Imprime a mensagem de erro e pula para a próxima iteração.
                 System.out.println(red + message + reset);
+
+                UtilTools.sleep(500);
                 continue;
             }
 

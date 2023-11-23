@@ -4,8 +4,8 @@ import game.Player;
 import pieces.*;
 
 // Tabuleiro com três opções de mate.
-public class Choice extends Board {
-    public Choice() {
+public class ThreeMates extends Board {
+    public ThreeMates() {
         super();
 
         board[0][2] = new King('B', 'B', 0, 2);
@@ -17,13 +17,12 @@ public class Choice extends Board {
         board[1][5] = new Pawn('W', 'B', 1, 5);
 
         board[4][5] = new Pawn('B', 'W', 4, 5);
+        board[4][5].addMove();
         board[4][6] = new Pawn('W', 'B', 4, 6);
 
         board[5][7] = new Bishop('W', 'B', 5, 7);
 
-        // Peão que pode ser capturado por en passant.
-        board[6][3] = new Pawn('W', 'B', 6, 3); 
-        board[6][3].addMove();
+        board[6][2] = new Pawn('W', 'B', 6, 2); 
 
         board[6][7] = new Bishop('W', 'W', 7, 6);
     }

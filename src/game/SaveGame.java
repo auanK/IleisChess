@@ -17,7 +17,6 @@ public class SaveGame {
         String path = "saves/";
 
         // Lê o nome do arquivo.
-        System.out.print("Nome do arquivo: ");
         fileName = file + ".obj";
 
         // Cria o arquivo.
