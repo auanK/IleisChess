@@ -11,7 +11,6 @@ import logic.MoveExecutor;
 import pieces.Piece;
 import specialmoves.Promotion;
 import ui.BoardUI;
-import ui.UtilTools;
 
 // Classe onde o jogo é executado.
 public class PlayChess {
@@ -153,13 +152,25 @@ public class PlayChess {
 
                 if (message.equals("Withdraw!")) {
                     Input.inputResign();
-                    System.out.println(resign);
+                    continue;
+                }
+
+                if (message.equals("Exit!")) {
+                    try {
+                        Input.inputExit();
+                    } catch (Exceptions e1) {
+                        return;
+                    }
                 }
 
                 // Imprime a mensagem de erro e pula para a próxima iteração.
                 System.out.println(red + message + reset);
 
-                UtilTools.sleep(500);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException s) {
+                    System.out.println("Erro ao tentat dormir o programa.");
+                }
                 continue;
             }
 
@@ -257,6 +268,5 @@ public class PlayChess {
     public static void setResign(boolean resignLoad) {
         resign = resignLoad;
     }
-
 
 }

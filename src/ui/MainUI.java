@@ -6,6 +6,7 @@ import game.Player;
 import game.Input;
 import pieces.Piece;
 
+// Classe que implementa a interface do menu principal.
 public class MainUI {
     private static String reset = "\u001B[0m";
     private static String cyan = "\u001B[36m";
@@ -13,9 +14,10 @@ public class MainUI {
     private static String green = "\u001B[32m";
     private static String red = "\u001B[31m";
 
+    // Menu principal.
     public static void ui(String[] args) {
         while (true) {
-            UtilTools.clearConsole();
+            System.out.print("\033[H\033[2J");
 
             System.out.println(cyan + "=== Bem-vindo ao " + yellow + "IleisChess" + cyan + "! ===" + reset);
             System.out.println();
@@ -43,7 +45,6 @@ public class MainUI {
                     Player playerBlack = new Player('B');
                     chessBoard.assignPiecesToPlayers(playerWhite, playerBlack);
 
-                    
                     PlayChess.playChessGame(board, playerWhite, playerBlack, 0, null, null);
                     break;
                 case "2":
@@ -58,13 +59,22 @@ public class MainUI {
                     break;
                 case "5":
                     System.out.println("Fechando o jogo...");
-                    UtilTools.sleep(1000);
+
                     return;
                 default:
                     System.out.println(red + "Opção inválida!" + reset);
-                    UtilTools.sleep(750);
+                    sleep(750);
             }
 
+        }
+    }
+
+    // Pausa o programa por um tempo.
+    private static void sleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            System.out.println("Erro ao pausar o jogo: " + e.getMessage());
         }
     }
 }

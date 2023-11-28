@@ -40,6 +40,7 @@ public class DrawType implements Serializable {
         this.drawType = draw;
     }
 
+    // Retorna se há empate.
     public boolean isDraw() {
         return drawType != null;
     }

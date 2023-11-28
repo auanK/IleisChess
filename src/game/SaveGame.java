@@ -66,6 +66,7 @@ public class SaveGame {
             throw e;
         }
 
+        // Setar os atributos do PlayChess para começar o jogo.
         PlayChess.setAttributes(board, playerWhite, playerBlack, currentPlayer, opponent, log, draw, resign);
 
     }

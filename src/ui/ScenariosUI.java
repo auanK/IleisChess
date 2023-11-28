@@ -8,16 +8,17 @@ import game.PlayChess;
 import game.Player;
 import pieces.Piece;
 
+// Classe que implementa o menu de cenários personalizados.
 public class ScenariosUI {
-    // ANSI escape codes for console colors
     private static String reset = "\u001B[0m";
     private static String cyan = "\u001B[36m";
     private static String green = "\u001B[32m";
     private static String red = "\u001B[31m";
 
+    // Menu de cenários personalizados.
     public static void customScenarios() {
         while (true) {
-            UtilTools.clearConsole();
+            System.out.print("\033[H\033[2J");
             System.out.println(cyan + "=== Menu de cenários personalizados ===" + reset);
             System.out.println("Escolha um cenário:");
             System.out.println(green + "1 - Mate com en passant");
@@ -51,11 +52,12 @@ public class ScenariosUI {
                     return;
                 default:
                     System.out.println(red + "Opção inválida!" + reset);
-                    UtilTools.sleep(1000);
+                    sleep(500);
             }
         }
     }
 
+    // Inicia o cenário de mate com en passant.
     private static void executeEnPassantMateScenario() {
         EnPassantMate enPassantMate = new EnPassantMate();
         Piece[][] board = enPassantMate.getBoard();
@@ -67,26 +69,30 @@ public class ScenariosUI {
         PlayChess.playChessGame(board, playerWhite, playerBlack, 1,  null, null);
     }
 
+    // Inicia o cenário de mate com roque.
     private static void executeCastlingMateScenario() {
         System.out.println("Mate com roque");
         System.out.println("Em desenvolvimento...");
-        UtilTools.sleep(1000);   
+        sleep(1000);   
     }
 
+    // Inicia o cenário de mate com promoção.
     private static void executePromotionMateScenario() {
         System.out.println("Mate com promoção");
         System.out.println("Em desenvolvimento...");
-        UtilTools.sleep(1000);
+        sleep(1000);
 
     }
 
+    // Inicia o cenário de empate por afogamento.
     private static void executeStalemateScenario() {
         System.out.println("Empate por afogamento");
         System.out.println("Em desenvolvimento...");
-        UtilTools.sleep(1000);
+        sleep(1000);
         
     }
 
+    // Inicia o cenário de três mates.
     private static void executeThreeMatesScenario() {
         System.out.println("Três Mates");
         ThreeMates board = new ThreeMates();
@@ -101,5 +107,14 @@ public class ScenariosUI {
         log.addMove("Pc6c7");
         log.addMove("Pf7f5");
         PlayChess.playChessGame(boardChoice, playerWhite, playerBlack, 0,  null, log);
+    }
+
+    // Pausa o programa por um tempo.
+    private static void sleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            System.out.println("Erro ao dormir o programa.");
+        }
     }
 }

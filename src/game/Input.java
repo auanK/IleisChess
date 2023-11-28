@@ -9,7 +9,6 @@ import logic.MoveValidator;
 
 import pieces.Piece;
 import ui.BoardUI;
-import ui.UtilTools;
 
 // Classe que implementa a entrada do usuário.
 public class Input {
@@ -32,7 +31,7 @@ public class Input {
                 throw new Exceptions("Draw Threefold Repetition!");
             }
             // Lida com a solicitação de empate.
-            handleDrawRequest(currentPlayer);
+            inputDraw(currentPlayer);
         }
 
         if (source.equals("resign")) {
@@ -41,6 +40,10 @@ public class Input {
 
         if (source.equals("save")) {
             throw new Exceptions("Save!");
+        }
+
+        if (source.equals("exit")) {
+            throw new Exceptions("Exit!");
         }
 
         // Coordenadas de origem e destino.
@@ -95,23 +98,6 @@ public class Input {
         }
     }
 
-    private static void handleDrawRequest(Player currentPlayer) throws Exceptions {
-        System.out.println("O(a) jogador(a) " + cyan + currentPlayer.getName() + reset + " pediu empate, aceita? "
-                + yellow + "(y/n)" + reset + " ");
-        String draw = sc.nextLine();
-
-        while (!isValidChoice(draw)) {
-            System.out.println("Opção inválida! Digite novamente: ");
-            draw = sc.nextLine();
-        }
-
-        if (draw.equals("Y") || draw.equals("y")) {
-            throw new Exceptions("Draw!");
-        } else {
-            throw new Exceptions("Empate recusado!");
-        }
-    }
-
     // Converte a notação de xadrez para coordenadas da matriz.
     public static int[] parseChessNotation(String chessNotation) {
         if (chessNotation.length() < 4) {
@@ -138,8 +124,28 @@ public class Input {
         playerBlack.setName(sc.nextLine());
     }
 
+    // Lê a escolha de empate.
+    private static void inputDraw(Player currentPlayer) throws Exceptions {
+        System.out.println("O(a) jogador(a) " + cyan + currentPlayer.getName() + reset + " pediu empate, aceita? "
+                + yellow + "(y/n)" + reset + " ");
+        String draw = sc.nextLine();
+
+        while (!isValidChoice(draw)) {
+            System.out.println("Opção inválida! Digite novamente: ");
+            draw = sc.nextLine();
+        }
+
+        if (draw.equals("Y") || draw.equals("y")) {
+            throw new Exceptions("Draw!");
+        } else {
+            throw new Exceptions("Empate recusado!");
+        }
+    }
+
+    // Lê a escolha de desistir e trata.
     public static void inputResign() {
-        System.out.println("Deseja mesmo desistir?");
+        System.out.println("Deseja mesmo desistir?" + yellow
+                + " (y/n)" + reset);
 
         String option = Input.readString();
         while (!isValidChoice(option)) {
@@ -152,7 +158,23 @@ public class Input {
         }
     }
 
-    // Lê a escolha de salvar o log da partida.
+    // Lê a escolha de sair do jogo.
+    public static void inputExit() throws Exceptions {
+        System.out.println("Deseja mesmo sair? (O progresso não salvo pode ser encontrado no recovery.obj)" + yellow
+                + " (y/n)" + reset + " ");
+
+        String option = Input.readString();
+        while (!isValidChoice(option)) {
+            invalidChoice();
+            option = Input.readString();
+        }
+
+        if (option.equals("Y") || option.equals("y")) {
+            throw new Exceptions("Exit!");
+        }
+    }
+
+    // Lê e trata a escolha de salvar o log.
     public static void inputSaveLog(String playerWhite, String playerBlack, ChessLog log,
             DrawType draw, boolean resign, Player loser) {
         System.out.println();
@@ -173,11 +195,11 @@ public class Input {
                 // Obtem a string que representa o fim da partida.
                 String end = "";
                 if (resign) {
-                    end = " o jogador " + loser.getName() + " desistindo!";
+                    end = " o(a) jogador(a) " + loser.getName() + "desistindo!";
                 } else if (draw.isDraw()) {
                     end = draw.getDrawTypeString();
                 } else {
-                    end = " xeque-mate para " + loser.getName() + "!";
+                    end = "xeque-mate para " + loser.getName() + "!";
                 }
 
                 // Obtem a hora atual.
@@ -199,10 +221,11 @@ public class Input {
         System.out.println();
     }
 
+    // Lê e trata a escolha de salvar o jogo.
     public static void inputSaveGame(Piece[][] board, Player currentPlayer, Player opponent, ChessLog log,
             DrawType draw, boolean resign) {
         System.out.println();
-        System.out.print("Deseja salvar o jogo? " + yellow + "(y/n)" + reset + " ");
+        System.out.print(cyan + "Deseja salvar o jogo? " + yellow + "(y/n)" + reset + " ");
 
         String option = Input.readString();
         while (!isValidChoice(option)) {
@@ -218,29 +241,37 @@ public class Input {
         }
 
         System.out.println("Salvando jogo...");
-        UtilTools.sleep(500);
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            System.out.println("Erro ao dormir o programa.");
+        }
 
         System.out.println();
         System.out.println();
     }
 
+    
+    // Lê uma string.
+    public static String readString() {
+        return sc.nextLine();
+    }
+    
     // Verifica se uma escolha é válida.
     private static boolean isValidChoice(String option) {
         return option.equals("Y") || option.equals("y") || option.equals("N") || option.equals("n");
     }
 
-    // Lê uma string.
-    public static String readString() {
-        return sc.nextLine();
+    // Imprime o erro de escolha inválida.
+    public static void invalidChoice() {
+        System.out.println(red + "Opção inválida! Tente novamente." + reset);
     }
 
+    // Enter para continuar.
     public static void enter() {
         System.out.println();
         System.out.println("Pressione enter para continuar...");
         sc.nextLine();
-    }
-
-    public static void invalidChoice() {
-        System.out.println(red + "Opção inválida! Tente novamente." + reset);
     }
 }

@@ -3,6 +3,7 @@ package ui;
 import java.io.File;
 import game.Input;
 
+// Classe que implementa a interface do menu de carregar jogo.
 public class LoadUI {
     private static final String reset = "\u001B[0m";
     private static final String cyan = "\u001B[36m";
@@ -10,8 +11,9 @@ public class LoadUI {
     private static final String yellow = "\u001B[33m";
     private static final String red = "\u001B[31m";
 
+    // Menu de carregar jogo.
     public static void loadUI() {
-        UtilTools.clearConsole();
+        System.out.print("\033[H\033[2J");
 
         System.out.println(cyan + "=== Carregar Jogo ===" + reset);
         System.out.println();
@@ -40,7 +42,7 @@ public class LoadUI {
 
         // Carrega o jogo.
         System.out.println(green + "Carregando jogo..." + reset);
-        UtilTools.sleep(500);
+        sleep(500);
         System.out.println(green + "Jogo carregado com sucesso!" + reset);
 
         game.PlayChess.playChessGame(null, null, null, 0, filename, null);
@@ -95,9 +97,9 @@ public class LoadUI {
                     listOfFiles[optionDeleteInt - 1].delete();
                     delete = true;
                     System.out.println(green + "Arquivo deletado com sucesso!" + reset);
-                    UtilTools.sleep(500);
+                    sleep(500);
                 } else {
-                    UtilTools.clearConsole();
+                    System.out.print("\033[H\033[2J");
                     System.out.println(red + "Opção inválida! Tente novamente." + reset);
                     System.out.print(red + "Digite o numero do arquivo que deseja deletar: " + reset);
                     displayFileOptions(listOfFiles);
@@ -109,6 +111,14 @@ public class LoadUI {
                 System.out.println("Opção: ");
                 optionDelete = Input.readString();
             }
+        }
+    }
+
+    private static void sleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            System.out.println("Erro ao dormir o programa.");
         }
     }
 }
