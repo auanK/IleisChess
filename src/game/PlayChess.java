@@ -20,9 +20,9 @@ public class PlayChess {
     private static Player playerBlack;
     private static Player currentPlayer;
     private static Player opponent;
-    private static ChessLog log = new ChessLog();
-    private static DrawType draw = new DrawType();
-    private static boolean resign = false;
+    private static ChessLog log;
+    private static DrawType draw;
+    private static boolean resign;
 
     private static String cyan = "\u001B[36m";
     private static String red = "\u001B[31m";
@@ -36,6 +36,9 @@ public class PlayChess {
             board = boardLoad;
             playerWhite = playerWhiteLoad;
             playerBlack = playerBlackLoad;
+
+            log = new ChessLog();
+            draw = new DrawType();
 
             // Adiciona o movimento inicial ao log.
             if (initial == 0) {

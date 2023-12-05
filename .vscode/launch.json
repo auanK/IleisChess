@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "game.Main",
+            "projectName": "IleisChess_ec650439"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "game.Main",
             "projectName": "IleisChess_51ce7dca"
         },
         {
