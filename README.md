@@ -19,21 +19,17 @@ O IleisChess é um jogo de xadrez desenvolvido em Java, com interface gráfica s
 - Regras de en passant.
 - Salvar e carregar partidas.
 - Menu de opções antes de iniciar a partida.
-- Tabuleiros com situações especiais: Xeque com en passant, xeque com promoção...
-
-## Funcionalidades a serem implementadas
-
-- Interface gráfica mais elaborada. (Com uso de JavaFX)
+- Tabuleiros com situações especiais: Xeque com en passant, xeque com promoção...W
 
 ## Como compilar
 
-Para compilar o projeto, é necessário ter o JDK 11 instalado na máquina(ou superior) e executar o seguinte comando no terminal:
+Para compilar o projeto, o JDK instalado na máquina, basta executar o seguinte comando no terminal dentro da pasta raiz do projeto: 
 
 ```bash
 javac -d bin src/board/*.java src/draw/*.java src/game/*.java src/logic/*.java src/pieces/*.java src/specialmoves/*.java src/ui/*.java
 ```
 
-Para executar o projeto, basta executar o seguinte comando no terminal:
+Em seguida, para executar o projeto, basta executar o seguinte comando no terminal:
 
 ```bash
 java -cp bin game.Main
