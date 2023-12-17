@@ -24,6 +24,7 @@ public class PlayChess {
     private static DrawType draw;
     private static boolean resign;
 
+    // Cores para o terminal.
     private static String cyan = "\u001B[36m";
     private static String red = "\u001B[31m";
     private static String reset = "\u001B[0m";
@@ -33,14 +34,16 @@ public class PlayChess {
             String filename, ChessLog logLoad) {
         // Verifica se o jogo está sendo carregado ou não.
         if (filename == null) {
+            // Carrega o tabuleiro e os jogadores.
             board = boardLoad;
             playerWhite = playerWhiteLoad;
             playerBlack = playerBlackLoad;
 
+            // Inicializa o log e a flag de empate.
             log = new ChessLog();
             draw = new DrawType();
 
-            // Adiciona o movimento inicial ao log.
+            // Define o jogador inicial.
             if (initial == 0) {
                 currentPlayer = playerWhite;
                 opponent = playerBlack;
@@ -49,6 +52,7 @@ public class PlayChess {
                 opponent = playerWhite;
             }
 
+            // Verifica se existe um log para carregar.
             if (logLoad != null) {
                 log = logLoad;
             }
