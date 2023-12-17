@@ -52,9 +52,12 @@ public class PlayChess {
                 opponent = playerWhite;
             }
 
-            // Verifica se existe um log para carregar.
+            // Verifica se existe um log para carregar, se não, adiciona o movimento inicial
+            // indicando a cor do jogador que começa.
             if (logLoad != null) {
                 log = logLoad;
+            } else {
+                log.addMove("Initial" + currentPlayer.getColor());
             }
 
             // Lê o nome dos jogadores.
