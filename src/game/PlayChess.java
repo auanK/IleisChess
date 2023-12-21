@@ -82,7 +82,12 @@ public class PlayChess {
         while (true) {
             // Salva o jogo a cada 2 jogadas.
             if (recovery == 2) {
+                try {
                 SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
+                } catch (Exceptions e) {
+                    System.out.println("Erro ao salvar o jogo: " + e.getMessage());
+                }
+                
                 recovery = 0;
             } else {
                 recovery++;
@@ -166,21 +171,20 @@ public class PlayChess {
                 }
 
                 if (message.equals("Exit!")) {
-                    try {
-                        Input.inputExit();
-                    } catch (Exceptions e1) {
-                        return;
+                    if (Input.inputExit()) {
+                        break;
+                    } else {
+                        System.out.println();
+                        System.out.println(red + "Sair cancelado!" + reset);
+                        sleep(750);
+                        continue;
                     }
                 }
 
                 // Imprime a mensagem de erro e pula para a próxima iteração.
                 System.out.println(red + message + reset);
 
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException s) {
-                    System.out.println("Erro ao tentat dormir o programa.");
-                }
+                sleep(750);
                 continue;
             }
 
@@ -277,6 +281,14 @@ public class PlayChess {
     // Seta a desistencia
     public static void setResign(boolean resignLoad) {
         resign = resignLoad;
+    }
+
+    private static void sleep(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException s) {
+            System.out.println("Erro ao tentar dormir o programa.");
+        }
     }
 
 }

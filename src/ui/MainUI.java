@@ -34,7 +34,7 @@ public class MainUI {
 
             System.out.println();
             System.out.print("Opção: ");
-            String option = Input.readString();
+            String option = Input.inputString();
 
             switch (option) {
                 case "1":

@@ -7,12 +7,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import draw.DrawType;
+import logic.Exceptions;
 import pieces.Piece;
 
 // Classe responsável por salvar e carregar o jogo.
 public class SaveGame {
     public static void saveGame(Piece[][] board, Player currentPlayer,
-            Player opponent, ChessLog log, DrawType draw, boolean resign, String file) {
+            Player opponent, ChessLog log, DrawType draw, boolean resign, String file) throws Exceptions {
         String fileName = "";
         String path = "saves/";
 
@@ -31,7 +32,7 @@ public class SaveGame {
             
 
         } catch (IOException e) {
-            System.out.println("Erro ao salvar o jogo: " + e.getMessage());
+            throw new Exceptions("Erro ao salvar o jogo.");
         }
 
     }

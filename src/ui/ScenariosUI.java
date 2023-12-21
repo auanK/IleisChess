@@ -30,7 +30,7 @@ public class ScenariosUI {
             System.out.println(red + "6 - Sair" + reset);
             System.out.println();
             System.out.print("Opção: ");
-            String option = Input.readString();
+            String option = Input.inputString();
             switch (option) {
                 case "1":
                     executeEnPassantMateScenario();

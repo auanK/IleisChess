@@ -26,7 +26,7 @@ public class LoadUI {
         if (listOfFiles.length == 0) {
             System.out.println(red + "Nenhum arquivo encontrado!" + reset);
             System.out.println("Pressione ENTER para voltar ao menu principal.");
-            Input.readString();
+            Input.inputString();
             return;
         }
 
@@ -60,7 +60,7 @@ public class LoadUI {
         while (true) {
             System.out.println();
             System.out.print("Opção: ");
-            String option = Input.readString();
+            String option = Input.inputString();
 
             try {
                 int optionInt = Integer.parseInt(option);
@@ -84,7 +84,7 @@ public class LoadUI {
         System.out.println();
         System.out.println(red + "Digite o numero do arquivo que deseja deletar " + yellow + "(0 para cancelar):" + reset);
         System.out.print("Opção: ");
-        String optionDelete = Input.readString();
+        String optionDelete = Input.inputString();
 
         boolean delete = false;
         while (!delete) {
@@ -103,13 +103,13 @@ public class LoadUI {
                     System.out.println(red + "Opção inválida! Tente novamente." + reset);
                     System.out.print(red + "Digite o numero do arquivo que deseja deletar: " + reset);
                     displayFileOptions(listOfFiles);
-                    optionDelete = Input.readString();
+                    optionDelete = Input.inputString();
                 }
             } catch (NumberFormatException e) {
                 System.out.println(red + "Por favor, insira um número válido." + reset);
                 System.out.println(red + "Digite o numero do arquivo que deseja deletar " + yellow + "(0 para cancelar):" + reset);
                 System.out.println("Opção: ");
-                optionDelete = Input.readString();
+                optionDelete = Input.inputString();
             }
         }
     }
