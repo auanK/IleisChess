@@ -82,7 +82,7 @@ public class PlayChess {
         // Loop principal do jogo.
         while (true) {
             // Salva o jogo a cada 2 jogadas.
-            if (moves % 2 == 0 && moves != 0) {
+            if (moves % 2 != 0) {
                 try {
                 SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
                 } catch (Exceptions e) {

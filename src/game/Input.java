@@ -10,7 +10,7 @@ import logic.MoveValidator;
 import pieces.Piece;
 import ui.BoardUI;
 
-// Classe que implementa a interação do usuário com o jogo (leitura de dados).
+// Classe que implementa a interação do usuário com o jogo.
 public class Input {
     private static Scanner sc = new Scanner(System.in);
 
@@ -251,8 +251,7 @@ public class Input {
     // Lê a escolha de sair do jogo.
     public static boolean inputExit() {
         System.out.println();
-        System.out.println("Deseja mesmo sair? (O progresso não salvo pode ser encontrado no recovery.obj)" + yellow
-                + " (y/n)" + reset + " ");
+        System.out.print(red + "Deseja mesmo sair? (O progresso não salvo pode ser encontrado no recovery.obj)" + yellow + " (y/n)" + reset + " ");
 
         String option = readChoice();
 
