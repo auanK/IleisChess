@@ -39,9 +39,10 @@ public class PlayChess {
             playerWhite = playerWhiteLoad;
             playerBlack = playerBlackLoad;
 
-            // Inicializa o log e a flag de empate.
+            // Inicializa o log, o tipo de empate e a flag de desistência.
             log = new ChessLog();
             draw = new DrawType();
+            resign = false;
 
             // Define o jogador inicial.
             if (initial == 0) {
