@@ -2,9 +2,9 @@ package specialmoves;
 
 import game.PlayChess;
 import game.ChessLog;
+import game.Exceptions;
 import game.Player;
 import logic.CheckValidation;
-import logic.Exceptions;
 import pieces.King;
 import pieces.Piece;
 import pieces.Rook;

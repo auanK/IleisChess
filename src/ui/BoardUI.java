@@ -2,8 +2,8 @@ package ui;
 
 import game.PlayChess;
 import game.ChessLog;
+import game.Exceptions;
 import game.Player;
-import logic.Exceptions;
 import logic.MoveValidator;
 import pieces.Piece;
 

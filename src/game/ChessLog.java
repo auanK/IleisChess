@@ -6,8 +6,6 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import logic.Exceptions;
-
 // Classe que implementa o log da partida.
 public class ChessLog implements Serializable {
     private ArrayList<String> logMoves; // Array de movimentos.

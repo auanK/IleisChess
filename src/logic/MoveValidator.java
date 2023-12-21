@@ -6,6 +6,7 @@ import specialmoves.Castling;
 import specialmoves.EnPassant;
 import game.PlayChess;
 import game.ChessLog;
+import game.Exceptions;
 
 // Classe que implementa a validação de movimentos.
 public class MoveValidator {

@@ -1,4 +1,4 @@
-package logic;
+package game;
 
 // Classe que implementa as exceções.
 public class Exceptions extends Exception {

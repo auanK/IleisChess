@@ -1,4 +1,4 @@
-package draw;
+package logic;
 
 
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.List;
 
 import game.ChessLog;
 import game.Player;
-import logic.MoveValidator;
 import pieces.Piece;
 
 // Classe que implementa os empates.

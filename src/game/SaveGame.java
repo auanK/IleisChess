@@ -6,8 +6,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import draw.DrawType;
-import logic.Exceptions;
+import logic.DrawType;
 import pieces.Piece;
 
 // Classe responsável por salvar e carregar o jogo.

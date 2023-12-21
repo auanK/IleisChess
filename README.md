@@ -2,9 +2,9 @@
 
 ## Sobre o Projeto
 
-O IleisChess é um jogo de xadrez desenvolvido em Java, com interface gráfica simples, que visa a implementação de todas as regras do xadrez padrão para que seja possível jogar uma partida completa. O projeto foi desenvolvido como um trabalho para a disciplina de Programação Orientada a Objetos, do curso de Ciência da Computação da Universidade Federal do Ceará - Campus Quixadá, lecionada pelo professor Rubens.
+O IleisChess é um jogo de xadrez desenvolvido em Java como parte do trabalho para a disciplina de Programação Orientada a Objetos da Universidade Federal do Ceará - Campus Quixadá, ministrada pelo professor Rubens.
 
-## Funcionalidades (Em ordem de implementação)
+## Funcionalidades (A maioria em ordem de implementação)
 
 - Representação de todas as peças de xadrez padrão.
 - Representação do tabuleiro de xadrez padrão.
@@ -19,23 +19,29 @@ O IleisChess é um jogo de xadrez desenvolvido em Java, com interface gráfica s
 - Regras de en passant.
 - Salvar e carregar partidas.
 - Menu de opções antes de iniciar a partida.
-- Tabuleiros com situações especiais: Xeque com en passant, xeque com promoção...W
+- Tabuleiros com situações especiais: Xeque com en passant, xeque com promoção...
+
+## Pacotes
+
+De forma geral, o projeto está dividido em 6 pacotes, sendo eles:
+
+- board: Contém as classes que representam o tabuleiro de xadrez, incluindo variações implementadas.
+- game: Classes relacionadas à execução da partida, interação dos jogadores, salvamento/carregamento de partidas e registros, além do Exception implementado para o projeto.
+- logic: Funcionalidades lógicas do jogo, incluindo verificação de xeque, xeque-mate, empates, validação e execução de movimentos.
+- pieces: Representação das peças de xadrez.
+- specialmoves: Implementação de movimentos especiais, como roque, en passant e promoção de peões.
+- ui: Classes relacionadas à interface gráfica do jogo, como menu, carregamento de partidas, ajuda, impressão do tabuleiro e etc..
 
 ## Como compilar
 
 Para compilar o projeto, com o JDK instalado na máquina, basta executar o seguinte comando no terminal dentro da pasta raiz do projeto: 
 
 ```bash
-javac -d bin src/board/*.java src/draw/*.java src/game/*.java src/logic/*.java src/pieces/*.java src/specialmoves/*.java src/ui/*.java
+javac -d bin src/Main.java src/board/*.java src/game/*.java src/logic/*.java src/pieces/*.java src/specialmoves/*.java src/ui/*.java
 ```
 
-Em seguida, para executar o projeto, basta executar o seguinte comando no terminal:
+Em seguida, para executar o projeto, execute o seguinte comando:
 
 ```bash
-java -cp bin game.Main
+java -cp bin Main
 ```
-
-## Autor
-- Kauan Pablo
-- Email: kauanpablo089@gmail.com 
-- GitHub: [github.com/auanK](https://github.com/auanK)

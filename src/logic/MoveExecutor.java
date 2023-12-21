@@ -1,6 +1,7 @@
 package logic;
 
 import game.ChessLog;
+import game.Exceptions;
 import game.Player;
 import pieces.Piece;
 import specialmoves.Castling;

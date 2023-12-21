@@ -2,9 +2,8 @@ package game;
 
 import java.util.Scanner;
 
-import draw.DrawType;
-import draw.Draws;
-import logic.Exceptions;
+import logic.DrawType;
+import logic.Draws;
 import logic.MoveValidator;
 
 import pieces.Piece;
@@ -181,7 +180,7 @@ public class Input {
             String hour = java.time.LocalTime.now().toString().substring(0, 8).replace(':', '-');
 
             // Obtem o nome do arquivo.
-            String filename = "log/" + hour + "_" + playerWhite + "vs" + playerBlack + ".txt";
+            String filename = "logs/" + hour + "_" + playerWhite + "vs" + playerBlack + ".txt";
 
             System.out.println("Salvando o log...");
             sleep(500);

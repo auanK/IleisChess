@@ -3,10 +3,9 @@ package game;
 import java.io.IOException;
 
 import board.ChessBoard;
-import draw.Draws;
-import draw.DrawType;
 import logic.CheckValidation;
-import logic.Exceptions;
+import logic.DrawType;
+import logic.Draws;
 import logic.MoveExecutor;
 import pieces.Piece;
 import specialmoves.Promotion;

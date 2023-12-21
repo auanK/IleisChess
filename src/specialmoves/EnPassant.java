@@ -1,10 +1,10 @@
 package specialmoves;
 
 import game.ChessLog;
+import game.Exceptions;
 import game.PlayChess;
 import game.Player;
 import logic.CheckValidation;
-import logic.Exceptions;
 import pieces.Piece;
 import pieces.Pawn;
 
