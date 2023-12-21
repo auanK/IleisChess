@@ -19,6 +19,7 @@ public abstract class Board {
         }
     }
 
+    // Cria uma string que representa o tabuleiro. (Usada para empate por tripla repetição)
     public static String getKey(Piece[][] board) {
         StringBuilder key = new StringBuilder();
 

@@ -26,6 +26,16 @@ public class ChessLog implements Serializable {
     public ArrayList<String> getPositions() {
         return logPositions;
     }
+    
+    // Retorna o tamanho do array de movimentos.
+    public int sizeLogMoves() {
+        return logMoves.size();
+    }
+
+    // Retorna o tamanho do array de posições.
+    public int sizeLogPositions() {
+        return logPositions.size();
+    }
 
     // Adiciona um movimento ao array de movimentos.
     public void addMove(String move) {
@@ -84,16 +94,6 @@ public class ChessLog implements Serializable {
         } catch (IOException e) {
             throw new Exceptions("Erro ao salvar o log da partida!");
         }
-    }
-
-    // Retorna o tamanho do array de movimentos.
-    public int sizeLogMoves() {
-        return logMoves.size();
-    }
-
-    // Retorna o tamanho do array de posições.
-    public int sizeLogPositions() {
-        return logPositions.size();
     }
 
     // Retorna uma String com a notação algébrica do movimento.
