@@ -171,11 +171,11 @@ public class Input {
             // Obtem a string que representa o fim da partida.
             String end = "";
             if (resign) {
-                end = " o(a) jogador(a) " + loser.getName() + "desistindo!";
+                end = " o(a) jogador(a) " + loser.getName() + " desistindo!";
             } else if (draw.isDraw()) {
                 end = draw.getDrawTypeString();
             } else {
-                end = "xeque-mate para " + loser.getName() + "!";
+                end = "xeque-mate contra " + loser.getName() + "!";
             }
 
             // Obtem a hora atual.
