@@ -76,22 +76,18 @@ public class PlayChess {
         // Flag de xeque-mate.
         boolean checkMate = false;
 
-        // Flag de recuperação.
-        int recovery = 0;
+        // flag que diz quantas rodadas se passaram no jogo.
+        int moves = 0;
 
         // Loop principal do jogo.
         while (true) {
             // Salva o jogo a cada 2 jogadas.
-            if (recovery == 2) {
+            if (moves % 2 == 0 && moves != 0) {
                 try {
                 SaveGame.saveGame(board, currentPlayer, opponent, log, draw, resign, "recovery");
                 } catch (Exceptions e) {
                     System.out.println("Erro ao salvar o jogo: " + e.getMessage());
                 }
-                
-                recovery = 0;
-            } else {
-                recovery++;
             }
 
             // Imprime o tabuleiro.
@@ -191,6 +187,9 @@ public class PlayChess {
 
             // Troca os jogadores.
             switchPlayers();
+
+            // Incrementa o número de jogadas.
+            moves++;
         }
 
         // Lida com o resultado do jogo.
@@ -205,7 +204,8 @@ public class PlayChess {
 
     // Lida com a tentativa de movimento.
     private static void makeMove(Piece[][] board) throws Exceptions {
-        System.out.println(currentPlayer.getName() + ", é sua vez. Digite o movimento: ");
+        System.out.println(currentPlayer.getName() + ", é sua vez:");
+        System.out.print("-> ");
 
         // Criar um array com as coordenadas de origem e destino.
         int[] moveCoordinates;

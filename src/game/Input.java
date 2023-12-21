@@ -131,8 +131,7 @@ public class Input {
     // Lê a escolha de empate.
     private static void inputDraw(Player currentPlayer) throws Exceptions {
         System.out.println();
-        System.out.println("O(a) jogador(a) " + cyan + currentPlayer.getName() + reset + " pediu empate, aceita? "
-                + yellow + "(y/n)" + reset + " ");
+        System.out.print("O(a) jogador(a) " + cyan + currentPlayer.getName() + reset + " pediu empate, aceita? " + yellow + "(y/n)" + reset + " ");
 
         String choice = readChoice();
 
@@ -146,7 +145,7 @@ public class Input {
     // Lê e trata a escolha de desistir.
     public static void inputResign() {
         System.out.println();
-        System.out.println("Deseja mesmo desistir?" + yellow + " (y/n)" + reset);
+        System.out.print("Deseja mesmo desistir?" + yellow + " (y/n) " + reset);
 
         String option = readChoice();
 
@@ -267,15 +266,14 @@ public class Input {
     // Lê o nome dos jogadores.
     public static void inputName(Player playerWhite, Player playerBlack) {
         System.out.println();
-        System.out.println(
-                "Digite o nome do(a)" + cyan + " jogador(a)" + reset + " das peças" + cyan + " brancas" + reset + ": ");
+        System.out.print( "Digite o nome do(a)" + cyan + " jogador(a)" + reset + " das peças" + cyan + " brancas" + reset + ": ");
         playerWhite.setName(inputString());
+        System.out.println();
 
         System.out.println();
-        System.out.println("Digite o nome do(a)" + yellow + " jogador(a)" + reset + " das peças" + yellow + " pretas"
-                + reset + ": ");
+        System.out.print("Digite o nome do(a)" + yellow + " jogador(a)" + reset + " das peças" + yellow + " pretas" + reset + ": ");
         playerBlack.setName(inputString());
-
+        System.out.println();
     }
 
     // Lê uma string.
@@ -306,7 +304,7 @@ public class Input {
     // Enter para continuar.
     public static void enter() {
         System.out.println();
-        System.out.println("Pressione enter para continuar...");
+        System.out.print("Pressione enter para continuar...");
         sc.nextLine();
     }
 

@@ -38,6 +38,7 @@ public class MainUI {
 
             switch (option) {
                 case "1":
+                    System.out.print("\033[H\033[2J");
                     ChessBoard chessBoard = new ChessBoard();
                     Piece[][] board = chessBoard.getBoard();
 
@@ -59,7 +60,7 @@ public class MainUI {
                     break;
                 case "5":
                     System.out.println("Fechando o jogo...");
-
+                    sleep(750);
                     return;
                 default:
                     System.out.println(red + "Opção inválida!" + reset);

@@ -18,18 +18,18 @@ public class LoadUI {
         System.out.println(cyan + "=== Carregar Jogo ===" + reset);
         System.out.println();
 
-        System.out.println("Escolha um arquivo para carregar:");
-
+        
         File folder = new File("saves/");
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles.length == 0) {
             System.out.println(red + "Nenhum arquivo encontrado!" + reset);
-            System.out.println("Pressione ENTER para voltar ao menu principal.");
-            Input.inputString();
+            Input.enter();
             return;
         }
 
+        System.out.println("Escolha um arquivo para carregar:");
+        
         displayFileOptions(listOfFiles);
         System.out.println(red + (listOfFiles.length + 1) + " - Deletar arquivo" + reset);
         System.out.println();
